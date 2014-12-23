@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -42,11 +43,17 @@
             <Label text="Orden:" textAlignment="RIGHT" GridPane.halignment="RIGHT">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" top="5.0" />
-               </GridPane.margin></Label>
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font></Label>
             <Label text="Descripción:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" />
-               </GridPane.margin></Label>
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font></Label>
             <TextField fx:id="ordenTextField" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
