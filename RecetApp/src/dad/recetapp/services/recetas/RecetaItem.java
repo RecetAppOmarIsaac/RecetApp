@@ -1,4 +1,4 @@
-package dad.recetapp.services;
+package dad.recetapp.services.recetas;
 
 import java.util.Date;
 

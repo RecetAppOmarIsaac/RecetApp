@@ -3,6 +3,7 @@ package dad.recetapp;
 import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.List;
+<<<<<<< HEAD:RecetApp/src/dad/recetapp/Main.java
 import dad.recetapp.services.RecetaItem;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
@@ -16,6 +17,19 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+=======
+
+
+
+
+import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.services.recetas.RecetaItem;
+
+
+
+public class MainReceta {
+>>>>>>> 7aeab86cebe6f7e92e061df33bc8cdc5abfb23e4:RecetApp/src/dad/recetapp/MainReceta.java
 	public static void main(String[] args) throws SQLException {
 		/*
 		crearReceta();

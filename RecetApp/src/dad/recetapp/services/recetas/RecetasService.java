@@ -1,6 +1,8 @@
-package dad.recetapp.services;
+package dad.recetapp.services.recetas;
 
 import java.util.List;
+
+import dad.recetapp.services.ServiceException;
 
 public interface RecetasService {
 
