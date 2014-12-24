@@ -8,16 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dad.recetapp.db.DataBase;
-import dad.recetapp.services.RecetaItem;
-import dad.recetapp.services.RecetasService;
 import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.recetas.RecetaItem;
+import dad.recetapp.services.recetas.RecetasService;
 
 public class RecetasServiceDB implements RecetasService {
 
 	@Override
 	public void crearReceta(RecetaItem receta) throws ServiceException {
 		if (receta==null)throw new IllegalArgumentException("Debe especificar una receta para crearla");
-
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement(
@@ -59,7 +58,7 @@ public class RecetasServiceDB implements RecetasService {
 			}
 			stmt.close();
 		} catch (SQLException e) {
-			throw new ServiceException("No se ha podido eliminar la receta "+ e);
+			throw new ServiceException("No se ha podido modificar la receta "+ e);
 		}
 
 	}

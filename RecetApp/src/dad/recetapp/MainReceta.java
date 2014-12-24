@@ -6,13 +6,14 @@ import java.util.List;
 
 
 
-import dad.recetapp.services.RecetaItem;
+
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.services.recetas.RecetaItem;
 
 
 
-public class Main {
+public class MainReceta {
 	public static void main(String[] args) throws SQLException {
 		crearReceta();
 		eliminarReceta();
