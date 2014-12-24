@@ -3,17 +3,21 @@ package dad.recetapp;
 import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-
-
 import dad.recetapp.services.RecetaItem;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.ui.controllers.EditarRecetaDialogController;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 
-
-public class Main {
+public class Main extends Application {
 	public static void main(String[] args) throws SQLException {
+		/*
 		crearReceta();
 		eliminarReceta();
 		listarRecetas();
@@ -21,7 +25,22 @@ public class Main {
 		buscarReceta();
 		modificarReceta();
 		listarRecetas();
+		*/
+		launch(args);
+	}
 
+	@Override
+	public void start(Stage stage) throws Exception {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml"));
+		loader.setController(new EditarRecetaDialogController());
+		loader.setRoot(new BorderPane());
+		Parent root = loader.load();
+
+		Scene scene = new Scene(root, 600, 400);
+
+		stage.setTitle("FXML Welcome");
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	private static void modificarReceta() {
