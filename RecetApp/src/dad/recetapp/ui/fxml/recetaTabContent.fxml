@@ -5,8 +5,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane
+        fx:id="topBorderPane"
+        maxHeight="1.7976931348623157E308"
+        maxWidth="1.7976931348623157E308"
+        minHeight="0.0"
+        minWidth="0.0"
+        prefHeight="400.0"
+        prefWidth="600.0"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="@../css/RecetaTabContent.css"
+        >
    <top>
       <GridPane minHeight="10.0" minWidth="10.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -23,7 +33,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="seccionTextField" GridPane.columnIndex="1">
+            <TextField fx:id="seccionTextField" onKeyReleased="#onSeccionTextKeyReleased" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
