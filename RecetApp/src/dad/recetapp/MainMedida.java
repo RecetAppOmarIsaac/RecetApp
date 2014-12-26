@@ -7,20 +7,20 @@ import dad.recetapp.services.medidas.MedidaItem;
 
 public class MainMedida {
 
-	public static void main(String[] args) {
-		crearMedida();
-		modificarMedida();
-		eliminarMedida();
-		listarMedidas();
-		obtenerMedida();
-	
-		
-
-	}
+//	public static void main(String[] args) {
+//		crearMedida();
+//		modificarMedida();
+//		eliminarMedida();
+//		listarMedidas();
+//		obtenerMedida();
+//	
+//		
+//
+//	}
 
 	private static void modificarMedida() {
 		MedidaItem medida=new MedidaItem();
-		medida.setId(10);
+		medida.setId(10L);
 		medida.setNombre("Kilogramo(s)");
 		medida.setAbreviatura("kg");
 		try{

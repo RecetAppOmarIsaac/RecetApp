@@ -41,7 +41,7 @@ public class MedidasServiceDB implements MedidasService {
 					+ "set nombre =?, abreviatura=? where id=?");
 			stmt.setString(1, medida.getNombre());
 			stmt.setString(2, medida.getAbreviatura());
-			stmt.setInt(3, medida.getId());
+			stmt.setLong(3, medida.getId());
 			if (stmt.executeUpdate()==0) {
 				throw new ServiceException("La medida con id "+medida.getId()+" no existe en la base de datos");
 			}
@@ -78,7 +78,7 @@ public class MedidasServiceDB implements MedidasService {
 			ResultSet rs =stmt.executeQuery();
 			while(rs.next()){
 				MedidaItem medida=new MedidaItem();
-				medida.setId(rs.getInt("id"));
+				medida.setId(rs.getLong("id"));
 				medida.setNombre(rs.getString("nombre"));
 				medida.setAbreviatura(rs.getString("abreviatura"));
 				medidas[i]=medida;
@@ -123,7 +123,7 @@ public class MedidasServiceDB implements MedidasService {
 			} else {
 				rs.previous();
 				while(rs.next()){
-					medida.setId(rs.getInt("id"));
+					medida.setId(rs.getLong("id"));
 					medida.setNombre(rs.getString("nombre"));
 					medida.setAbreviatura(rs.getString("abreviatura"));	
 				}

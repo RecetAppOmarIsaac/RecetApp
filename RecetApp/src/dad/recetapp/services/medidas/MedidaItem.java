@@ -1,14 +1,14 @@
 package dad.recetapp.services.medidas;
 
 public class MedidaItem {
-	private Integer id;
+	private Long id;
 	private String nombre;
 	private String abreviatura;
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNombre() {

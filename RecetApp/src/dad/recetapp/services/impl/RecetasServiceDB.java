@@ -52,7 +52,7 @@ public class RecetasServiceDB implements RecetasService {
 			stmt.setInt(5, receta.getTiempoTotal());
 			stmt.setInt(6, receta.getTiempoThermomix());
 			stmt.setInt(7, receta.getIdCategoria());
-			stmt.setInt(8, receta.getId());
+			stmt.setLong(8, receta.getId());
 			if (stmt.executeUpdate()==0) {
 				throw new ServiceException("La receta con id "+receta.getId()+" no existe en la base de datos");
 			}
@@ -93,7 +93,7 @@ public class RecetasServiceDB implements RecetasService {
 			ResultSet rs =stmt.executeQuery();
 			while(rs.next()){
 				RecetaItem receta=new RecetaItem();
-				receta.setId(rs.getInt("id"));
+				receta.setId(rs.getLong("id"));
 				receta.setNombre(rs.getString("nombre"));
 				receta.setFechaCreacion(rs.getDate("fecha_creacion"));
 				receta.setCantidad(rs.getInt("cantidad"));
@@ -120,7 +120,7 @@ public class RecetasServiceDB implements RecetasService {
 			ResultSet rs =stmt.executeQuery();
 			while(rs.next()){
 				RecetaItem receta=new RecetaItem();
-				receta.setId(rs.getInt("id"));
+				receta.setId(rs.getLong("id"));
 				receta.setNombre(rs.getString("nombre"));
 				receta.setFechaCreacion(rs.getDate("fecha_creacion"));
 				receta.setCantidad(rs.getInt("cantidad"));
@@ -151,7 +151,7 @@ public class RecetasServiceDB implements RecetasService {
 			} else {
 				rs.previous();
 				while(rs.next()){
-					receta.setId(rs.getInt("id"));
+					receta.setId(rs.getLong("id"));
 					receta.setNombre(rs.getString("nombre"));
 					receta.setFechaCreacion(rs.getDate("fecha_creacion"));
 					receta.setCantidad(rs.getInt("cantidad"));

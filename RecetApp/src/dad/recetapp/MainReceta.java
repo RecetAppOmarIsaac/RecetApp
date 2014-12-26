@@ -14,20 +14,20 @@ import dad.recetapp.services.recetas.RecetaItem;
 
 
 public class MainReceta {
-	public static void main(String[] args) throws SQLException {
-		crearReceta();
-		eliminarReceta();
-		listarRecetas();
-		obtenerReceta();
-		buscarReceta();
-		modificarReceta();
-		listarRecetas();
-
-	}
+//	public static void main(String[] args) throws SQLException {
+//		crearReceta();
+//		eliminarReceta();
+//		listarRecetas();
+//		obtenerReceta();
+//		buscarReceta();
+//		modificarReceta();
+//		listarRecetas();
+//
+//	}
 
 	private static void modificarReceta() {
 		RecetaItem receta=new RecetaItem();
-		receta.setId(3);
+		receta.setId(3L);
 		receta.setNombre("Pollo al pilpil");
 		receta.setFechaCreacion(new GregorianCalendar(2012,3,14).getTime());
 		receta.setCantidad(2);

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class RecetaItem {
 	
-	private Integer id;
+	private Long id;
 	private String nombre;
 	private Date fechaCreacion;
 	private Integer cantidad;
@@ -13,12 +13,12 @@ public class RecetaItem {
 	private Integer tiempoThermomix;
 	private Integer idCategoria;
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
