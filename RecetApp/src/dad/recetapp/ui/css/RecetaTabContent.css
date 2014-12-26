@@ -1,0 +1,23 @@
+#addIngredienteButton {
+	-fx-graphic: url("../images/add-icon-20x20.png");
+}
+
+#editarIngredienteButton {
+	-fx-graphic: url("../images/edit-icon-20x20.png");
+}
+
+#borrarIngredienteButton {
+	-fx-graphic: url("../images/delete-icon-20x20.png");
+}
+
+#addInstruccionButton {
+	-fx-graphic: url("../images/add-icon-20x20.png");
+}
+
+#editarInstruccionButton {
+	-fx-graphic: url("../images/edit-icon-20x20.png");
+}
+
+#borrarInstruccionButton {
+	-fx-graphic: url("../images/delete-icon-20x20.png");
+}
