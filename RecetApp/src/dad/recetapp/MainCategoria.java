@@ -5,14 +5,14 @@ import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.categorias.CategoriaItem;
 
 public class MainCategoria {
-//	public static void main(String[] args) {
-//		crearCategoria();
-//		modificarCategoria();
-//		eliminarCategoria();
-//		listarCategoria();
-//		obtenerCategoria();
-//
-//	}
+	public static void main(String[] args) {
+		crearCategoria();
+		modificarCategoria();
+		eliminarCategoria();
+		listarCategoria();
+		obtenerCategoria();
+
+	}
 
 	private static void modificarCategoria() {
 		CategoriaItem categoria=new CategoriaItem();

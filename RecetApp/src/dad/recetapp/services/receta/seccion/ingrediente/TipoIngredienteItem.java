@@ -1,4 +1,4 @@
-package dad.recetapp.services.ingredientes;
+package dad.recetapp.services.receta.seccion.ingrediente;
 
 public class TipoIngredienteItem {
 	private Long id;

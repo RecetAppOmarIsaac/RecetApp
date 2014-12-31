@@ -7,10 +7,12 @@ import java.sql.SQLException;
 
 
 
+
+
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.medidas.MedidaItem;
-import dad.recetapp.services.medidas.MedidasService;
+import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
+import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidasService;
 
 public class MedidasServiceDB implements MedidasService {
 

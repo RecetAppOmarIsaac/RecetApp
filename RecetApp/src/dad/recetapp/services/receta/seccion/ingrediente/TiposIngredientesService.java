@@ -1,4 +1,4 @@
-package dad.recetapp.services.ingredientes;
+package dad.recetapp.services.receta.seccion.ingrediente;
 
 import dad.recetapp.services.ServiceException;
 

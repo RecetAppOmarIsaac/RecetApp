@@ -1,4 +1,4 @@
-package dad.recetapp.services.recetas;
+package dad.recetapp.services.receta;
 
 import java.util.List;
 

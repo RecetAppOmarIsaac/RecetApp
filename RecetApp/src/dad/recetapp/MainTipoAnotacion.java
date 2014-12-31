@@ -7,15 +7,15 @@ import dad.recetapp.services.anotaciones.TipoAnotacionItem;
 
 public class MainTipoAnotacion {
 
-//	public static void main(String[] args) {
-//		crearTipoAnotacion();
-//		modificarTipoAnotacion();
-//		eliminarTipoAnotacion();
-//		listarTipoAnotacion();
-//		obtenerTipoAnotacion();
-//		
-//
-//	}
+	public static void main(String[] args) {
+		crearTipoAnotacion();
+		modificarTipoAnotacion();
+		eliminarTipoAnotacion();
+		listarTipoAnotacion();
+		obtenerTipoAnotacion();
+		
+
+	}
 
 	private static void modificarTipoAnotacion() {
 	TipoAnotacionItem tipo=new TipoAnotacionItem();

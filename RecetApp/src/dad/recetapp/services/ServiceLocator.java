@@ -7,9 +7,9 @@ import dad.recetapp.services.impl.MedidasServiceDB;
 import dad.recetapp.services.impl.RecetasServiceDB;
 import dad.recetapp.services.impl.TiposAnotacionesServiceDB;
 import dad.recetapp.services.impl.TiposIngredientesServiceDB;
-import dad.recetapp.services.ingredientes.TiposIngredientesService;
-import dad.recetapp.services.medidas.MedidasService;
-import dad.recetapp.services.recetas.RecetasService;
+import dad.recetapp.services.receta.RecetasService;
+import dad.recetapp.services.receta.seccion.ingrediente.TiposIngredientesService;
+import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidasService;
 
 
 public class ServiceLocator {

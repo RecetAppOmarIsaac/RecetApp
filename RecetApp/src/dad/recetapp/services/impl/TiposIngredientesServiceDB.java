@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.ingredientes.TipoIngredienteItem;
-import dad.recetapp.services.ingredientes.TiposIngredientesService;
+import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
+import dad.recetapp.services.receta.seccion.ingrediente.TiposIngredientesService;
 
 
 public class TiposIngredientesServiceDB implements TiposIngredientesService {

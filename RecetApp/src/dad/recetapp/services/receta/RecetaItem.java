@@ -1,6 +1,10 @@
-package dad.recetapp.services.recetas;
+package dad.recetapp.services.receta;
 
 import java.util.Date;
+import java.util.List;
+
+import dad.recetapp.services.anotaciones.AnotacionItem;
+import dad.recetapp.services.receta.seccion.SeccionItem;
 
 public class RecetaItem {
 	
@@ -12,7 +16,8 @@ public class RecetaItem {
 	private Integer tiempoTotal;
 	private Integer tiempoThermomix;
 	private Integer idCategoria;
-	
+	private List<AnotacionItem> anotaciones;
+	private List<SeccionItem>secciones;
 	public Long getId() {
 		return id;
 	}
@@ -97,6 +102,26 @@ public class RecetaItem {
 	@Override
 	public String toString() {
 		return id+ ".- "+ nombre; 
+	}
+
+
+	public List<AnotacionItem> getAnotaciones() {
+		return anotaciones;
+	}
+
+
+	public void setAnotaciones(List<AnotacionItem> anotaciones) {
+		this.anotaciones = anotaciones;
+	}
+
+
+	public List<SeccionItem> getSecciones() {
+		return secciones;
+	}
+
+
+	public void setSecciones(List<SeccionItem> secciones) {
+		this.secciones = secciones;
 	}
 	
 }

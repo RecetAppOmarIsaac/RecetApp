@@ -2,19 +2,19 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.ingredientes.TipoIngredienteItem;
+import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
 
 
 public class MainTipoIngrediente {
 
-//	public static void main(String[] args) {
-//		crearTipoIngrediente();
-//		modificarTipoIngrediente();
-//		eliminarTipoIngrediente();
-//		listarTipoIngrediente();
-//		obtenerTipoIngrediente();
-	
-//	}
+	public static void main(String[] args) {
+		crearTipoIngrediente();
+		modificarTipoIngrediente();
+		eliminarTipoIngrediente();
+		listarTipoIngrediente();
+		obtenerTipoIngrediente();
+
+	}
 
 	private static void modificarTipoIngrediente() {
 		TipoIngredienteItem tipo=new TipoIngredienteItem();
@@ -35,7 +35,7 @@ public class MainTipoIngrediente {
 		} catch (Exception e) {
 			System.err.println("Ha ocurrido un error:\n" +e.getMessage());
 		}
-		
+
 	}
 
 	private static void eliminarTipoIngrediente() {
@@ -45,8 +45,8 @@ public class MainTipoIngrediente {
 			System.err.println("Ha ocurrido un error:\n" +e.getMessage());
 		}
 	}
-		
-	
+
+
 
 	private static void listarTipoIngrediente() {
 		try {
@@ -54,7 +54,7 @@ public class MainTipoIngrediente {
 			for (int i = 0; i < tipos.length; i++) {
 				System.out.println(tipos[i]+"; ");
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("Ha ocurrido un error:\n" +e.getMessage());
 		}

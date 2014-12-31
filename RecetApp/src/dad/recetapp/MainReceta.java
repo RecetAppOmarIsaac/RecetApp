@@ -7,23 +7,24 @@ import java.util.List;
 
 
 
+
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.recetas.RecetaItem;
+import dad.recetapp.services.receta.RecetaItem;
 
 
 
 public class MainReceta {
-//	public static void main(String[] args) throws SQLException {
-//		crearReceta();
-//		eliminarReceta();
-//		listarRecetas();
-//		obtenerReceta();
-//		buscarReceta();
-//		modificarReceta();
-//		listarRecetas();
-//
-//	}
+	public static void main(String[] args) throws SQLException {
+		crearReceta();
+		eliminarReceta();
+		listarRecetas();
+		obtenerReceta();
+		buscarReceta();
+		modificarReceta();
+		listarRecetas();
+
+	}
 
 	private static void modificarReceta() {
 		RecetaItem receta=new RecetaItem();

@@ -1,4 +1,4 @@
-package dad.recetapp.services.medidas;
+package dad.recetapp.services.receta.seccion.ingrediente.medida;
 
 import dad.recetapp.services.ServiceException;
 

@@ -2,21 +2,21 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.medidas.MedidaItem;
+import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
 
 
 public class MainMedida {
 
-//	public static void main(String[] args) {
-//		crearMedida();
-//		modificarMedida();
-//		eliminarMedida();
-//		listarMedidas();
-//		obtenerMedida();
-//	
-//		
-//
-//	}
+	public static void main(String[] args) {
+		crearMedida();
+		modificarMedida();
+		eliminarMedida();
+		listarMedidas();
+		obtenerMedida();
+	
+		
+
+	}
 
 	private static void modificarMedida() {
 		MedidaItem medida=new MedidaItem();

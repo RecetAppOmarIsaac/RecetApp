@@ -9,8 +9,8 @@ import java.util.List;
 
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.recetas.RecetaItem;
-import dad.recetapp.services.recetas.RecetasService;
+import dad.recetapp.services.receta.RecetaItem;
+import dad.recetapp.services.receta.RecetasService;
 
 public class RecetasServiceDB implements RecetasService {
 
