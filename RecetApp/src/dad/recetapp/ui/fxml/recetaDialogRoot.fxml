@@ -59,7 +59,7 @@
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <ComboBox>
+                  <ComboBox fx:id="paraCombo">
                      <HBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </HBox.margin></ComboBox>
@@ -69,7 +69,7 @@
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" top="5.0" />
                </GridPane.margin></TextField>
-            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ComboBox fx:id="categoriaCombo" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" />
                </GridPane.margin></ComboBox>
@@ -110,7 +110,6 @@
    <center>
       <TabPane fx:id="seccionTabPane" minHeight="0.0" minWidth="0.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab fx:id="emptyDefaultTab" closable="false" />
           <Tab fx:id="newTab" closable="false" onSelectionChanged="#onNewTabSelection" />
         </tabs>
       </TabPane>
