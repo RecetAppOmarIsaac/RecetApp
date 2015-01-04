@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <TabPane layoutX="-578.0" layoutY="-631.0" prefHeight="459.0" prefWidth="609.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Untitled Tab 1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="-4.0" layoutY="-1.0" prefHeight="435.0" prefWidth="619.0">
+                           <top>
+                              <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label layoutX="7.0" layoutY="74.0" text="Nombre:" />
+                                    <TextField layoutX="68.0" layoutY="70.0" />
+                                    <Label layoutX="227.0" layoutY="75.0" text="Hasta" />
+                                    <TextField layoutX="268.0" layoutY="71.0" prefHeight="25.0" prefWidth="24.0" />
+                                    <Button layoutX="292.0" layoutY="83.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="10.0" text="&lt;">
+                                       <font>
+                                          <Font size="5.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="292.0" layoutY="71.0" mnemonicParsing="false" text="&gt;">
+                                       <font>
+                                          <Font size="5.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="310.0" layoutY="75.0" text="M" />
+                                    <TextField layoutX="329.0" layoutY="71.0" prefHeight="25.0" prefWidth="24.0" />
+                                    <Button layoutX="353.0" layoutY="83.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="10.0" text="&lt;">
+                                       <font>
+                                          <Font size="5.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="353.0" layoutY="71.0" mnemonicParsing="false" text="&gt;">
+                                       <font>
+                                          <Font size="5.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="373.0" layoutY="75.0" text="S" />
+                                    <Label layoutX="393.0" layoutY="75.0" text="Categorias:" />
+                                    <ComboBox layoutX="452.0" layoutY="71.0" prefWidth="150.0" />
+                                 </children>
+                              </Pane>
+                           </top>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
