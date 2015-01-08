@@ -1,5 +1,6 @@
 package dad.recetapp.ui.controllers;
 
+import dad.recetapp.services.receta.seccion.SeccionItem;
 import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
 import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
 import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
@@ -38,6 +39,7 @@ public class RecetaTabContentController implements Initializable {
 
 	private Optional<TabPane> parentTabPane = Optional.empty();
 	private Optional<Tab> parentTab = Optional.empty();
+	private Optional<SeccionItem> seccion = Optional.empty();
 
 
 	@FXML public void onSeccionTextKeyReleased() {
@@ -85,13 +87,32 @@ public class RecetaTabContentController implements Initializable {
 		parentTabPane = Optional.ofNullable(tab.getTabPane());
 	}
 
+	public RecetaTabContentController withParentTab(Tab tab) {
+		setParentTab(tab);
+		return this;
+	}
+
 	public void setParentTabPane(TabPane tabPane) {
 		parentTabPane = Optional.of(tabPane);
 	}
 
+	public Optional<SeccionItem> getSeccion() {
+		return seccion;
+	}
+
+	public void setSeccion(SeccionItem item) {
+		seccion = Optional.of(item);
+		//TODO poner datos en controles
+	}
+
+	public RecetaTabContentController withSeccion(SeccionItem item) {
+		setSeccion(item);
+		return this;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO controllers para los dialogos pequeños
+		//TODO controller para Instruccion
 		//TODO eventos para lanzar esos dialogos
 	}
 }

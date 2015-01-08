@@ -10,10 +10,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import jfxtras.scene.control.ListSpinner;
 import jfxtras.scene.control.ListSpinnerIntegerList;
 import jfxtras.util.StringConverterFactory;
@@ -21,21 +23,19 @@ import jfxtras.util.StringConverterFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Observable;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-/**
- * Created by Usuario on 24/12/14.
- */
-//TODO Crear RecetaDialogControllerBase y mover los metodos que se puedan ahi
-public class EditarRecetaDialogController implements Initializable {
-	@FXML private Button aceptarButton;
 
+public class RecetaDialogController implements Initializable {
+	public static final String NEW_CAPTION = "Añadir";
+	public static final String EDIT_CAPTION = "Guardar cambios";
+
+	@FXML private Parent rootPane;
+	@FXML private Button aceptarButton;
 	@FXML private ComboBox<String> paraCombo;
 	@FXML private ComboBox<CategoriaItem> categoriaCombo; //en principio, CategoriaItem
-
 	@FXML private GridPane topGridPane;
-
 	@FXML private TabPane seccionTabPane;
 	@FXML private Tab newTab;
 
@@ -44,34 +44,51 @@ public class EditarRecetaDialogController implements Initializable {
 	private ListSpinner<Integer> totalSegundosSpinner;
 	private ListSpinner<Integer> thermoSegundosSpinner;
 
-	private RecetaItem receta;
+	private Optional<RecetaItem> receta = Optional.empty();
 
-	protected String aceptarButtonCaption = "Guardar cambios";
 
-	public RecetaItem getReceta() {
+
+	public Optional<RecetaItem> getReceta() {
 		return receta;
 	}
 
-	public void setReceta(RecetaItem receta) {
-		this.receta = receta;
-		totalSegundosSpinner.setValue(receta.getTiempoTotal() % 60);
-		totalMinutosSpinner.setValue(receta.getTiempoTotal() / 60);
-		thermoSegundosSpinner.setValue(receta.getTiempoThermomix() % 60);
-		thermoMinutosSpinner.setValue(receta.getTiempoThermomix() / 60);
+	public void setReceta(RecetaItem item) {
+		receta = Optional.of(item);
+		aceptarButton.setText(EDIT_CAPTION);
+		RecetaItem ri = receta.get();
+		totalSegundosSpinner.setValue(ri.getTiempoTotal() % 60);
+		totalMinutosSpinner.setValue(ri.getTiempoTotal() / 60);
+		thermoSegundosSpinner.setValue(ri.getTiempoThermomix() % 60);
+		thermoMinutosSpinner.setValue(ri.getTiempoThermomix() / 60);
 
 		seccionTabPane.getTabs().clear();
 		seccionTabPane.getTabs().add(newTab);
 		//TODO añadir tab por seccion y meterle datos
 	}
 
+	public RecetaDialogController editingReceta(RecetaItem item) {
+		setReceta(item);
+		return this;
+	}
+
+	private boolean validate() {
+		boolean valid = true;
+		return valid;
+	}
+
 	@FXML public void onAceptarButtonClick() {
-		//TODO implementacion de verdad
-		System.out.println("Hace falta implementar el modelo entero para guardar cambios");
+		if (validate()) {
+			RecetaItem ri = receta.orElse(new RecetaItem());
+			//TODO guardar cosas en ri
+			receta = Optional.of(ri);
+			Stage s = (Stage) rootPane.getScene().getWindow();
+			s.close();
+		}
 	}
 
 	@FXML public void onCancelarButtonClick() {
-		//TODO implementacion de verdad
-		System.out.println("Imagina que me cierro");
+		Stage s = (Stage) rootPane.getScene().getWindow();
+		s.close();
 	}
 
 	@FXML public void onNewTabSelection() {
@@ -113,10 +130,10 @@ public class EditarRecetaDialogController implements Initializable {
 	Por lo pronto, parece que no se pueden asignar limites ni StringConverters via FXML, asi que hay que meterlos programaticamente.
 	 */
 	private void initSpinners() {
-		totalMinutosSpinner = new ListSpinner<Integer>(new ListSpinnerIntegerList(0, 10000)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
-		totalSegundosSpinner = new ListSpinner<Integer>(new ListSpinnerIntegerList(0, 59)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
-		thermoMinutosSpinner = new ListSpinner<Integer>(new ListSpinnerIntegerList(0, 10000)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
-		thermoSegundosSpinner = new ListSpinner<Integer>(new ListSpinnerIntegerList(0, 59)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		totalMinutosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 10000)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		totalSegundosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 59)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		thermoMinutosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 10000)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		thermoSegundosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 59)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
 
 		topGridPane.add(totalMinutosSpinner, 3, 0);
 		topGridPane.add(totalSegundosSpinner, 5, 0);
@@ -141,8 +158,7 @@ public class EditarRecetaDialogController implements Initializable {
 				catch (ServiceException e) {
 					System.err.println("CategoriaService Error: " + e.getMessage() + " Cause: " + e.getCause());
 				}
-				ObservableList<CategoriaItem> ol = FXCollections.observableArrayList(Arrays.asList(c));
-				return ol;
+				return FXCollections.observableArrayList(Arrays.asList(c));
 			}
 
 			@Override
@@ -161,6 +177,6 @@ public class EditarRecetaDialogController implements Initializable {
 
 		newTab.setGraphic(new ImageView(getClass().getResource("/dad/recetapp/ui/images/addTabIcon.png").toString())); //intente ponerlo via CSS, no lo consegui
 
-		aceptarButton.setText(aceptarButtonCaption);
+		aceptarButton.setText(NEW_CAPTION);
 	}
 }

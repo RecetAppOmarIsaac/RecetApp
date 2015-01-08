@@ -2,6 +2,7 @@ package dad.recetapp.ui.controllers;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
 import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
 import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
 import javafx.collections.FXCollections;
@@ -9,25 +10,29 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-/**
- * Created by Usuario on 04/01/15.
- */
-//Y si pongo un setEditable() que meramente cambie el caption de aceptarButton y se evita uno dos controllers casi iguales?
-public class NuevoIngredienteDialogController implements Initializable {
+
+public class IngredienteDialogController implements Initializable {
+	public static final String NEW_CAPTION = "Añadir";
+	public static final String EDIT_CAPTION = "Guardar cambios";
+
+	@FXML private Parent rootPane;
 	@FXML private TextField cantidadTextField;
 	@FXML private ComboBox<MedidaItem> medidaCombo;
 	@FXML private ComboBox<TipoIngredienteItem> tipoCombo;
 	@FXML private Button aceptarButton;
-
-	private String aceptarButtonCaption = "Añadir";
+	private Optional<IngredienteItem> ingrediente = Optional.empty();
 
 	private void initCombos() {
 		MedidaItem mi = new MedidaItem();
@@ -81,17 +86,62 @@ public class NuevoIngredienteDialogController implements Initializable {
 
 	@FXML
 	public void onAceptarButtonClick() {
-
+		if (validate()) {
+			IngredienteItem ii = ingrediente.orElse(new IngredienteItem());
+			ii.setCantidad(Integer.valueOf(cantidadTextField.getText()));
+			ii.setMedida(medidaCombo.getValue());
+			ii.setTipoIngrediente(tipoCombo.getValue());
+			ingrediente = Optional.of(ii);
+			Stage s = (Stage) rootPane.getScene().getWindow();
+			s.close();
+		}
 	}
 
 	@FXML
 	public void onCancelarButtonClick() {
-		//cerrar el dialog, sin mas
+		Stage s = (Stage) rootPane.getScene().getWindow();
+		s.close();
+	}
+
+	public Optional<IngredienteItem> getIngrediente() {
+		return ingrediente;
+	}
+
+	/**
+	 * Asume que si se pone un Item es para editarlo y cambiara el texto del boton.
+	 * @param item
+	 */
+	public void setIngrediente(IngredienteItem item) {
+		ingrediente = Optional.of(item);
+		aceptarButton.setText(EDIT_CAPTION);
+		IngredienteItem ii = ingrediente.get();
+		cantidadTextField.setText(ii.getCantidad().toString());
+		medidaCombo.setValue(ii.getMedida());
+		tipoCombo.setValue(ii.getTipoIngrediente());
+	}
+
+	public IngredienteDialogController editingIngrediente(IngredienteItem item) {
+		setIngrediente(item);
+		return this;
+	}
+
+	private boolean validate() {
+		boolean valid = true;
+		try {
+			Integer.parseInt(cantidadTextField.getText());
+		} catch (NumberFormatException e) {
+			valid = false;
+		}
+		if (!medidaCombo.getItems().contains(medidaCombo.getValue()))
+			valid = false;
+		if (!tipoCombo.getItems().contains(tipoCombo.getValue()))
+			valid = false;
+		return valid;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initCombos();
-		aceptarButton.setText(aceptarButtonCaption);
+		aceptarButton.setText(NEW_CAPTION);
 	}
 }

@@ -1,6 +1,6 @@
 package dad.recetapp;
 
-import dad.recetapp.ui.controllers.EditarRecetaDialogController;
+import dad.recetapp.ui.controllers.RecetaDialogController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +15,7 @@ public class TestEditarRecetaDialog extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml"));
 
-		loader.setController(new EditarRecetaDialogController());
+		loader.setController(new RecetaDialogController());
 
 		Parent root = loader.load();
 
