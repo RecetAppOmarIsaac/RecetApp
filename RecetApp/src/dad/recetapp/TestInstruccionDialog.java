@@ -1,21 +1,18 @@
 package dad.recetapp;
 
-import dad.recetapp.ui.controllers.EditarRecetaDialogController;
+import dad.recetapp.ui.controllers.InstruccionDialogController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Created by Usuario on 25/12/14.
- */
-public class TestEditarRecetaDialog extends Application {
+public class TestInstruccionDialog extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/instruccionDialogRoot.fxml"));
 
-		loader.setController(new EditarRecetaDialogController());
+		loader.setController(new InstruccionDialogController());
 
 		Parent root = loader.load();
 

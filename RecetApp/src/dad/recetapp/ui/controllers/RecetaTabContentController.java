@@ -1,5 +1,10 @@
 package dad.recetapp.ui.controllers;
 
+import dad.recetapp.services.receta.seccion.SeccionItem;
+import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
+import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
+import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
+import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -23,17 +28,18 @@ public class RecetaTabContentController implements Initializable {
 	@FXML private Button editarInstruccionButton;
 	@FXML private Button borrarInstruccionButton;
 
-	@FXML private TableView ingredientesTable; //TODO add <> cuando IngredienteItem exista
-	@FXML private TableColumn ingredientesCantidadColumn; //TODO add <IngredienteItem, Integer>
-	@FXML private TableColumn ingredientesMedidaColumn; //TODO add <>
-	@FXML private TableColumn ingredientesTipoColumn; //TODO add <>
+	@FXML private TableView<IngredienteItem> ingredientesTable;
+	@FXML private TableColumn<IngredienteItem, Integer> ingredientesCantidadColumn;
+	@FXML private TableColumn<IngredienteItem, MedidaItem> ingredientesMedidaColumn;
+	@FXML private TableColumn<IngredienteItem, TipoIngredienteItem> ingredientesTipoColumn;
 
-	@FXML private TableView instruccionesTable; //TODO add <InstruccionItem>
-	@FXML private TableColumn instruccionesOrdenColumn; //TODO add <>
-	@FXML private TableColumn instruccionesTipoColumn; //TODO add <>
+	@FXML private TableView<InstruccionItem> instruccionesTable;
+	@FXML private TableColumn<InstruccionItem, Integer> instruccionesOrdenColumn;
+	@FXML private TableColumn<InstruccionItem, String> instruccionesDescColumn;
 
 	private Optional<TabPane> parentTabPane = Optional.empty();
 	private Optional<Tab> parentTab = Optional.empty();
+	private Optional<SeccionItem> seccion = Optional.empty();
 
 
 	@FXML public void onSeccionTextKeyReleased() {
@@ -81,13 +87,31 @@ public class RecetaTabContentController implements Initializable {
 		parentTabPane = Optional.ofNullable(tab.getTabPane());
 	}
 
+	public RecetaTabContentController withParentTab(Tab tab) {
+		setParentTab(tab);
+		return this;
+	}
+
 	public void setParentTabPane(TabPane tabPane) {
 		parentTabPane = Optional.of(tabPane);
 	}
 
+	public Optional<SeccionItem> getSeccion() {
+		return seccion;
+	}
+
+	public void setSeccion(SeccionItem item) {
+		seccion = Optional.of(item);
+		//TODO poner datos en controles
+	}
+
+	public RecetaTabContentController withSeccion(SeccionItem item) {
+		setSeccion(item);
+		return this;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO controllers para los dialogos pequeños
 		//TODO eventos para lanzar esos dialogos
 	}
 }
