@@ -112,7 +112,6 @@ public class RecetaTabContentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO controller para Instruccion
 		//TODO eventos para lanzar esos dialogos
 	}
 }
