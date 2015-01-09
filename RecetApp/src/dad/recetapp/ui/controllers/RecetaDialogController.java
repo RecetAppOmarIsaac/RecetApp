@@ -104,8 +104,9 @@ public class RecetaDialogController implements Initializable {
 			protected BorderPane call() {
 				BorderPane tabContents = null;
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaTabContent.fxml"));
-				RecetaTabContentController controller = new RecetaTabContentController();
-				controller.setParentTab(tab);
+				RecetaTabContentController controller = new RecetaTabContentController()
+						.withParentTab(tab)
+						.withParentTabPane(seccionTabPane);
 				loader.setController(controller);
 				try {
 					tabContents = loader.load();

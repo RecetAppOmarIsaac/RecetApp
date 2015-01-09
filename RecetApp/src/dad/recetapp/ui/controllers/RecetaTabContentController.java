@@ -46,9 +46,9 @@ public class RecetaTabContentController implements Initializable {
 		parentTab.ifPresent(tab -> tab.setText(seccionTextField.getText()));
 	}
 
-	//Acoplamiento de narices
+
 	@FXML public void onBorrarSeccionButtonClick() {
-		parentTab.ifPresent(tab -> System.out.println(tab.getText()));
+		parentTabPane.ifPresent(tabPane -> tabPane.getTabs().remove(parentTab.get()));
 	}
 
 	@FXML public void onAddIngredienteButtonClick() {
@@ -84,7 +84,7 @@ public class RecetaTabContentController implements Initializable {
 
 	public void setParentTab(Tab tab) {
 		parentTab = Optional.of(tab);
-		parentTabPane = Optional.ofNullable(tab.getTabPane());
+		parentTabPane = Optional.ofNullable(tab.getTabPane()); //A estas alturas, normalmente es nulo
 	}
 
 	public RecetaTabContentController withParentTab(Tab tab) {
@@ -94,6 +94,11 @@ public class RecetaTabContentController implements Initializable {
 
 	public void setParentTabPane(TabPane tabPane) {
 		parentTabPane = Optional.of(tabPane);
+	}
+
+	public RecetaTabContentController withParentTabPane(TabPane tabPane) {
+		setParentTabPane(tabPane);
+		return this;
 	}
 
 	public Optional<SeccionItem> getSeccion() {
