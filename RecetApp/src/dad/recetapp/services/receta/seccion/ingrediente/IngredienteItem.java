@@ -1,8 +1,9 @@
 package dad.recetapp.services.receta.seccion.ingrediente;
 
+import dad.recetapp.services.IItem;
 import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
 
-public class IngredienteItem {
+public class IngredienteItem implements IItem {
 	private Long id;
 	private Integer cantidad;
 	private MedidaItem medida;

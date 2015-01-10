@@ -2,10 +2,11 @@ package dad.recetapp.services.receta.seccion;
 
 import java.util.List;
 
+import dad.recetapp.services.IItem;
 import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
 import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
 
-public class SeccionItem {
+public class SeccionItem implements IItem {
 	private Long id;
 	private String nombre;
 	private List<IngredienteItem>ingredientes;

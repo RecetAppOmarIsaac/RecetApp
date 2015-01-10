@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Usuario on 25/12/14.
  */
-public class RecetaTabContentController implements Initializable {
+public class RecetaTabContentController implements IDialogController<SeccionItem> {
 	@FXML private BorderPane topBorderPane;
 	@FXML private TextField seccionTextField;
 
@@ -101,22 +101,21 @@ public class RecetaTabContentController implements Initializable {
 		return this;
 	}
 
-	public Optional<SeccionItem> getSeccion() {
-		return seccion;
-	}
-
-	public void setSeccion(SeccionItem item) {
-		seccion = Optional.of(item);
-		//TODO poner datos en controles
-	}
-
-	public RecetaTabContentController withSeccion(SeccionItem item) {
-		setSeccion(item);
-		return this;
-	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//TODO eventos para lanzar esos dialogos
+	}
+
+	@Override
+	public void setItem(Optional<SeccionItem> item) {
+		item.get();
+		seccion = item;
+		//TODO poner datos en controles
+	}
+
+	@Override
+	public Optional<SeccionItem> getItem() {
+		return seccion;
 	}
 }

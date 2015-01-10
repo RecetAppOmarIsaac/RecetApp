@@ -3,10 +3,11 @@ package dad.recetapp.services.receta;
 import java.util.Date;
 import java.util.List;
 
+import dad.recetapp.services.IItem;
 import dad.recetapp.services.anotaciones.AnotacionItem;
 import dad.recetapp.services.receta.seccion.SeccionItem;
 
-public class RecetaItem {
+public class RecetaItem implements IItem {
 	
 	private Long id;
 	private String nombre;

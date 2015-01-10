@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class InstruccionDialogController implements Initializable {
+public class InstruccionDialogController implements IDialogController<InstruccionItem> {
 	public static final String NEW_CAPTION = "Añadir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
@@ -33,7 +33,7 @@ public class InstruccionDialogController implements Initializable {
 			instruccion = Optional.of(ii);
 			Stage s = (Stage) rootPane.getScene().getWindow();
 			s.close();
-		}
+		} //TODO poner algo que diga que los datos no son validos
 	}
 
 	@FXML
@@ -52,21 +52,18 @@ public class InstruccionDialogController implements Initializable {
 		return valid;
 	}
 
-	public Optional<InstruccionItem> getInstruccion() {
+	@Override
+	public Optional<InstruccionItem> getItem() {
 		return instruccion;
 	}
 
-	public void setInstruccion(InstruccionItem item) {
-		instruccion = Optional.of(item);
-		aceptarButton.setText(EDIT_CAPTION);
+	@Override
+	public void setItem(Optional<InstruccionItem> item) {
 		InstruccionItem ii = instruccion.get();
+		instruccion = Optional.of(ii);
+		aceptarButton.setText(EDIT_CAPTION);
 		ordenTextField.setText(ii.getOrden().toString());
 		descripcionTextArea.setText(ii.getDescripcion());
-	}
-
-	public InstruccionDialogController editingInstruccion(InstruccionItem item) {
-		setInstruccion(item);
-		return this;
 	}
 
 	@Override
