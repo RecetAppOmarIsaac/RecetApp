@@ -25,7 +25,7 @@ public class MedidaItem {
 	}
 	@Override
 	public String toString() {
-		return id+".- "+nombre+" ("+abreviatura+")";
+		return nombre + " (" + abreviatura + ")";
 	}
 
 }
