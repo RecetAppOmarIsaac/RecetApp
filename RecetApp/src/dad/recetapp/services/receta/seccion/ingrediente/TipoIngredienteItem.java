@@ -22,6 +22,6 @@ public class TipoIngredienteItem {
 
 
 	public String toString() {
-		return id+".- "+nombre;
+		return nombre;
 	}
 }
