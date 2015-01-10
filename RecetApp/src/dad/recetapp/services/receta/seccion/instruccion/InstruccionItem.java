@@ -1,6 +1,8 @@
 package dad.recetapp.services.receta.seccion.instruccion;
 
-public class InstruccionItem {
+import dad.recetapp.services.IItem;
+
+public class InstruccionItem implements IItem {
 	private Long id;
 	private Integer orden;
 	private String descripcion;

@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-public class IngredienteDialogController implements Initializable {
+public class IngredienteDialogController implements IDialogController<IngredienteItem> {
 	public static final String NEW_CAPTION = "Añadir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
@@ -102,28 +102,6 @@ public class IngredienteDialogController implements Initializable {
 		s.close();
 	}
 
-	public Optional<IngredienteItem> getIngrediente() {
-		return ingrediente;
-	}
-
-	/**
-	 * Asume que si se pone un Item es para editarlo y cambiara el texto del boton.
-	 * @param item
-	 */
-	public void setIngrediente(IngredienteItem item) {
-		ingrediente = Optional.of(item);
-		aceptarButton.setText(EDIT_CAPTION);
-		IngredienteItem ii = ingrediente.get();
-		cantidadTextField.setText(ii.getCantidad().toString());
-		medidaCombo.setValue(ii.getMedida());
-		tipoCombo.setValue(ii.getTipoIngrediente());
-	}
-
-	public IngredienteDialogController editingIngrediente(IngredienteItem item) {
-		setIngrediente(item);
-		return this;
-	}
-
 	private boolean validate() {
 		boolean valid = true;
 		try {
@@ -142,5 +120,20 @@ public class IngredienteDialogController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		initCombos();
 		aceptarButton.setText(NEW_CAPTION);
+	}
+
+	@Override
+	public void setItem(Optional<IngredienteItem> item) {
+		IngredienteItem ii = item.get();
+		ingrediente = Optional.of(ii);
+		aceptarButton.setText(EDIT_CAPTION);
+		cantidadTextField.setText(ii.getCantidad().toString());
+		medidaCombo.setValue(ii.getMedida());
+		tipoCombo.setValue(ii.getTipoIngrediente());
+	}
+
+	@Override
+	public Optional<IngredienteItem> getItem() {
+		return ingrediente;
 	}
 }

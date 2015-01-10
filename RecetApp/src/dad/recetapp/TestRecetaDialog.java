@@ -1,5 +1,7 @@
 package dad.recetapp;
 
+import dad.recetapp.ui.ItemDialog;
+import dad.recetapp.ui.ItemDialogFactory;
 import dad.recetapp.ui.controllers.RecetaDialogController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 public class TestRecetaDialog extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		/*
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml"));
 
 		loader.setController(new RecetaDialogController());
@@ -23,6 +26,8 @@ public class TestRecetaDialog extends Application {
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		*/
+		ItemDialogFactory.forRecetaItem().show();
 	}
 
 	public static void main(String[] args) {

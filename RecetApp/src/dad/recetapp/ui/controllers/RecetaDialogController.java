@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-public class RecetaDialogController implements Initializable {
+public class RecetaDialogController implements IDialogController<RecetaItem> {
 	public static final String NEW_CAPTION = "Añadir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
@@ -46,30 +46,6 @@ public class RecetaDialogController implements Initializable {
 
 	private Optional<RecetaItem> receta = Optional.empty();
 
-
-
-	public Optional<RecetaItem> getReceta() {
-		return receta;
-	}
-
-	public void setReceta(RecetaItem item) {
-		receta = Optional.of(item);
-		aceptarButton.setText(EDIT_CAPTION);
-		RecetaItem ri = receta.get();
-		totalSegundosSpinner.setValue(ri.getTiempoTotal() % 60);
-		totalMinutosSpinner.setValue(ri.getTiempoTotal() / 60);
-		thermoSegundosSpinner.setValue(ri.getTiempoThermomix() % 60);
-		thermoMinutosSpinner.setValue(ri.getTiempoThermomix() / 60);
-
-		seccionTabPane.getTabs().clear();
-		seccionTabPane.getTabs().add(newTab);
-		//TODO añadir tab por seccion y meterle datos
-	}
-
-	public RecetaDialogController editingReceta(RecetaItem item) {
-		setReceta(item);
-		return this;
-	}
 
 	private boolean validate() {
 		boolean valid = true;
@@ -179,5 +155,25 @@ public class RecetaDialogController implements Initializable {
 		newTab.setGraphic(new ImageView(getClass().getResource("/dad/recetapp/ui/images/addTabIcon.png").toString())); //intente ponerlo via CSS, no lo consegui
 
 		aceptarButton.setText(NEW_CAPTION);
+	}
+
+	@Override
+	public void setItem(Optional<RecetaItem> item) {
+		RecetaItem ri = item.get();
+		receta = Optional.of(ri);
+		aceptarButton.setText(EDIT_CAPTION);
+		totalSegundosSpinner.setValue(ri.getTiempoTotal() % 60);
+		totalMinutosSpinner.setValue(ri.getTiempoTotal() / 60);
+		thermoSegundosSpinner.setValue(ri.getTiempoThermomix() % 60);
+		thermoMinutosSpinner.setValue(ri.getTiempoThermomix() / 60);
+
+		seccionTabPane.getTabs().clear();
+		seccionTabPane.getTabs().add(newTab);
+		//TODO añadir tab por seccion y meterle datos
+	}
+
+	@Override
+	public Optional<RecetaItem> getItem() {
+		return receta;
 	}
 }
