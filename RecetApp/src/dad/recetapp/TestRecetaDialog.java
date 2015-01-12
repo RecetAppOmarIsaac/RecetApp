@@ -1,5 +1,12 @@
 package dad.recetapp;
 
+import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.services.receta.RecetaItem;
+import dad.recetapp.services.receta.seccion.SeccionItem;
+import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
+import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
+import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
+import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
 import dad.recetapp.ui.ItemDialog;
 import dad.recetapp.ui.ItemDialogFactory;
 import dad.recetapp.ui.controllers.RecetaDialogController;
@@ -9,25 +16,53 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Created by Usuario on 25/12/14.
- */
+import java.util.Collections;
+import java.util.List;
+
 public class TestRecetaDialog extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		/*
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml"));
-
-		loader.setController(new RecetaDialogController());
-
-		Parent root = loader.load();
-
-		Scene scene = new Scene(root);
-
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		List<RecetaItem> lista = ServiceLocator.getRecetasService().listarRecetas();
+		if (!lista.isEmpty())
+			ItemDialogFactory.forRecetaItem(lista.get(0)).show();
+		else
+			System.out.println("No recetas");
 		*/
-		ItemDialogFactory.forRecetaItem().show();
+		RecetaItem ri = new RecetaItem();
+		ri.setNombre("Receta test");
+		ri.setIdCategoria(1);
+		ri.setCantidad(4);
+		ri.setPara("gentes");
+		ri.setTiempoThermomix(1000);
+		ri.setTiempoTotal(1000);
+
+		InstruccionItem is = new InstruccionItem();
+		is.setOrden(1);
+		is.setDescripcion("Instruccion test");
+
+		TipoIngredienteItem tig = new TipoIngredienteItem();
+		tig.setNombre("TipoIng test");
+
+		MedidaItem mi = new MedidaItem();
+		mi.setNombre("Medida test");
+		mi.setAbreviatura("(test)");
+
+		IngredienteItem ig = new IngredienteItem();
+		ig.setTipoIngrediente(tig);
+		ig.setCantidad(1);
+		ig.setMedida(mi);
+
+		SeccionItem si = new SeccionItem();
+		si.setNombre("Seccion test");
+		si.setIngredientes(Collections.singletonList(ig));
+		si.setInstrucciones(Collections.singletonList(is));
+
+		ri.setSecciones(Collections.singletonList(si));
+
+		ItemDialogFactory.forRecetaItem(ri).show();
+
+		//ItemDialogFactory.forRecetaItem().show();
 	}
 
 	public static void main(String[] args) {

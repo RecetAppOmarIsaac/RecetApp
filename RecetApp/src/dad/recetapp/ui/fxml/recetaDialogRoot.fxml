@@ -55,7 +55,7 @@
                </GridPane.margin></Label>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <TextField>
+                  <TextField fx:id="paraText">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></TextField>
@@ -65,7 +65,7 @@
                      </HBox.margin></ComboBox>
                </children>
             </HBox>
-            <TextField GridPane.columnIndex="1">
+            <TextField fx:id="nombreText" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" top="5.0" />
                </GridPane.margin></TextField>
