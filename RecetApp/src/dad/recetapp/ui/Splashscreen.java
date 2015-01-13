@@ -51,10 +51,6 @@ public class Splashscreen {
 		fadeAndCloseTransition.setOnFinished(eventHandler);
 	}
 
-	public void show() {
-		stage.show();
-	}
-
 	public void show(double ms) {
 		Timeline timer = new Timeline(new KeyFrame(Duration.millis(ms), ae -> fadeAndCloseTransition.play()));
 		stage.show();
