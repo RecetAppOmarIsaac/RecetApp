@@ -1,8 +1,8 @@
-package dad.recetapp.services.anotaciones;
+package dad.recetapp.services;
 
-import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.items.TipoAnotacionItem;
 
-public interface TiposAnotacionesService {
+public interface ITiposAnotacionesService {
 	public void crearTipoAnotacion(TipoAnotacionItem tipo)throws ServiceException;
 	public void modificarTipoAnotacion(TipoAnotacionItem tipo)throws ServiceException;
 	public void eliminarTipoAnotacion(Long id)throws ServiceException;

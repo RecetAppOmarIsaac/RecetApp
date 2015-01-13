@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dad.recetapp.db.DataBase;
+import dad.recetapp.services.ITiposAnotacionesService;
 import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.anotaciones.TipoAnotacionItem;
-import dad.recetapp.services.anotaciones.TiposAnotacionesService;
+import dad.recetapp.services.items.TipoAnotacionItem;
 
 
-public class TiposAnotacionesServiceDB implements TiposAnotacionesService {
+public class TiposAnotacionesService implements ITiposAnotacionesService {
 
 	@Override
 	public void crearTipoAnotacion(TipoAnotacionItem tipo)
@@ -35,6 +35,7 @@ public class TiposAnotacionesServiceDB implements TiposAnotacionesService {
 	@Override
 	public void modificarTipoAnotacion(TipoAnotacionItem tipo)
 			throws ServiceException {
+		if (tipo==null)throw new IllegalArgumentException("Debe especificar un tipo de anotacion para modificarlo");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement("update tipos_anotaciones "
