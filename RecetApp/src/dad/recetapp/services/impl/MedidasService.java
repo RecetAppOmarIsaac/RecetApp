@@ -9,12 +9,15 @@ import java.sql.SQLException;
 
 
 
-import dad.recetapp.db.DataBase;
-import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidasService;
 
-public class MedidasServiceDB implements MedidasService {
+
+
+import dad.recetapp.db.DataBase;
+import dad.recetapp.services.IMedidasService;
+import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.items.MedidaItem;
+
+public class MedidasService implements IMedidasService {
 
 	@Override
 	public void crearMedida(MedidaItem medida) throws ServiceException {
@@ -37,6 +40,7 @@ public class MedidasServiceDB implements MedidasService {
 
 	@Override
 	public void modificarMedida(MedidaItem medida) throws ServiceException {
+		if (medida==null)throw new IllegalArgumentException("Debe especificar una medida para modificarla");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement("update medidas "

@@ -1,6 +1,6 @@
 package dad.recetapp.ui.controllers;
 
-import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
+import dad.recetapp.services.items.InstruccionItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;

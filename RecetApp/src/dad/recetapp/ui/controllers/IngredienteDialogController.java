@@ -2,9 +2,9 @@ package dad.recetapp.ui.controllers;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
+import dad.recetapp.services.items.IngredienteItem;
+import dad.recetapp.services.items.MedidaItem;
+import dad.recetapp.services.items.TipoIngredienteItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -89,7 +89,7 @@ public class IngredienteDialogController implements Initializable {
 			IngredienteItem ii = ingrediente.orElse(new IngredienteItem());
 			ii.setCantidad(Integer.valueOf(cantidadTextField.getText()));
 			ii.setMedida(medidaCombo.getValue());
-			ii.setTipoIngrediente(tipoCombo.getValue());
+			ii.setTipo(tipoCombo.getValue());
 			ingrediente = Optional.of(ii);
 			Stage s = (Stage) rootPane.getScene().getWindow();
 			s.close();
@@ -116,7 +116,7 @@ public class IngredienteDialogController implements Initializable {
 		IngredienteItem ii = ingrediente.get();
 		cantidadTextField.setText(ii.getCantidad().toString());
 		medidaCombo.setValue(ii.getMedida());
-		tipoCombo.setValue(ii.getTipoIngrediente());
+		tipoCombo.setValue(ii.getTipo());
 	}
 
 	public IngredienteDialogController editingIngrediente(IngredienteItem item) {

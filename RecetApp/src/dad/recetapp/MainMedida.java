@@ -2,7 +2,7 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
+import dad.recetapp.services.items.MedidaItem;
 
 
 public class MainMedida {

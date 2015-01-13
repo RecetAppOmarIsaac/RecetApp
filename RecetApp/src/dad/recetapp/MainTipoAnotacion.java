@@ -2,7 +2,7 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.anotaciones.TipoAnotacionItem;
+import dad.recetapp.services.items.TipoAnotacionItem;
 
 
 public class MainTipoAnotacion {

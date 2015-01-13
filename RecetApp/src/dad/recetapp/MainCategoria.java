@@ -2,7 +2,7 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.categorias.CategoriaItem;
+import dad.recetapp.services.items.CategoriaItem;
 
 public class MainCategoria {
 	public static void main(String[] args) {

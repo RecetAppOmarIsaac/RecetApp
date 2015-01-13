@@ -1,9 +1,9 @@
-package dad.recetapp.services.receta.seccion.ingrediente.medida;
+package dad.recetapp.services;
 
-import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.items.MedidaItem;
 
 
-public interface MedidasService {
+public interface IMedidasService {
 	public void  crearMedida (MedidaItem medida) throws ServiceException;
 	public void modificarMedida (MedidaItem medida)throws ServiceException;
 	public void eliminarMedida (Long id)throws ServiceException;

@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dad.recetapp.db.DataBase;
+import dad.recetapp.services.ITiposIngredientesService;
 import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.TiposIngredientesService;
+import dad.recetapp.services.items.TipoIngredienteItem;
 
 
-public class TiposIngredientesServiceDB implements TiposIngredientesService {
+public class TiposIngredientesService implements ITiposIngredientesService {
 
 	@Override
 	public void crearTipoIngrediente(TipoIngredienteItem tipo) throws ServiceException {
@@ -33,6 +33,7 @@ public class TiposIngredientesServiceDB implements TiposIngredientesService {
 
 	@Override
 	public void modificarTipoIngrediente(TipoIngredienteItem tipo) throws ServiceException {
+		if (tipo==null)throw new IllegalArgumentException("Debe especificar una tipo de ingrediente para modificarlo");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement("update tipos_ingredientes "

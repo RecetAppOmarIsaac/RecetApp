@@ -1,9 +1,9 @@
-package dad.recetapp.services.receta.seccion.ingrediente;
+package dad.recetapp.services.items;
 
 public class TipoIngredienteItem {
 	private Long id;
 	private String nombre;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -20,8 +20,4 @@ public class TipoIngredienteItem {
 		this.nombre = nombre;
 	}
 
-
-	public String toString() {
-		return id+".- "+nombre;
-	}
 }

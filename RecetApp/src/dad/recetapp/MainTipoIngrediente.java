@@ -2,7 +2,7 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
+import dad.recetapp.services.items.TipoIngredienteItem;
 
 
 public class MainTipoIngrediente {
