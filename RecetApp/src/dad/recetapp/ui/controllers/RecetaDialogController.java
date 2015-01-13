@@ -4,6 +4,7 @@ import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.categorias.CategoriaItem;
 import dad.recetapp.services.receta.RecetaItem;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -101,6 +102,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		};
 
 		task.run();
+		//TODO Task ejecuta call() en hilo de eventos, usar otra clase
 	}
 
 	/*
