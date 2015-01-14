@@ -115,6 +115,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		};
 
 		task.run();
+		//TODO Task ejecuta call() en hilo de eventos, usar otra clase
 	}
 
 	/*
