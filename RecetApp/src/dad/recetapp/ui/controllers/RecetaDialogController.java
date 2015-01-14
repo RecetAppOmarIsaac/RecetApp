@@ -2,6 +2,8 @@ package dad.recetapp.ui.controllers;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.services.items.SeccionItem;
+import dad.recetapp.ui.SeccionTab;
 import dad.recetapp.services.items.CategoriaItem;
 import dad.recetapp.services.items.RecetaItem;
 import javafx.collections.FXCollections;
@@ -9,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -33,6 +34,8 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 
 	@FXML private Parent rootPane;
 	@FXML private Button aceptarButton;
+	@FXML private TextField paraText;
+	@FXML private TextField nombreText;
 	@FXML private ComboBox<String> paraCombo;
 	@FXML private ComboBox<CategoriaItem> categoriaCombo; //en principio, CategoriaItem
 	@FXML private GridPane topGridPane;
@@ -68,13 +71,21 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	}
 
 	@FXML public void onNewTabSelection() {
-		Tab newTab = new Tab();
-		createTabContents(newTab);
-		seccionTabPane.getTabs().add(seccionTabPane.getTabs().size() -1, newTab);
+		addTab();
 		seccionTabPane.getSelectionModel().selectPrevious();
 	}
 
-	private void createTabContents(Tab tab) {
+	private void addTab() {
+		addTab(Optional.empty());
+	}
+
+	private void addTab(Optional<SeccionItem> item) {
+		SeccionTab tab = new SeccionTab();
+		createTabContents(tab, item);
+		seccionTabPane.getTabs().add(seccionTabPane.getTabs().size() - 1, tab);
+	}
+
+	private void createTabContents(SeccionTab tab, Optional<SeccionItem> item) {
 		Task<BorderPane> task = new Task<BorderPane>() {
 			@Override
 			protected BorderPane call() {
@@ -83,6 +94,8 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 				RecetaTabContentController controller = new RecetaTabContentController()
 						.withParentTab(tab)
 						.withParentTabPane(seccionTabPane);
+				if (item.isPresent())
+					controller.setItem(item);
 				loader.setController(controller);
 				try {
 					tabContents = loader.load();
@@ -90,6 +103,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 				catch (IOException e) {
 					System.err.println("FXML TabContent noped, " + e.getMessage() + " cause: " + e.getCause());
 				}
+				tab.setController(controller);
 				return tabContents;
 			}
 
@@ -101,6 +115,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		};
 
 		task.run();
+		//TODO Task ejecuta call() en hilo de eventos, usar otra clase
 	}
 
 	/*
@@ -162,6 +177,13 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		RecetaItem ri = item.get();
 		receta = Optional.of(ri);
 		aceptarButton.setText(EDIT_CAPTION);
+
+		paraText.setText(ri.getCantidad().toString());
+		paraCombo.setValue(ri.getPara()); //ri.getPara es lo que va en el combobox?
+		nombreText.setText(ri.getNombre());
+		//TODO una vez que RecetaItem cambie de idCategoria a CategoriaItem, quitar el tumor éste
+		categoriaCombo.setValue(ri.getCategoria());
+
 		totalSegundosSpinner.setValue(ri.getTiempoTotal() % 60);
 		totalMinutosSpinner.setValue(ri.getTiempoTotal() / 60);
 		thermoSegundosSpinner.setValue(ri.getTiempoThermomix() % 60);
@@ -169,7 +191,9 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 
 		seccionTabPane.getTabs().clear();
 		seccionTabPane.getTabs().add(newTab);
-		//TODO añadir tab por seccion y meterle datos
+		System.out.println("ri secciones " + ri.getSecciones());
+		if (ri.getSecciones() != null)
+			ri.getSecciones().forEach(seccionItem -> addTab(Optional.of(seccionItem)));
 	}
 
 	@Override

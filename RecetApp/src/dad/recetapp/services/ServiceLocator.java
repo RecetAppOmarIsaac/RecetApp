@@ -8,45 +8,47 @@ import dad.recetapp.services.impl.TiposIngredientesService;
 
 
 public class ServiceLocator {
-	private static IRecetasService recetasService=null;
-	private static IMedidasService medidasService=null;
-	private static ITiposIngredientesService tiposIngredientesService=null;
-	private static ICategoriasService categoriasService=null;
-	private static ITiposAnotacionesService tiposAnotacionesService=null;
-	
-	public static IRecetasService getRecetasService(){
+	private static IRecetasService recetasService = null;
+	private static IMedidasService medidasService = null;
+	private static ITiposIngredientesService tiposIngredientesService = null;
+	private static ICategoriasService categoriasService = null;
+	private static ITiposAnotacionesService tiposAnotacionesService = null;
+
+	public static IRecetasService getRecetasService() {
 		if(recetasService ==null){
-			recetasService=new RecetasService();
+			recetasService = new RecetasService();
 			
 		}
 		return recetasService;
 	}
-	
-	public static IMedidasService getMedidasService(){
+
+	public static IMedidasService getMedidasService() {
 		if(medidasService ==null){
-			medidasService=new MedidasService();
+			medidasService = new MedidasService();
 			
 		}
 		return medidasService;
 	}
-	public static ITiposIngredientesService getTipoIngredienteService(){
+
+	public static ITiposIngredientesService getTipoIngredienteService() {
 		if(tiposIngredientesService ==null){
-			tiposIngredientesService=new TiposIngredientesService();
+			tiposIngredientesService = new TiposIngredientesService();
 			
 		}
 		return tiposIngredientesService;
 	}
 
-	public static ICategoriasService getCategoriasService(){
+	public static ICategoriasService getCategoriasService() {
 		if (categoriasService==null) {
-			categoriasService=new CategoriasService();
+			categoriasService = new CategoriasService();
 			
 		}
 		return categoriasService;
 	}
-	public static ITiposAnotacionesService getTiposAnotacionesService(){
+
+	public static ITiposAnotacionesService getTiposAnotacionesService() {
 		if (tiposAnotacionesService==null) {
-			tiposAnotacionesService=new TiposAnotacionesService(); 
+			tiposAnotacionesService = new TiposAnotacionesService();
 			
 		}
 		return tiposAnotacionesService;

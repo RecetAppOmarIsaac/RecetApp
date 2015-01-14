@@ -5,18 +5,17 @@ import dad.recetapp.services.items.InstruccionItem;
 import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.SeccionItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-/**
- * Created by Usuario on 25/12/14.
- */
 public class RecetaTabContentController implements IDialogController<SeccionItem> {
 	@FXML private BorderPane topBorderPane;
 	@FXML private TextField seccionTextField;
@@ -109,8 +108,18 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 
 	@Override
 	public void setItem(Optional<SeccionItem> item) {
-		item.get();
-		seccion = item;
+		System.out.println("Tab setItem called, item: " + item + " " + item.get());
+		SeccionItem si = item.get();
+		seccion = Optional.of(si);
+
+		parentTab.ifPresent(tab -> tab.setText(si.getNombre()));
+
+		//Esto de aqui abajo no esta funcionando
+		ingredientesTable.setItems(FXCollections.observableArrayList(si.getIngredientes()));
+		ingredientesCantidadColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, Integer>("cantidad"));
+		ingredientesMedidaColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, MedidaItem>("medida"));
+		ingredientesTipoColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, TipoIngredienteItem>("tipoIngrediente"));
+		//instruccionesTable.setItems(FXCollections.observableArrayList(si.getInstrucciones()));
 		//TODO poner datos en controles
 	}
 

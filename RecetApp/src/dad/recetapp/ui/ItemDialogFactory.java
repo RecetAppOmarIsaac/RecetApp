@@ -9,9 +9,6 @@ import dad.recetapp.ui.controllers.RecetaDialogController;
 
 import java.io.IOException;
 
-/**
- * Created by Usuario on 10/01/15.
- */
 public class ItemDialogFactory {
 	private ItemDialogFactory() {}
 

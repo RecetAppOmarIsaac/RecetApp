@@ -5,9 +5,6 @@ import javafx.fxml.Initializable;
 
 import java.util.Optional;
 
-/**
- * Created by Usuario on 10/01/15.
- */
 public interface IDialogController<T extends IItem> extends Initializable {
 	void setItem(Optional<T> item);
 	Optional<T> getItem();
