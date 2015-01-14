@@ -1,13 +1,8 @@
 package dad.recetapp;
 
+
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.receta.RecetaItem;
-import dad.recetapp.services.receta.seccion.SeccionItem;
-import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
-import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
-import dad.recetapp.ui.ItemDialog;
+import dad.recetapp.services.items.*;
 import dad.recetapp.ui.ItemDialogFactory;
 import dad.recetapp.ui.controllers.RecetaDialogController;
 import javafx.application.Application;
@@ -22,13 +17,11 @@ import java.util.List;
 public class TestRecetaDialog extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+
+		RecetaItem recetaItem = ServiceLocator.getRecetasService().obtenerReceta(1L);
+		ItemDialogFactory.forRecetaItem(recetaItem).show();
+
 		/*
-		List<RecetaItem> lista = ServiceLocator.getRecetasService().listarRecetas();
-		if (!lista.isEmpty())
-			ItemDialogFactory.forRecetaItem(lista.get(0)).show();
-		else
-			System.out.println("No recetas");
-		*/
 		RecetaItem ri = new RecetaItem();
 		ri.setNombre("Receta test");
 		ri.setIdCategoria(1);
@@ -61,7 +54,7 @@ public class TestRecetaDialog extends Application {
 		ri.setSecciones(Collections.singletonList(si));
 
 		ItemDialogFactory.forRecetaItem(ri).show();
-
+		*/
 		//ItemDialogFactory.forRecetaItem().show();
 	}
 

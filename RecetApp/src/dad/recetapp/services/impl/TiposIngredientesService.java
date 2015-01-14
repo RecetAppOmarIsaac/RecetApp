@@ -33,7 +33,8 @@ public class TiposIngredientesService implements ITiposIngredientesService {
 
 	@Override
 	public void modificarTipoIngrediente(TipoIngredienteItem tipo) throws ServiceException {
-		if (tipo==null)throw new IllegalArgumentException("Debe especificar una tipo de ingrediente para modificarlo");
+		if (tipo == null)
+			throw new IllegalArgumentException("Debe especificar una tipo de ingrediente para modificarlo");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement("update tipos_ingredientes "

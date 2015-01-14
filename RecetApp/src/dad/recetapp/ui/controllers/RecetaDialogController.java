@@ -2,9 +2,7 @@ package dad.recetapp.ui.controllers;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.categorias.CategoriaItem;
-import dad.recetapp.services.receta.RecetaItem;
-import dad.recetapp.services.receta.seccion.SeccionItem;
+import dad.recetapp.services.items.SeccionItem;
 import dad.recetapp.ui.SeccionTab;
 import dad.recetapp.services.items.CategoriaItem;
 import dad.recetapp.services.items.RecetaItem;
@@ -13,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -85,7 +82,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	private void addTab(Optional<SeccionItem> item) {
 		SeccionTab tab = new SeccionTab();
 		createTabContents(tab, item);
-		seccionTabPane.getTabs().add(seccionTabPane.getTabs().size() -1, tab);
+		seccionTabPane.getTabs().add(seccionTabPane.getTabs().size() - 1, tab);
 	}
 
 	private void createTabContents(SeccionTab tab, Optional<SeccionItem> item) {
@@ -184,13 +181,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		paraCombo.setValue(ri.getPara()); //ri.getPara es lo que va en el combobox?
 		nombreText.setText(ri.getNombre());
 		//TODO una vez que RecetaItem cambie de idCategoria a CategoriaItem, quitar el tumor éste
-		try {
-			CategoriaItem ci = ServiceLocator.getCategoriasService().obtenerCategoria(ri.getIdCategoria().longValue());
-			categoriaCombo.setValue(ci);
-		}
-		catch (ServiceException e) {
-			e.printStackTrace();
-		}
+		categoriaCombo.setValue(ri.getCategoria());
 
 		totalSegundosSpinner.setValue(ri.getTiempoTotal() % 60);
 		totalMinutosSpinner.setValue(ri.getTiempoTotal() / 60);

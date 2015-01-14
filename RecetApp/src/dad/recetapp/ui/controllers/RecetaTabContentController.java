@@ -5,6 +5,7 @@ import dad.recetapp.services.items.InstruccionItem;
 import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.SeccionItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

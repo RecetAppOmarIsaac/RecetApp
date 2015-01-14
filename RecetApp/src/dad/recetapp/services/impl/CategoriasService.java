@@ -15,7 +15,7 @@ public class CategoriasService implements ICategoriasService {
 
 	@Override
 	public void crearCategoria(CategoriaItem categoria) throws ServiceException {
-		if (categoria==null)throw new IllegalArgumentException("Debe especificar una categoría  para crearla");
+		if (categoria==null)throw new IllegalArgumentException("Debe especificar una categorï¿½a  para crearla");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement(
@@ -26,14 +26,14 @@ public class CategoriasService implements ICategoriasService {
 			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new ServiceException("No se ha podido crear la categoría "+ e);
+			throw new ServiceException("No se ha podido crear la categorï¿½a "+ e);
 		}
 
 	}
 
 	@Override
-	public void modificarCategoria(CategoriaItem categoria)throws ServiceException {
-		if (categoria==null)throw new IllegalArgumentException("Debe especificar una categoría  para modificarla");
+	public void modificarCategoria(CategoriaItem categoria) throws ServiceException {
+		if (categoria == null) throw new IllegalArgumentException("Debe especificar una categorï¿½a  para modificarla");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement("update categorias "
@@ -41,11 +41,11 @@ public class CategoriasService implements ICategoriasService {
 			stmt.setString(1, categoria.getDescripcion());
 			stmt.setLong(2, categoria.getId());
 			if (stmt.executeUpdate()==0) {
-				throw new ServiceException("La categoría con id "+categoria.getId()+" no existe en la base de datos");
+				throw new ServiceException("La categorï¿½a con id "+categoria.getId()+" no existe en la base de datos");
 			}
 			stmt.close();
 		} catch (SQLException e) {
-			throw new ServiceException("No se ha podido modificar la categoría "+ e);
+			throw new ServiceException("No se ha podido modificar la categorï¿½a "+ e);
 		}
 	}
 
@@ -57,11 +57,11 @@ public class CategoriasService implements ICategoriasService {
 			PreparedStatement stmt=conn.prepareStatement("delete from categorias where id=?");
 			stmt.setLong(1,id);
 			if (stmt.executeUpdate()==0) {
-				throw new ServiceException("La categoría con id "+id+" no existe en la base de datos");
+				throw new ServiceException("La categorï¿½a con id "+id+" no existe en la base de datos");
 			}
 			stmt.close();
 		} catch (SQLException e) {
-			throw new ServiceException("No se ha podido eliminar la categoría "+ e);
+			throw new ServiceException("No se ha podido eliminar la categorï¿½a "+ e);
 		}
 
 	}
@@ -117,7 +117,7 @@ public class CategoriasService implements ICategoriasService {
 			stmt.setLong(1,id);
 			ResultSet rs =stmt.executeQuery();
 			if (!rs.next()) {
-				throw new ServiceException("No existe ninguna categoría con ese id ");
+				throw new ServiceException("No existe ninguna categorï¿½a con ese id ");
 			} else {
 				rs.previous();
 				while(rs.next()){

@@ -30,7 +30,7 @@ public class MedidaItem {
 	}
 	@Override
 	public String toString() {
-		return nombre+" ("+abreviatura+")";
+		return nombre + " (" + abreviatura + ")";
 	}
 
 }

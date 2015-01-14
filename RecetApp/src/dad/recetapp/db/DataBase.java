@@ -8,16 +8,17 @@ import java.util.ResourceBundle;
 public class DataBase {
 	private static final ResourceBundle CONFIG = ResourceBundle.getBundle(DataBase.class.getPackage().getName() + ".database");
 	private static Connection connection = null;
-	
-	private DataBase() {}
-	
+
+	private DataBase() {
+	}
+
 	public static Connection getConnection() throws SQLException {
 		if (connection == null || connection.isClosed()) {
 			connection = connect();
 		}
 		return connection;
 	}
-	
+
 	private static final void registerDriver() {
 		try {
 			Class.forName(CONFIG.getString("db.driver.classname"));
@@ -27,12 +28,13 @@ public class DataBase {
 	}
 
 	/**
-	 * Abre una conexión con la base de datos especificada en los parámetros.
-	 * @param url URL de conexión.
+	 * Abre una conexiï¿½n con la base de datos especificada en los parï¿½metros.
+	 *
+	 * @param url      URL de conexiï¿½n.
 	 * @param username Nombre de usuario.
-	 * @param password Contraseña.
-	 * @return Conexión abierta.
-	 * @throws SQLException En caso de no poder abrir la conexión por algún motivo.
+	 * @param password Contraseï¿½a.
+	 * @return Conexiï¿½n abierta.
+	 * @throws SQLException En caso de no poder abrir la conexiï¿½n por algï¿½n motivo.
 	 */
 	public static Connection connect(String url, String username, String password) throws SQLException {
 		registerDriver();
@@ -40,40 +42,44 @@ public class DataBase {
 	}
 
 	/**
-	 * Abre una conexión con la base de datos usando los parámetros del fichero
+	 * Abre una conexiï¿½n con la base de datos usando los parï¿½metros del fichero
 	 * de propiedades "database.properties".
-	 * @return Conexión abierta.
-	 * @throws SQLException En caso de no poder abrir la conexión por algún motivo.
+	 *
+	 * @return Conexiï¿½n abierta.
+	 * @throws SQLException En caso de no poder abrir la conexiï¿½n por algï¿½n motivo.
 	 */
 	public static Connection connect() throws SQLException {
 		return connect(CONFIG.getString("db.url"), CONFIG.getString("db.username"), CONFIG.getString("db.password"));
 	}
-	
+
 	/**
-	 * Cierra la conexión.
-	 * @param connection Conexión abierta que queremos cerrar.
-	 * @throws SQLException En caso de que no pueda cerrar la conexión por algún
-	 * motivo.
+	 * Cierra la conexiï¿½n.
+	 *
+	 * @param connection Conexiï¿½n abierta que queremos cerrar.
+	 * @throws SQLException En caso de que no pueda cerrar la conexiï¿½n por algï¿½n
+	 *                      motivo.
 	 */
 	public static void disconnect(Connection connection) throws SQLException {
 		if (connection != null && !connection.isClosed()) {
 			connection.close();
 		}
 	}
-	
+
 	/**
-	 * Cierra la conexión abierta previamente mediante "{@link #getConnection()}".
-	 * @throws SQLException En caso de que no pueda cerrar la conexión por algún
-	 * motivo. 
+	 * Cierra la conexiï¿½n abierta previamente mediante "{@link #getConnection()}".
+	 *
+	 * @throws SQLException En caso de que no pueda cerrar la conexiï¿½n por algï¿½n
+	 *                      motivo.
 	 */
 	public static void disconnect() throws SQLException {
 		disconnect(connection);
 		connection = null;
 	}
-	
+
 	/**
-	 * Comprueba la conexión con la base de datos.
-	 * @return Devuelve "true" si abre y cierra la conexión sin errores. "false"
+	 * Comprueba la conexiï¿½n con la base de datos.
+	 *
+	 * @return Devuelve "true" si abre y cierra la conexiï¿½n sin errores. "false"
 	 * en caso contrario.
 	 */
 	public static Boolean test() {

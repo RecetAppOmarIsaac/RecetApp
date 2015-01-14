@@ -1,6 +1,7 @@
 package dad.recetapp.ui;
 
-import dad.recetapp.services.receta.seccion.SeccionItem;
+
+import dad.recetapp.services.items.SeccionItem;
 import dad.recetapp.ui.controllers.IDialogController;
 import javafx.scene.control.Tab;
 
