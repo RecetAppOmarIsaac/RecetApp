@@ -2,8 +2,8 @@ package dad.recetapp.ui.controllers;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
-import dad.recetapp.services.categorias.CategoriaItem;
-import dad.recetapp.services.receta.RecetaItem;
+import dad.recetapp.services.items.CategoriaItem;
+import dad.recetapp.services.items.RecetaItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;

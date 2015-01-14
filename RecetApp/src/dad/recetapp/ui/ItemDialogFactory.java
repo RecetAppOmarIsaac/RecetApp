@@ -1,8 +1,8 @@
 package dad.recetapp.ui;
 
-import dad.recetapp.services.receta.RecetaItem;
-import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
-import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
+import dad.recetapp.services.items.IngredienteItem;
+import dad.recetapp.services.items.InstruccionItem;
+import dad.recetapp.services.items.RecetaItem;
 import dad.recetapp.ui.controllers.IngredienteDialogController;
 import dad.recetapp.ui.controllers.InstruccionDialogController;
 import dad.recetapp.ui.controllers.RecetaDialogController;

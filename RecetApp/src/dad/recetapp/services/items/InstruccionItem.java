@@ -1,7 +1,10 @@
-package dad.recetapp.services.categorias;
+package dad.recetapp.services.items;
 
-public class CategoriaItem {
+import dad.recetapp.services.IItem;
+
+public class InstruccionItem implements IItem {
 	private Long id;
+	private Integer orden;
 	private String descripcion;
 
 	public Long getId() {
@@ -12,6 +15,14 @@ public class CategoriaItem {
 		this.id = id;
 	}
 
+	public Integer getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Integer orden) {
+		this.orden = orden;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -19,9 +30,9 @@ public class CategoriaItem {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
 	@Override
 	public String toString() {
 		return descripcion;
 	}
+
 }

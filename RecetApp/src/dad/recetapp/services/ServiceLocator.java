@@ -1,57 +1,52 @@
 package dad.recetapp.services;
 
-import dad.recetapp.services.anotaciones.TiposAnotacionesService;
-import dad.recetapp.services.categorias.CategoriasService;
-import dad.recetapp.services.impl.CategoriasServiceDB;
-import dad.recetapp.services.impl.MedidasServiceDB;
-import dad.recetapp.services.impl.RecetasServiceDB;
-import dad.recetapp.services.impl.TiposAnotacionesServiceDB;
-import dad.recetapp.services.impl.TiposIngredientesServiceDB;
-import dad.recetapp.services.receta.RecetasService;
-import dad.recetapp.services.receta.seccion.ingrediente.TiposIngredientesService;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidasService;
+import dad.recetapp.services.impl.CategoriasService;
+import dad.recetapp.services.impl.MedidasService;
+import dad.recetapp.services.impl.RecetasService;
+import dad.recetapp.services.impl.TiposAnotacionesService;
+import dad.recetapp.services.impl.TiposIngredientesService;
 
 
 public class ServiceLocator {
-	private static RecetasService recetasService=null;
-	private static MedidasService medidasService=null;
-	private static TiposIngredientesService tiposIngredientesService=null;
-	private static CategoriasService categoriasService=null;
-	private static TiposAnotacionesService tiposAnotacionesService=null;
+	private static IRecetasService recetasService=null;
+	private static IMedidasService medidasService=null;
+	private static ITiposIngredientesService tiposIngredientesService=null;
+	private static ICategoriasService categoriasService=null;
+	private static ITiposAnotacionesService tiposAnotacionesService=null;
 	
-	public static RecetasService getRecetasService(){
+	public static IRecetasService getRecetasService(){
 		if(recetasService ==null){
-			recetasService=new RecetasServiceDB();
+			recetasService=new RecetasService();
 			
 		}
 		return recetasService;
 	}
 	
-	public static MedidasService getMedidasService(){
+	public static IMedidasService getMedidasService(){
 		if(medidasService ==null){
-			medidasService=new MedidasServiceDB();
+			medidasService=new MedidasService();
 			
 		}
 		return medidasService;
 	}
-	public static TiposIngredientesService getTipoIngredienteService(){
+	public static ITiposIngredientesService getTipoIngredienteService(){
 		if(tiposIngredientesService ==null){
-			tiposIngredientesService=new TiposIngredientesServiceDB();
+			tiposIngredientesService=new TiposIngredientesService();
 			
 		}
 		return tiposIngredientesService;
 	}
 
-	public static CategoriasService getCategoriasService(){
+	public static ICategoriasService getCategoriasService(){
 		if (categoriasService==null) {
-			categoriasService=new CategoriasServiceDB();
+			categoriasService=new CategoriasService();
 			
 		}
 		return categoriasService;
 	}
-	public static TiposAnotacionesService getTiposAnotacionesService(){
+	public static ITiposAnotacionesService getTiposAnotacionesService(){
 		if (tiposAnotacionesService==null) {
-			tiposAnotacionesService=new TiposAnotacionesServiceDB(); 
+			tiposAnotacionesService=new TiposAnotacionesService(); 
 			
 		}
 		return tiposAnotacionesService;

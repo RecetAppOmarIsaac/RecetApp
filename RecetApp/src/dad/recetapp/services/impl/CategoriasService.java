@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dad.recetapp.db.DataBase;
+import dad.recetapp.services.ICategoriasService;
 import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.categorias.CategoriaItem;
-import dad.recetapp.services.categorias.CategoriasService;
+import dad.recetapp.services.items.CategoriaItem;
 
 
-public class CategoriasServiceDB implements CategoriasService {
+public class CategoriasService implements ICategoriasService {
 
 	@Override
 	public void crearCategoria(CategoriaItem categoria) throws ServiceException {
@@ -32,8 +32,8 @@ public class CategoriasServiceDB implements CategoriasService {
 	}
 
 	@Override
-	public void modificarCategoria(CategoriaItem categoria)
-			throws ServiceException {
+	public void modificarCategoria(CategoriaItem categoria)throws ServiceException {
+		if (categoria==null)throw new IllegalArgumentException("Debe especificar una categoría  para modificarla");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement("update categorias "
@@ -134,3 +134,4 @@ public class CategoriasServiceDB implements CategoriasService {
 		}
 
 }
+
