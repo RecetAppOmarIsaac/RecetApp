@@ -1,8 +1,8 @@
-package dad.recetapp.services.categorias;
+package dad.recetapp.services;
 
-import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.items.CategoriaItem;
 
-public interface CategoriasService {
+public interface ICategoriasService {
 	public void crearCategoria(CategoriaItem categoria)throws ServiceException;
 	public void modificarCategoria(CategoriaItem categoria)throws ServiceException;
 	public void eliminarCategoria(Long id)throws ServiceException;

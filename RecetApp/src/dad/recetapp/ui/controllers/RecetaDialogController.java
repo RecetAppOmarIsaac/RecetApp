@@ -6,6 +6,8 @@ import dad.recetapp.services.categorias.CategoriaItem;
 import dad.recetapp.services.receta.RecetaItem;
 import dad.recetapp.services.receta.seccion.SeccionItem;
 import dad.recetapp.ui.SeccionTab;
+import dad.recetapp.services.items.CategoriaItem;
+import dad.recetapp.services.items.RecetaItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -114,6 +116,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 				tab.setContent(getValue());
 			}
 		};
+
 		task.run();
 	}
 

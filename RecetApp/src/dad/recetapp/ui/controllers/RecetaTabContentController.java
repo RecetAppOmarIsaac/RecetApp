@@ -1,11 +1,10 @@
 package dad.recetapp.ui.controllers;
 
-import dad.recetapp.services.receta.seccion.SeccionItem;
-import dad.recetapp.services.receta.seccion.ingrediente.IngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.TipoIngredienteItem;
-import dad.recetapp.services.receta.seccion.ingrediente.medida.MedidaItem;
-import dad.recetapp.services.receta.seccion.instruccion.InstruccionItem;
-import javafx.collections.FXCollections;
+import dad.recetapp.services.items.IngredienteItem;
+import dad.recetapp.services.items.InstruccionItem;
+import dad.recetapp.services.items.MedidaItem;
+import dad.recetapp.services.items.SeccionItem;
+import dad.recetapp.services.items.TipoIngredienteItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
