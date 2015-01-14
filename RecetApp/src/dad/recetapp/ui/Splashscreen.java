@@ -20,6 +20,7 @@ public class Splashscreen {
 	private BorderPane root;
 	private Timeline fadeAndCloseTransition;
 	private boolean clicked = false;
+	private Timeline showTimer;
 
 	public Splashscreen() {
 		ImageView iv = new ImageView(new Image(IMAGE_PATH));
@@ -27,6 +28,8 @@ public class Splashscreen {
 			if (!clicked) { //nos aseguramos que solo intenta lanzar la animacion UNA vez
 				clicked = true;
 				fadeAndCloseTransition.play();
+				if (showTimer != null)
+					showTimer.stop();
 			}
 		});
 		root = new BorderPane();
@@ -52,8 +55,8 @@ public class Splashscreen {
 	}
 
 	public void show(double ms) {
-		Timeline timer = new Timeline(new KeyFrame(Duration.millis(ms), ae -> fadeAndCloseTransition.play()));
+		showTimer = new Timeline(new KeyFrame(Duration.millis(ms), ae -> fadeAndCloseTransition.play()));
 		stage.show();
-		timer.play();
+		showTimer.play();
 	}
 }
