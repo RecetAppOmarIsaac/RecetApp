@@ -5,12 +5,15 @@ import dad.recetapp.services.items.InstruccionItem;
 import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.SeccionItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.Optional;
@@ -104,22 +107,24 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//TODO eventos para lanzar esos dialogos
+		ingredientesCantidadColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, Integer>("cantidad"));
+		ingredientesMedidaColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, MedidaItem>("medida"));
+		ingredientesTipoColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, TipoIngredienteItem>("tipo"));
+
+		instruccionesDescColumn.setCellValueFactory(new PropertyValueFactory<InstruccionItem, String>("descripcion"));
+		instruccionesOrdenColumn.setCellValueFactory(new PropertyValueFactory<InstruccionItem, Integer>("orden"));
 	}
 
 	@Override
 	public void setItem(Optional<SeccionItem> item) {
-		System.out.println("Tab setItem called, item: " + item + " " + item.get());
 		SeccionItem si = item.get();
 		seccion = Optional.of(si);
-
 		parentTab.ifPresent(tab -> tab.setText(si.getNombre()));
 
-		//Esto de aqui abajo no esta funcionando
+		seccionTextField.setText(si.getNombre());
+
 		ingredientesTable.setItems(FXCollections.observableArrayList(si.getIngredientes()));
-		ingredientesCantidadColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, Integer>("cantidad"));
-		ingredientesMedidaColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, MedidaItem>("medida"));
-		ingredientesTipoColumn.setCellValueFactory(new PropertyValueFactory<IngredienteItem, TipoIngredienteItem>("tipoIngrediente"));
-		//instruccionesTable.setItems(FXCollections.observableArrayList(si.getInstrucciones()));
+		instruccionesTable.setItems(FXCollections.observableArrayList(si.getInstrucciones()));
 		//TODO poner datos en controles
 	}
 
