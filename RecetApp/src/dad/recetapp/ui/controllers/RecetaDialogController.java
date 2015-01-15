@@ -181,7 +181,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		paraText.setText(ri.getCantidad().toString());
 		paraCombo.setValue(ri.getPara()); //ri.getPara es lo que va en el combobox?
 		nombreText.setText(ri.getNombre());
-		//TODO una vez que RecetaItem cambie de idCategoria a CategoriaItem, quitar el tumor éste
+
 		categoriaCombo.setValue(ri.getCategoria());
 
 		totalSegundosSpinner.setValue(ri.getTiempoTotal() % 60);
