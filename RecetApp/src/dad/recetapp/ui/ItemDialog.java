@@ -5,7 +5,9 @@ import dad.recetapp.ui.controllers.IDialogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class ItemDialog<T extends IItem> {
         Scene scene = new Scene(root);
 
         stage = new Stage();
+        stage.initStyle(StageStyle.UTILITY);
         stage.setScene(scene);
     }
 
@@ -34,13 +37,20 @@ public class ItemDialog<T extends IItem> {
             stage.show();
     }
 
+    public void showModal() {
+        if (stage != null) {
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        }
+    }
+
     public void close() {
         if (stage != null)
             stage.close();
     }
 
-    public T getItem() {
-        return controller.getItem().get();
+    public Optional<T> getItem() {
+        return controller.getItem();
     }
 
     public void setItem(T item) {
