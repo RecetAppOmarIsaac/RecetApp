@@ -109,10 +109,12 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 		} catch (NumberFormatException e) {
 			valid = false;
 		}
-		if (!medidaCombo.getItems().contains(medidaCombo.getValue()))
+		if (!medidaCombo.getItems().contains(medidaCombo.getValue())) {
 			valid = false;
-		if (!tipoCombo.getItems().contains(tipoCombo.getValue()))
+		}
+		if (!tipoCombo.getItems().contains(tipoCombo.getValue())) {
 			valid = false;
+		}
 		return valid;
 	}
 

@@ -25,4 +25,12 @@ public class TipoIngredienteItem {
 		return nombre;
 	}
 
+	//pelin feo, no?
+	@Override
+	public boolean equals(Object o) {
+		if (o != null && o instanceof TipoIngredienteItem && this.id == ((TipoIngredienteItem)o).getId())
+			return true;
+		else
+			return false;
+	}
 }
