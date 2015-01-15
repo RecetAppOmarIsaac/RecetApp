@@ -77,10 +77,10 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	}
 
 	@FXML public void onEditarInstruccionButtonClick() {
-		//ItemDialog<InstruccionItem> dialog = ItemDialogFactory.forInstruccionItem(instruccionesTable.getSelectionModel().getSelectedItem());
-		//dialog.showModal();
+		ItemDialog<InstruccionItem> dialog = ItemDialogFactory.forInstruccionItem(instruccionesTable.getSelectionModel().getSelectedItem());
+		dialog.showModal();
 		//dialog.getItem().ifPresent();
-		System.out.println("Abrir dialogo de editar instrucciones");
+		//System.out.println("Abrir dialogo de editar instrucciones");
 	}
 	@FXML public void onBorrarInstruccionButtonClick() {
 		System.out.println("Eliminar filas seleccionadas en tabla de instrucciones");

@@ -59,7 +59,7 @@ public class InstruccionDialogController implements IDialogController<Instruccio
 
 	@Override
 	public void setItem(Optional<InstruccionItem> item) {
-		InstruccionItem ii = instruccion.get();
+		InstruccionItem ii = item.get();
 		instruccion = Optional.of(ii);
 		aceptarButton.setText(EDIT_CAPTION);
 		ordenTextField.setText(ii.getOrden().toString());
