@@ -94,8 +94,6 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 				RecetaTabContentController controller = new RecetaTabContentController()
 						.withParentTab(tab)
 						.withParentTabPane(seccionTabPane);
-				if (item.isPresent())
-					controller.setItem(item);
 				loader.setController(controller);
 				try {
 					tabContents = loader.load();
@@ -103,6 +101,8 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 				catch (IOException e) {
 					System.err.println("FXML TabContent noped, " + e.getMessage() + " cause: " + e.getCause());
 				}
+				if (item.isPresent())
+					controller.setItem(item);
 				tab.setController(controller);
 				return tabContents;
 			}
@@ -191,9 +191,11 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 
 		seccionTabPane.getTabs().clear();
 		seccionTabPane.getTabs().add(newTab);
-		System.out.println("ri secciones " + ri.getSecciones());
 		if (ri.getSecciones() != null)
 			ri.getSecciones().forEach(seccionItem -> addTab(Optional.of(seccionItem)));
+		if (seccionTabPane.getTabs().size() > 2 && seccionTabPane.getTabs().get(0).getText() == null) { //haaaack
+			seccionTabPane.getTabs().remove(0);
+		}
 	}
 
 	@Override
