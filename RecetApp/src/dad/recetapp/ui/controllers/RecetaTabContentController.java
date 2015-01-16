@@ -63,11 +63,15 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	}
 
 	@FXML public void onEditarIngredienteButtonClick() {
-		System.out.println("Abrir dialogo de editar ingredientes");
+		IngredienteItem ii = ingredientesTable.getSelectionModel().getSelectedItem();
+		if (ii != null)
+			ItemDialogFactory.forIngredienteItem(ii).showModal();
 	}
 
 	@FXML public void onBorrarIngredienteButtonClick() {
-		System.out.println("Eliminar filas seleccionadas en tabla de ingredientes");
+		IngredienteItem ii = ingredientesTable.getSelectionModel().getSelectedItem();
+		if (ii != null)
+			ingredientesTable.getItems().remove(ii);
 	}
 
 	@FXML public void onAddInstruccionButtonClick() {
@@ -77,13 +81,15 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	}
 
 	@FXML public void onEditarInstruccionButtonClick() {
-		//ItemDialog<InstruccionItem> dialog = ItemDialogFactory.forInstruccionItem(instruccionesTable.getSelectionModel().getSelectedItem());
-		//dialog.showModal();
-		//dialog.getItem().ifPresent();
-		System.out.println("Abrir dialogo de editar instrucciones");
+		InstruccionItem ii = instruccionesTable.getSelectionModel().getSelectedItem();
+		if (ii != null)
+			ItemDialogFactory.forInstruccionItem(ii).showModal();
 	}
+
 	@FXML public void onBorrarInstruccionButtonClick() {
-		System.out.println("Eliminar filas seleccionadas en tabla de instrucciones");
+		InstruccionItem ii = instruccionesTable.getSelectionModel().getSelectedItem();
+		if (ii != null)
+			instruccionesTable.getItems().remove(ii);
 	}
 
 	public Optional<Tab> getParentTab() {
@@ -116,21 +122,21 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO eventos para lanzar esos dialogos
 		initCombos();
 		initTables();
 	}
 
 	private void initTables() {
+		//Por algun motivo, a setCellValueFactory no le gusta nada IntegerProperty, Pero como funciona bien asi pues aceptamos magia negra
 		ingredientesCantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 		ingredientesCantidadColumn.setCellFactory(TextFieldTableCell.<IngredienteItem, Integer>forTableColumn(StringConverterFactory.forInteger()));
 		ingredientesCantidadColumn.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue().setCantidad(cellEditEvent.getNewValue()));
 
-		ingredientesMedidaColumn.setCellValueFactory(new PropertyValueFactory<>("medida"));
+		ingredientesMedidaColumn.setCellValueFactory(cell -> cell.getValue().medidaProperty());
 		ingredientesMedidaColumn.setCellFactory(ComboBoxTableCell.<IngredienteItem, MedidaItem>forTableColumn(medidaComboList));
 		ingredientesMedidaColumn.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue().setMedida(cellEditEvent.getNewValue()));
 
-		ingredientesTipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+		ingredientesTipoColumn.setCellValueFactory(cell -> cell.getValue().tipoProperty());
 		ingredientesTipoColumn.setCellFactory(ComboBoxTableCell.<IngredienteItem, TipoIngredienteItem>forTableColumn(tipoIngredienteComboList));
 		ingredientesTipoColumn.setOnEditCommit(event -> event.getRowValue().setTipo(event.getNewValue()));
 
@@ -138,7 +144,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 		instruccionesOrdenColumn.setCellFactory(TextFieldTableCell.<InstruccionItem, Integer>forTableColumn(StringConverterFactory.forInteger()));
 		instruccionesOrdenColumn.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue().setOrden(cellEditEvent.getNewValue()));
 
-		instruccionesDescColumn.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+		instruccionesDescColumn.setCellValueFactory(cell -> cell.getValue().descripcionProperty());
 		instruccionesDescColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	}
 

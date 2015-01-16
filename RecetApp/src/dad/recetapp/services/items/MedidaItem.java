@@ -30,7 +30,14 @@ public class MedidaItem {
 	}
 	@Override
 	public String toString() {
-		return nombre + " (" + abreviatura + ")";
+		return nombre + (abreviatura != null? " (" + abreviatura + ")" : "");
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o != null && o instanceof MedidaItem && this.id == ((MedidaItem)o).getId())
+			return true;
+		else
+			return false;
+	}
 }
