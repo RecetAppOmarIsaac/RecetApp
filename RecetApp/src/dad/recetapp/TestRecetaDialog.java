@@ -36,6 +36,8 @@ public class TestRecetaDialog extends Application {
 		ri.getSecciones().add(si);
 
 		ItemDialogFactory.forRecetaItem(ri).show();
+
+		ItemDialogFactory.forRecetaItem().show();
 	}
 
 	public static void main(String[] args) {

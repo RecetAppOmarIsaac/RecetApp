@@ -15,6 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -31,6 +35,8 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 	@FXML private ComboBox<MedidaItem> medidaCombo;
 	@FXML private ComboBox<TipoIngredienteItem> tipoCombo;
 	@FXML private Button aceptarButton;
+
+	private ValidationSupport validationSupport;
 	private Optional<IngredienteItem> ingrediente = Optional.empty();
 
 	private void initCombos() {
@@ -60,6 +66,9 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 		};
 		medidaTask.run();
 
+		TipoIngredienteItem tii = new TipoIngredienteItem();
+		tii.setNombre("<Seleccione un ingrediente>");
+		tipoCombo.setValue(tii);
 		Task<ObservableList<TipoIngredienteItem>> tipoTask = new Task<ObservableList<TipoIngredienteItem>>() {
 			@Override
 			protected ObservableList<TipoIngredienteItem> call() {
@@ -83,17 +92,29 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 		tipoTask.run();
 	}
 
+	private void initValidation() {
+		validationSupport = new ValidationSupport();
+		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
+		validationSupport.registerValidator(cantidadTextField, Validator.createRegexValidator("No es un numero valido", "[+-]?\\d+", Severity.ERROR));
+		validationSupport.registerValidator(medidaCombo, Validator.createEqualsValidator("Elija una medida", Severity.ERROR, medidaCombo.getItems()));
+		validationSupport.registerValidator(tipoCombo, Validator.createEqualsValidator("Elija un ingrediente", Severity.ERROR, tipoCombo.getItems()));
+		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue && !newValue)
+				aceptarButton.setDisable(false);
+			else
+				aceptarButton.setDisable(true);
+		});
+	}
+
 	@FXML
 	public void onAceptarButtonClick() {
-		if (validate()) {
-			IngredienteItem ii = ingrediente.orElse(new IngredienteItem());
-			ii.setCantidad(Integer.valueOf(cantidadTextField.getText()));
-			ii.setMedida(medidaCombo.getValue());
-			ii.setTipo(tipoCombo.getValue());
-			ingrediente = Optional.of(ii);
-			Stage s = (Stage) rootPane.getScene().getWindow();
-			s.close();
-		}
+		IngredienteItem ii = ingrediente.orElse(new IngredienteItem());
+		ii.setCantidad(Integer.valueOf(cantidadTextField.getText()));
+		ii.setMedida(medidaCombo.getValue());
+		ii.setTipo(tipoCombo.getValue());
+		ingrediente = Optional.of(ii);
+		Stage s = (Stage) rootPane.getScene().getWindow();
+		s.close();
 	}
 
 	@FXML
@@ -102,25 +123,11 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 		s.close();
 	}
 
-	private boolean validate() {
-		boolean valid = true;
-		try {
-			Integer.parseInt(cantidadTextField.getText());
-		} catch (NumberFormatException e) {
-			valid = false;
-		}
-		if (!medidaCombo.getItems().contains(medidaCombo.getValue())) {
-			valid = false;
-		}
-		if (!tipoCombo.getItems().contains(tipoCombo.getValue())) {
-			valid = false;
-		}
-		return valid;
-	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initCombos();
+		initValidation();
 		aceptarButton.setText(NEW_CAPTION);
 	}
 

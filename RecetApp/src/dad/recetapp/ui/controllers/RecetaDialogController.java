@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import jfxtras.scene.control.ListSpinner;
 import jfxtras.scene.control.ListSpinnerIntegerList;
 import jfxtras.util.StringConverterFactory;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,7 +40,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	@FXML private TextField paraText;
 	@FXML private TextField nombreText;
 	@FXML private ComboBox<String> paraCombo;
-	@FXML private ComboBox<CategoriaItem> categoriaCombo; //en principio, CategoriaItem
+	@FXML private ComboBox<CategoriaItem> categoriaCombo;
 	@FXML private GridPane topGridPane;
 	@FXML private TabPane seccionTabPane;
 	@FXML private Tab newTab;
@@ -50,19 +53,12 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	private Optional<RecetaItem> receta = Optional.empty();
 
 
-	private boolean validate() {
-		boolean valid = true;
-		return valid;
-	}
-
 	@FXML public void onAceptarButtonClick() {
-		if (validate()) {
-			RecetaItem ri = receta.orElse(new RecetaItem());
-			//TODO guardar cosas en ri
-			receta = Optional.of(ri);
-			Stage s = (Stage) rootPane.getScene().getWindow();
-			s.close();
-		}
+		RecetaItem ri = receta.orElse(new RecetaItem());
+		//TODO guardar cosas en ri
+		receta = Optional.of(ri);
+		Stage s = (Stage) rootPane.getScene().getWindow();
+		s.close();
 	}
 
 	@FXML public void onCancelarButtonClick() {
@@ -115,7 +111,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		};
 
 		task.run();
-		//TODO Task ejecuta call() en hilo de eventos, usar otra clase
+		//TODO Task ejecuta call() en hilo de eventos, usar otra clase. Cazar todas los usos de ServiceLocator en GUI y echarlos del hilo
 	}
 
 	/*
@@ -138,7 +134,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		paraCombo.setValue("Personas");
 
 		CategoriaItem ci = new CategoriaItem();
-		ci.setDescripcion("<Seleccione una categoria>"); //TODO modificar toString()'s de los Items para que solo devuelvan su campo String.
+		ci.setDescripcion("<Seleccione una categoria>");
 		categoriaCombo.setValue(ci);
 		Task<ObservableList<CategoriaItem>> task = new Task<ObservableList<CategoriaItem>>() {
 			@Override
@@ -162,10 +158,24 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		task.run();
 	}
 
+	private void initValidation() {
+		ValidationSupport validationSupport = new ValidationSupport();
+		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
+		validationSupport.registerValidator(nombreText, Validator.createEmptyValidator("Introduzca un nombre para la receta"));
+		validationSupport.registerValidator(categoriaCombo, Validator.createEqualsValidator("Asigne una categoria", categoriaCombo.getItems()));
+		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue && !newValue)
+				aceptarButton.setDisable(false);
+			else
+				aceptarButton.setDisable(true);
+		});
+	}
+
 
 	public void initialize(URL location, ResourceBundle resources) {
 		initSpinners();
 		initCombos();
+		initValidation();
 
 		newTab.setGraphic(new ImageView(getClass().getResource("/dad/recetapp/ui/images/addTabIcon.png").toString())); //intente ponerlo via CSS, no lo consegui
 
@@ -179,7 +189,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		aceptarButton.setText(EDIT_CAPTION);
 
 		paraText.setText(ri.getCantidad().toString());
-		paraCombo.setValue(ri.getPara()); //ri.getPara es lo que va en el combobox?
+		paraCombo.setValue(ri.getPara());
 		nombreText.setText(ri.getNombre());
 
 		categoriaCombo.setValue(ri.getCategoria());

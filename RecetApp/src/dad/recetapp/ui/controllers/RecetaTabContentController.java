@@ -149,7 +149,6 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	}
 
 	private void initCombos() {
-		//TODO esto hace llorar al niño jesus
 		MedidaItem[] categorias = new MedidaItem[0];
 		try {
 			categorias = ServiceLocator.getMedidasService().listarMedidas();
