@@ -2,12 +2,15 @@ package dad.recetapp.ui.controllers;
 
 import dad.recetapp.services.items.InstruccionItem;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import java.net.URL;
 import java.util.Optional;
@@ -22,34 +25,36 @@ public class InstruccionDialogController implements IDialogController<Instruccio
 	@FXML private TextArea descripcionTextArea;
 	@FXML private Button aceptarButton;
 
+	private ValidationSupport validationSupport;
+
 	private Optional<InstruccionItem> instruccion = Optional.empty();
+
+	private void initValidation() {
+		validationSupport = new ValidationSupport();
+		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
+		validationSupport.registerValidator(ordenTextField, Validator.createRegexValidator("No es un numero valido", "[+-]?\\d+", Severity.ERROR));
+		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue && !newValue)
+				aceptarButton.setDisable(false);
+			else
+				aceptarButton.setDisable(true);
+		});
+	}
 
 	@FXML
 	public void onAceptarButtonClick() {
-		if (validate()) {
-			InstruccionItem ii = instruccion.orElse(new InstruccionItem());
-			ii.setOrden(Integer.valueOf(ordenTextField.getText()));
-			ii.setDescripcion(descripcionTextArea.getText());
-			instruccion = Optional.of(ii);
-			Stage s = (Stage) rootPane.getScene().getWindow();
-			s.close();
-		} //TODO poner algo que diga que los datos no son validos
+		InstruccionItem ii = instruccion.orElse(new InstruccionItem());
+		ii.setOrden(Integer.valueOf(ordenTextField.getText()));
+		ii.setDescripcion(descripcionTextArea.getText());
+		instruccion = Optional.of(ii);
+		Stage s = (Stage) rootPane.getScene().getWindow();
+		s.close();
 	}
 
 	@FXML
 	public void onCancelarButtonClick() {
 		Stage s = (Stage) rootPane.getScene().getWindow();
 		s.close();
-	}
-
-	private boolean validate() {
-		boolean valid = true;
-		try {
-			Integer.parseInt(ordenTextField.getText());
-		} catch (NumberFormatException e) {
-			valid = false;
-		}
-		return valid;
 	}
 
 	@Override
@@ -68,5 +73,7 @@ public class InstruccionDialogController implements IDialogController<Instruccio
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initValidation();
+		aceptarButton.setText(NEW_CAPTION);
 	}
 }

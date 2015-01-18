@@ -24,4 +24,11 @@ public class CategoriaItem {
 		return descripcion;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o != null && o instanceof CategoriaItem && this.id == ((CategoriaItem)o).getId())
+			return true;
+		else
+			return false;
+	}
 }
