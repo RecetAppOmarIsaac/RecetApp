@@ -32,8 +32,7 @@ public class InstruccionDialogController implements IDialogController<Instruccio
 	private void initValidation() {
 		validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(ordenTextField, false, Validator.createRegexValidator("No es un n\u00FAmero v\u00E1lido", "([+-]?\\d+)?", Severity.ERROR));
-		validationSupport.registerValidator(descripcionTextArea, Validator.createEmptyValidator(""));
+		validationSupport.registerValidator(ordenTextField, Validator.createRegexValidator("No es un numero valido", "[+-]?\\d+", Severity.ERROR));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				aceptarButton.setDisable(false);

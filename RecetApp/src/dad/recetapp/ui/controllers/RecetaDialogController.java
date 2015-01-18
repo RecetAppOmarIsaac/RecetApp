@@ -57,7 +57,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		RecetaItem ri = receta.orElse(new RecetaItem());
 		//TODO guardar cosas en ri
 		ri.setNombre(nombreText.getText());
-		ri.setCantidad(Integer.valueOf(paraText.getText()));
+		ri.setCantidad((paraText.getText().isEmpty())? 0 : Integer.valueOf(paraText.getText()));
 		ri.setPara(paraCombo.getValue());
 		ri.setCategoria(categoriaCombo.getValue());
 		ri.setTiempoTotal(totalMinutosSpinner.getValue() * 60 + totalSegundosSpinner.getValue());
