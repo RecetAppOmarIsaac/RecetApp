@@ -54,42 +54,40 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 
 
 	@FXML public void onAceptarButtonClick() {
-		if (validate()) {
-			RecetaItem ri = receta.orElse(new RecetaItem());
-			//TODO guardar cosas en ri
-			ri.setNombre(nombreText.getText());
-			ri.setCantidad(Integer.valueOf(paraText.getText()));
-			ri.setPara(paraCombo.getValue());
-			ri.setCategoria(categoriaCombo.getValue());
-			ri.setTiempoTotal(totalMinutosSpinner.getValue() * 60 + totalSegundosSpinner.getValue());
-			ri.setTiempoThermomix(thermoMinutosSpinner.getValue() * 60 + thermoSegundosSpinner.getValue());
-			ri.getSecciones().removeAll(ri.getSecciones());
-			seccionTabPane.getTabs().filtered(tab -> tab != newTab).forEach(tab -> {
-				SeccionTab stab = (SeccionTab)tab;
-				if (stab.getController().getItem().isPresent())
-					ri.getSecciones().add(stab.getController().getItem().get());
-			});
-			receta = Optional.of(ri);
-			Stage s = (Stage) rootPane.getScene().getWindow();
+		RecetaItem ri = receta.orElse(new RecetaItem());
+		//TODO guardar cosas en ri
+		ri.setNombre(nombreText.getText());
+		ri.setCantidad(Integer.valueOf(paraText.getText()));
+		ri.setPara(paraCombo.getValue());
+		ri.setCategoria(categoriaCombo.getValue());
+		ri.setTiempoTotal(totalMinutosSpinner.getValue() * 60 + totalSegundosSpinner.getValue());
+		ri.setTiempoThermomix(thermoMinutosSpinner.getValue() * 60 + thermoSegundosSpinner.getValue());
+		ri.getSecciones().removeAll(ri.getSecciones());
+		seccionTabPane.getTabs().filtered(tab -> tab != newTab).forEach(tab -> {
+			SeccionTab stab = (SeccionTab)tab;
+			if (stab.getController().getItem().isPresent())
+				ri.getSecciones().add(stab.getController().getItem().get());
+		});
+		receta = Optional.of(ri);
+		Stage s = (Stage) rootPane.getScene().getWindow();
 
-			//TODO quitar esto al terminar de depurar
-			System.out.println("----data dump----");
-			System.out.println("Nombre: " + ri.getNombre());
-			System.out.println("Para " + ri.getCantidad() + " " + ri.getPara());
-			System.out.println("Secciones.len: " + ri.getSecciones().size());
-			ri.getSecciones().forEach(seccionItem -> {
-				System.out.println("{");
-				System.out.println("SeccionItem: " + seccionItem.getNombre());
-				System.out.println("Ingreds.len: " + seccionItem.getIngredientes().size());
-				seccionItem.getIngredientes().forEach(item -> System.out.println(item.getTipo().getNombre() + " " + item.getCantidad()));
-				System.out.println("Instrucc.len: " + seccionItem.getInstrucciones().size());
-				seccionItem.getInstrucciones().forEach(item -> System.out.println(item.getDescripcion()));
-				System.out.println("}");
-			});
-			System.out.println("------------------");
+		//TODO quitar esto al terminar de depurar
+		System.out.println("----data dump----");
+		System.out.println("Nombre: " + ri.getNombre());
+		System.out.println("Para " + ri.getCantidad() + " " + ri.getPara());
+		System.out.println("Secciones.len: " + ri.getSecciones().size());
+		ri.getSecciones().forEach(seccionItem -> {
+			System.out.println("{");
+			System.out.println("SeccionItem: " + seccionItem.getNombre());
+			System.out.println("Ingreds.len: " + seccionItem.getIngredientes().size());
+			seccionItem.getIngredientes().forEach(item -> System.out.println(item.getTipo().getNombre() + " " + item.getCantidad()));
+			System.out.println("Instrucc.len: " + seccionItem.getInstrucciones().size());
+			seccionItem.getInstrucciones().forEach(item -> System.out.println(item.getDescripcion()));
+			System.out.println("}");
+		});
+		System.out.println("------------------");
 
-			s.close();
-		}
+		s.close();
 	}
 
 	@FXML public void onCancelarButtonClick() {
