@@ -2,6 +2,7 @@ package dad.recetapp;
 
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.*;
+import dad.recetapp.ui.ItemDialog;
 import dad.recetapp.ui.ItemDialogFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,7 +10,6 @@ import javafx.stage.Stage;
 public class TestRecetaDialog extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
 		RecetaItem ri = ServiceLocator.getRecetasService().obtenerReceta(1L);
 
 		InstruccionItem is = new InstruccionItem();

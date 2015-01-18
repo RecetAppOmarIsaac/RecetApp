@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import jfxtras.util.StringConverterFactory;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -180,8 +181,22 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 		instruccionesTable.setItems(FXCollections.observableArrayList(si.getInstrucciones()));
 	}
 
+	private void updateItem() {
+		seccion.ifPresent(item -> {
+			if (parentTab.isPresent()) {
+				String s = parentTab.get().getText();
+				item.setNombre(s != null ? s : "");
+			}
+			List<IngredienteItem> itemIngredList = item.getIngredientes();
+			itemIngredList.addAll(ingredientesTable.getItems().filtered(ii -> !itemIngredList.contains(ii)));
+			List<InstruccionItem> itemInstList = item.getInstrucciones();
+			itemInstList.addAll(instruccionesTable.getItems().filtered(ii -> !itemInstList.contains(ii)));
+		});
+	}
+
 	@Override
 	public Optional<SeccionItem> getItem() {
+		updateItem();
 		return seccion;
 	}
 }
