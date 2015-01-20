@@ -2,13 +2,19 @@ package dad.recetapp.services.items;
 
 import java.util.Date;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class RecetaListItem {
     private Long id;
-    private String nombre;
+    private StringProperty nombre=new SimpleStringProperty();
     private Date fechaCreacion;
     private Integer cantidad;
     private String para;
-    private Integer tiempoTotal;
+    private StringProperty paraProperty=new SimpleStringProperty();
+    private IntegerProperty tiempoTotal= new SimpleIntegerProperty();
     private Integer tiempoThermomix;
     private String categoria;
 
@@ -21,11 +27,15 @@ public class RecetaListItem {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.getValue();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre.setValue(nombre);
+    }
+    
+    public StringProperty nombreProperty(){
+    	return nombre;
     }
 
     public Date getFechaCreacion() {
@@ -41,6 +51,7 @@ public class RecetaListItem {
     }
 
     public void setCantidad(Integer cantidad) {
+    	paraProperty.setValue(cantidad+" "+para);
         this.cantidad = cantidad;
     }
 
@@ -49,15 +60,24 @@ public class RecetaListItem {
     }
 
     public void setPara(String para) {
+    	paraProperty.setValue(cantidad+" "+para);
         this.para = para;
+    }
+    
+    public StringProperty paraProperty(){
+    	return paraProperty;
     }
 
     public Integer getTiempoTotal() {
-        return tiempoTotal;
+        return tiempoTotal.getValue();
     }
 
     public void setTiempoTotal(Integer tiempoTotal) {
-        this.tiempoTotal = tiempoTotal;
+        this.tiempoTotal.setValue(tiempoTotal);
+    }
+    
+    public IntegerProperty tiempoTotalProperty(){
+    	return tiempoTotal;
     }
 
     public Integer getTiempoThermomix() {
@@ -87,7 +107,7 @@ public class RecetaListItem {
 
     @Override
     public String toString() {
-        return nombre;
+        return nombre.getValue();
     }
 
 }

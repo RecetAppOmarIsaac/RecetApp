@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dad.recetapp.ui.fxml.RecetaFrameRootController">
+   <children>
+      <BorderPane prefHeight="480.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <TabPane fx:id="rootTabPane" prefHeight="322.0" prefWidth="552.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab fx:id="recetasTab" onSelectionChanged="#onRecetasTabSelected" text="Recetas">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <center>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <center>
+                                          <TableView fx:id="recetTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                            <columns>
+                                              <TableColumn fx:id="recetaNombreColumn" prefWidth="75.0" text="Nombre" />
+                                              <TableColumn fx:id="recetaParaColumn" prefWidth="75.0" text="Para" />
+                                                <TableColumn fx:id="recetaTiempoTotalColumn" prefWidth="75.0" text="Tiempo total" />
+                                                <TableColumn fx:id="recetaFechaCreacionColumn" prefWidth="75.0" text="Fecha de creación" />
+                                                <TableColumn fx:id="recetaCategoriaColumn" prefWidth="75.0" text="Categoría" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                             <BorderPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </BorderPane.margin>
+                                          </TableView>
+                                       </center>
+                                       <top>
+                                          <FlowPane fx:id="anyadirRecetaPanel" alignment="CENTER" prefHeight="48.0" prefWidth="507.0" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <Label fx:id="nombreRecetaLabel" text="Nombre:" />
+                                                <TextField fx:id="nombreRecetaTextField" prefHeight="25.0" prefWidth="159.0">
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="5.0" right="5.0" top="5.0" />
+                                                   </FlowPane.margin>
+                                                </TextField>
+                                                <Label fx:id="hastaRecetaLabel" prefHeight="17.0" prefWidth="36.0" text="Hasta:" />
+                                                <ComboBox prefHeight="25.0" prefWidth="11.0" />
+                                                <Label fx:id="minutoRecetaLabel" text="M">
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </FlowPane.margin>
+                                                </Label>
+                                                <ComboBox prefHeight="25.0" prefWidth="27.0" />
+                                                <Label fx:id="segundoRecetaLabel" prefHeight="17.0" prefWidth="5.0" text="S">
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </FlowPane.margin>
+                                                </Label>
+                                                <Label fx:id="categoriaRecetaLabel" prefHeight="17.0" prefWidth="55.0" text="Categoría:" />
+                                                <ComboBox fx:id="categoriaItemCombo" prefHeight="25.0" prefWidth="90.0">
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </FlowPane.margin>
+                                                </ComboBox>
+                                             </children>
+                                             <BorderPane.margin>
+                                                <Insets top="5.0" />
+                                             </BorderPane.margin>
+                                          </FlowPane>
+                                       </top>
+                                    </BorderPane>
+                                 </center>
+                                 <right>
+                                    <AnchorPane prefHeight="337.0" prefWidth="93.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Button fx:id="anyadirRecetaButton" alignment="CENTER" layoutX="9.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAnyadirRecetaButtonClick" text="Añadir" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button fx:id="eliminarRecetaButton" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#onEliminarRecetaButtonClick" text="Eliminar" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                                             <padding>
+                                                <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button fx:id="editarRecetaButton" layoutX="11.0" layoutY="87.0" mnemonicParsing="false" onAction="#onEditarRecetaButtonClick" text="Editar" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                                             <padding>
+                                                <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                                             </padding>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </right>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="categoriasTab" onSelectionChanged="#onCantidadTabSelected" text="Categorías">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <center>
+                                    <TableView fx:id="cateTable" prefHeight="311.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+                                      <columns>
+                                        <TableColumn fx:id="cateDescripColumn" prefWidth="75.0" text="Descripción" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                                 <top>
+                                    <FlowPane alignment="CENTER" prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label fx:id="descripCateLabel" text="Descripción:" />
+                                          <TextField fx:id="descripCatTextField">
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                          </TextField>
+                                          <Button fx:id="anyadirCateButton" mnemonicParsing="false" text="Añadir">
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Button>
+                                          <Button fx:id="eliminarCateButton" mnemonicParsing="false" text="Eliminar" />
+                                       </children>
+                                    </FlowPane>
+                                 </top>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab fx:id="ingredientesTab" onSelectionChanged="#onIngredientesTabSelected" text="Ingredientes">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <center>
+                                    <TableView fx:id="ingreTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                      <columns>
+                                        <TableColumn fx:id="ingreNombreColumn" prefWidth="597.0" text="Nombre" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <opaqueInsets>
+                                          <Insets left="5.0" right="5.0" />
+                                       </opaqueInsets>
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                                 <top>
+                                    <FlowPane alignment="CENTER" prefHeight="37.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label fx:id="nombreIngreLabel" text="Nombre:">
+                                             <FlowPane.margin>
+                                                <Insets />
+                                             </FlowPane.margin>
+                                          </Label>
+                                          <TextField fx:id="nombreIngreTextField">
+                                             <FlowPane.margin>
+                                                <Insets left="5.0" right="5.0" />
+                                             </FlowPane.margin>
+                                          </TextField>
+                                          <Button fx:id="anyadirIngreButton" mnemonicParsing="false" text="Añadir">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Button>
+                                          <Button fx:id="eliminarIngreButton" mnemonicParsing="false" text="Eliminar">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Button>
+                                       </children>
+                                    </FlowPane>
+                                 </top>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="medidasTab" onSelectionChanged="#onMedidasTabSelected" text="Medidas">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <center>
+                                    <TableView fx:id="medidasTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                      <columns>
+                                        <TableColumn fx:id="medidaNombreColumn" prefWidth="75.0" text="Nombre" />
+                                        <TableColumn fx:id="medidaAbreviaturaColumn" prefWidth="75.0" text="Abreviatura" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                                 <top>
+                                    <FlowPane alignment="CENTER" prefHeight="37.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label fx:id="nombreMedidaLabel" text="Nombre:" />
+                                          <TextField fx:id="nombreMedidaTextField">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </TextField>
+                                          <Label fx:id="abrevMedidaLabel" text="Abreviatura:">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Label>
+                                          <TextField fx:id="abrevMedidaTextField" />
+                                          <Button fx:id="anyadirMedidaButton" mnemonicParsing="false" text="Añadir">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Button>
+                                          <Button fx:id="eliminarMedidaButton" mnemonicParsing="false" text="Eliminar" />
+                                       </children>
+                                    </FlowPane>
+                                 </top>
+                              </BorderPane>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="anotacionesTab" onSelectionChanged="#onAnotacionesTabSelected" text="Anotaciones">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane layoutX="167.0" layoutY="55.0" prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <center>
+                                    <TableView fx:id="anotacionesTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                      <columns>
+                                        <TableColumn fx:id="anotaDescripColumn" prefWidth="75.0" text="Descripción" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                                 <top>
+                                    <FlowPane alignment="CENTER" prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label fx:id="descripAnotaLabel" text="Descripción:">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Label>
+                                          <TextField fx:id="descripAnotaTextField">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </TextField>
+                                          <Button fx:id="anyadirAnotaButton" mnemonicParsing="false" text="Añadir">
+                                             <FlowPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </FlowPane.margin>
+                                          </Button>
+                                          <Button fx:id="eliminarAnotaButton" mnemonicParsing="false" text="Eliminar" />
+                                       </children>
+                                    </FlowPane>
+                                 </top>
+                              </BorderPane>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+         <bottom>
+            <FlowPane alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label contentDisplay="TOP" text="Recetas:">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin>
+                  </Label>
+                  <Label fx:id="cantidadRecetaLabel" text="Label" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </FlowPane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
