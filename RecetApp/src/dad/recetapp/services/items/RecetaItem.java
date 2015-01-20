@@ -110,4 +110,17 @@ public class RecetaItem implements IItem {
 		return nombre;
 	}
 
+	public RecetaListItem getRecetaListItem() {
+		RecetaListItem rli = new RecetaListItem();
+		//meter datos
+		rli.setId(this.getId());
+		rli.setNombre(this.getNombre());
+		rli.setCantidad(this.getCantidad());
+		rli.setPara(this.getPara());
+		rli.setFechaCreacion(this.getFechaCreacion());
+		rli.setTiempoTotal(this.getTiempoTotal());
+		rli.setTiempoThermomix(this.getTiempoThermomix());
+		rli.setCategoria(this.getCategoria().getDescripcion());
+		return rli;
+	}
 }

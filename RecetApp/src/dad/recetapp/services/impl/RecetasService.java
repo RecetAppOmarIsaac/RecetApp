@@ -24,8 +24,9 @@ import dad.recetapp.services.items.TipoAnotacionItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
 
 public class RecetasService implements IRecetasService {
-    public void crearReceta(RecetaItem receta) throws ServiceException {
+    public Long crearReceta(RecetaItem receta) throws ServiceException {
         Connection conn = null;
+        Long id = null;
         try {
             conn = DataBase.getConnection();
             conn.setAutoCommit(false);
@@ -42,7 +43,7 @@ public class RecetasService implements IRecetasService {
             sentencia.setLong(7, receta.getCategoria().getId());
             sentencia.executeUpdate();
             ResultSet rs = sentencia.getGeneratedKeys();
-            Long id = null;
+            
             if (rs.next()) {
                 id = rs.getLong(1);
             }
@@ -70,6 +71,7 @@ public class RecetasService implements IRecetasService {
             }
             throw new ServiceException("Error al crear la receta '" + receta.getNombre() + "': " + e.getMessage());
         }
+        return id;
     }
 
 

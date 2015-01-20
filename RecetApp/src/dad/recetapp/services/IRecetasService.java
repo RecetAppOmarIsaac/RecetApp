@@ -7,7 +7,7 @@ import dad.recetapp.services.items.RecetaListItem;
 
 public interface IRecetasService {
 
-    public void crearReceta(RecetaItem receta) throws ServiceException;
+    public Long crearReceta(RecetaItem receta) throws ServiceException;
 
     public void modificarReceta(RecetaItem receta) throws ServiceException;
 
