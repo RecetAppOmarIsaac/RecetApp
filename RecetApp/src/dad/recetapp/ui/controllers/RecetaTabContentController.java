@@ -5,6 +5,8 @@ import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.*;
 import dad.recetapp.ui.ItemDialog;
 import dad.recetapp.ui.ItemDialogFactory;
+import dad.recetapp.ui.model.items.IngredienteItemFX;
+import dad.recetapp.ui.model.items.InstruccionItemFX;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,14 +33,14 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	@FXML private Button editarInstruccionButton;
 	@FXML private Button borrarInstruccionButton;
 
-	@FXML private TableView<IngredienteItem> ingredientesTable;
-	@FXML private TableColumn<IngredienteItem, Integer> ingredientesCantidadColumn;
-	@FXML private TableColumn<IngredienteItem, MedidaItem> ingredientesMedidaColumn;
-	@FXML private TableColumn<IngredienteItem, TipoIngredienteItem> ingredientesTipoColumn;
+	@FXML private TableView<IngredienteItemFX> ingredientesTable;
+	@FXML private TableColumn<IngredienteItemFX, Integer> ingredientesCantidadColumn;
+	@FXML private TableColumn<IngredienteItemFX, MedidaItem> ingredientesMedidaColumn;
+	@FXML private TableColumn<IngredienteItemFX, TipoIngredienteItem> ingredientesTipoColumn;
 
-	@FXML private TableView<InstruccionItem> instruccionesTable;
-	@FXML private TableColumn<InstruccionItem, Integer> instruccionesOrdenColumn;
-	@FXML private TableColumn<InstruccionItem, String> instruccionesDescColumn;
+	@FXML private TableView<InstruccionItemFX> instruccionesTable;
+	@FXML private TableColumn<InstruccionItemFX, Integer> instruccionesOrdenColumn;
+	@FXML private TableColumn<InstruccionItemFX, String> instruccionesDescColumn;
 
 	private ObservableList<MedidaItem> medidaComboList;
 	private ObservableList<TipoIngredienteItem> tipoIngredienteComboList;
@@ -60,7 +62,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	@FXML public void onAddIngredienteButtonClick() {
 		ItemDialog<IngredienteItem> dialog = ItemDialogFactory.forIngredienteItem();
 		dialog.showModal();
-		dialog.getItem().ifPresent(item -> ingredientesTable.getItems().add(item));
+		dialog.getItem().ifPresent(item -> ingredientesTable.getItems().add(IngredienteItemFX.fromIngredienteItem(item)));
 	}
 
 	@FXML public void onEditarIngredienteButtonClick() {
@@ -78,7 +80,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	@FXML public void onAddInstruccionButtonClick() {
 		ItemDialog<InstruccionItem> dialog = ItemDialogFactory.forInstruccionItem();
 		dialog.showModal();
-		dialog.getItem().ifPresent(item -> instruccionesTable.getItems().add(item));
+		dialog.getItem().ifPresent(item -> instruccionesTable.getItems().add(InstruccionItemFX.fromInstruccionItem(item)));
 	}
 
 	@FXML public void onEditarInstruccionButtonClick() {
@@ -130,19 +132,19 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	private void initTables() {
 		//Por algun motivo, a setCellValueFactory no le gusta nada IntegerProperty, Pero como funciona bien asi pues aceptamos magia negra
 		ingredientesCantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-		ingredientesCantidadColumn.setCellFactory(TextFieldTableCell.<IngredienteItem, Integer>forTableColumn(StringConverterFactory.forInteger()));
+		ingredientesCantidadColumn.setCellFactory(TextFieldTableCell.<IngredienteItemFX, Integer>forTableColumn(StringConverterFactory.forInteger()));
 		ingredientesCantidadColumn.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue().setCantidad(cellEditEvent.getNewValue()));
 
 		ingredientesMedidaColumn.setCellValueFactory(cell -> cell.getValue().medidaProperty());
-		ingredientesMedidaColumn.setCellFactory(ComboBoxTableCell.<IngredienteItem, MedidaItem>forTableColumn(medidaComboList));
+		ingredientesMedidaColumn.setCellFactory(ComboBoxTableCell.<IngredienteItemFX, MedidaItem>forTableColumn(medidaComboList));
 		ingredientesMedidaColumn.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue().setMedida(cellEditEvent.getNewValue()));
 
 		ingredientesTipoColumn.setCellValueFactory(cell -> cell.getValue().tipoProperty());
-		ingredientesTipoColumn.setCellFactory(ComboBoxTableCell.<IngredienteItem, TipoIngredienteItem>forTableColumn(tipoIngredienteComboList));
+		ingredientesTipoColumn.setCellFactory(ComboBoxTableCell.<IngredienteItemFX, TipoIngredienteItem>forTableColumn(tipoIngredienteComboList));
 		ingredientesTipoColumn.setOnEditCommit(event -> event.getRowValue().setTipo(event.getNewValue()));
 
 		instruccionesOrdenColumn.setCellValueFactory(new PropertyValueFactory<>("orden"));
-		instruccionesOrdenColumn.setCellFactory(TextFieldTableCell.<InstruccionItem, Integer>forTableColumn(StringConverterFactory.forInteger()));
+		instruccionesOrdenColumn.setCellFactory(TextFieldTableCell.<InstruccionItemFX, Integer>forTableColumn(StringConverterFactory.forInteger()));
 		instruccionesOrdenColumn.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue().setOrden(cellEditEvent.getNewValue()));
 
 		instruccionesDescColumn.setCellValueFactory(cell -> cell.getValue().descripcionProperty());
@@ -177,8 +179,13 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 
 		seccionTextField.setText(si.getNombre());
 
-		ingredientesTable.setItems(FXCollections.observableArrayList(si.getIngredientes()));
-		instruccionesTable.setItems(FXCollections.observableArrayList(si.getInstrucciones()));
+		ObservableList<InstruccionItemFX> instruccionFXList = FXCollections.observableArrayList();
+		si.getInstrucciones().forEach(ii -> instruccionFXList.add(InstruccionItemFX.fromInstruccionItem(ii)));
+		ObservableList<IngredienteItemFX> ingredienteFXList = FXCollections.observableArrayList();
+		si.getIngredientes().forEach(ii -> ingredienteFXList.add(IngredienteItemFX.fromIngredienteItem(ii)));
+
+		ingredientesTable.setItems(ingredienteFXList);
+		instruccionesTable.setItems(instruccionFXList);
 	}
 
 	private void updateItem() {
@@ -188,9 +195,11 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 				item.setNombre(s != null ? s : "");
 			}
 			List<IngredienteItem> itemIngredList = item.getIngredientes();
-			itemIngredList.addAll(ingredientesTable.getItems().filtered(ii -> !itemIngredList.contains(ii)));
+			itemIngredList.clear();
+			ingredientesTable.getItems().forEach(ii -> itemIngredList.add(ii.asIngredienteItem()));
 			List<InstruccionItem> itemInstList = item.getInstrucciones();
-			itemInstList.addAll(instruccionesTable.getItems().filtered(ii -> !itemInstList.contains(ii)));
+			itemInstList.clear();
+			instruccionesTable.getItems().forEach(ii -> itemInstList.add(ii.asInstruccionItem()));
 		});
 	}
 
