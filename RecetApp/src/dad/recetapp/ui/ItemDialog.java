@@ -56,4 +56,8 @@ public class ItemDialog<T extends IItem> {
     public void setItem(T item) {
         controller.setItem(Optional.of(item));
     }
+
+    public void setTitle(String title) {
+        stage.setTitle(title);
+    }
 }
