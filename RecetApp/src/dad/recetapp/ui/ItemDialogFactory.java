@@ -15,6 +15,7 @@ public class ItemDialogFactory {
 	public static ItemDialog<RecetaItem> forRecetaItem() {
 		try {
 			ItemDialog<RecetaItem> dialog = new ItemDialog<>("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml", new RecetaDialogController());
+			dialog.setTitle("A\u00F1adir receta");
 			return dialog;
 		}
 		catch (IOException e) {
@@ -27,6 +28,7 @@ public class ItemDialogFactory {
 		try {
 			ItemDialog<RecetaItem> dialog = new ItemDialog<>("/dad/recetapp/ui/fxml/recetaDialogRoot.fxml", new RecetaDialogController());
 			dialog.setItem(ri);
+			dialog.setTitle("Editar receta");
 			return dialog;
 		}
 		catch (IOException e) {
@@ -38,6 +40,7 @@ public class ItemDialogFactory {
 	public static ItemDialog<InstruccionItem> forInstruccionItem() {
 		try {
 			ItemDialog<InstruccionItem> dialog = new ItemDialog<>("/dad/recetapp/ui/fxml/instruccionDialogRoot.fxml", new InstruccionDialogController());
+			dialog.setTitle("A\u00F1adir instrucci\u00F3n");
 			return dialog;
 		}
 		catch (IOException e) {
@@ -50,6 +53,7 @@ public class ItemDialogFactory {
 		try {
 			ItemDialog<InstruccionItem> dialog = new ItemDialog<>("/dad/recetapp/ui/fxml/instruccionDialogRoot.fxml", new InstruccionDialogController());
 			dialog.setItem(ii);
+			dialog.setTitle("Editar instrucci\u00F3n");
 			return dialog;
 		}
 		catch (IOException e) {
@@ -61,6 +65,7 @@ public class ItemDialogFactory {
 	public static ItemDialog<IngredienteItem> forIngredienteItem() {
 		try {
 			ItemDialog<IngredienteItem> dialog = new ItemDialog<>("/dad/recetapp/ui/fxml/ingredienteDialogRoot.fxml", new IngredienteDialogController());
+			dialog.setTitle("A\u00F1adir ingrediente");
 			return dialog;
 		}
 		catch (IOException e) {
@@ -74,6 +79,7 @@ public class ItemDialogFactory {
 		try {
 			ItemDialog<IngredienteItem> dialog = new ItemDialog<>("/dad/recetapp/ui/fxml/ingredienteDialogRoot.fxml", new IngredienteDialogController());
 			dialog.setItem(ii);
+			dialog.setTitle("Editar ingrediente");
 			return dialog;
 		}
 		catch (IOException e) {

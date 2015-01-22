@@ -5,11 +5,18 @@ import dad.recetapp.services.items.*;
 import dad.recetapp.ui.ItemDialog;
 import dad.recetapp.ui.ItemDialogFactory;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class TestRecetaDialog extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Titulo");
+		alert.setHeaderText(null);
+		alert.setContentText("Yo, wassup");
+		alert.showAndWait();
+
 		RecetaItem ri = ServiceLocator.getRecetasService().obtenerReceta(1L);
 
 		InstruccionItem is = new InstruccionItem();
