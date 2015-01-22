@@ -110,7 +110,7 @@ public class RecetaItem implements IItem {
 		return nombre;
 	}
 
-	public RecetaListItem getRecetaListItem() {
+	public RecetaListItem toRecetaListItem() {
 		RecetaListItem rli = new RecetaListItem();
 		//meter datos
 		rli.setId(this.getId());

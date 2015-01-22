@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import dad.recetapp.ui.model.items.RecetaListItemFX;
 import org.controlsfx.dialog.Dialogs;
 
 import dad.recetapp.services.ServiceException;
@@ -42,23 +43,23 @@ public class RecetaFrameRootController {
 	private Label cantidadRecetaLabel;
 	@FXML
 	private TabPane rootTabPane;
-	// pestaña Recetas
+	// pestaï¿½a Recetas
 	@FXML
 	private Tab recetasTab;
 	@FXML
 	private FlowPane anyadirRecetaPanel;
 	@FXML
-	private TableView<RecetaListItem> recetTable;
+	private TableView<RecetaListItemFX> recetTable;
 	@FXML
-	private TableColumn<RecetaListItem, String> recetaNombreColumn;
+	private TableColumn<RecetaListItemFX, String> recetaNombreColumn;
 	@FXML
-	private TableColumn<RecetaListItem, String> recetaParaColumn;
+	private TableColumn<RecetaListItemFX, String> recetaParaColumn;
 	@FXML
-	private TableColumn<RecetaListItem, Integer> recetaTiempoTotalColumn;
+	private TableColumn<RecetaListItemFX, Integer> recetaTiempoTotalColumn;
 	@FXML
-	private TableColumn<RecetaListItem, Date> recetaFechaCreacionColumn;
+	private TableColumn<RecetaListItemFX, Date> recetaFechaCreacionColumn;
 	@FXML
-	private TableColumn<RecetaListItem, String> recetaCategoriaColumn;
+	private TableColumn<RecetaListItemFX, String> recetaCategoriaColumn;
 
 	@FXML
 	private Label nombreRecetaLabel;
@@ -84,9 +85,9 @@ public class RecetaFrameRootController {
 	@FXML
 	private Button editarRecetaButton;
 
-	private ObservableList<RecetaListItem> recetData;
+	private ObservableList<RecetaListItemFX> recetData;
 
-	// pestaña categorias
+	// pestaï¿½a categorias
 	@FXML
 	private Tab categoriasTab;
 	@FXML
@@ -103,7 +104,7 @@ public class RecetaFrameRootController {
 	private Button eliminarCateButton;
 	private ObservableList<CategoriaItem> cateData;
 
-	// pestaña ingredientes
+	// pestaï¿½a ingredientes
 	@FXML
 	private Tab ingredientesTab;
 	@FXML
@@ -120,7 +121,7 @@ public class RecetaFrameRootController {
 	private Button eliminarIngreButton;
 	private ObservableList<TipoIngredienteItem> ingreData;
 
-	// pestaña medidas
+	// pestaï¿½a medidas
 	@FXML
 	private Tab medidasTab;
 	@FXML
@@ -143,7 +144,7 @@ public class RecetaFrameRootController {
 	private Button eliminarMedidaButton;
 	private ObservableList<MedidaItem> medidaData;
 
-	// pestaña anotaciones
+	// pestaï¿½a anotaciones
 	@FXML
 	private Tab anotacionesTab;
 	@FXML
@@ -224,7 +225,6 @@ public class RecetaFrameRootController {
 
 	private void initCantidadRecetasLabel() {
 		cantidadRecetaLabel.setText(Integer.toString(recetData.size()));
-
 	}
 
 	private void initTabRecetas() {
@@ -245,14 +245,15 @@ public class RecetaFrameRootController {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
-		recetData = FXCollections.observableArrayList(recetas);
+		recetData = FXCollections.observableArrayList();
+		recetas.forEach(r -> recetData.add(RecetaListItemFX.fromRecetaListItem(r)));
 	}
 
 	private void initRecetTable() {
 		recetaNombreColumn.setCellValueFactory(cell -> cell.getValue()
 				.nombreProperty());
 		recetaNombreColumn.setCellFactory(TextFieldTableCell
-				.<RecetaListItem, String> forTableColumn(StringConverterFactory
+				.<RecetaListItemFX, String> forTableColumn(StringConverterFactory
 						.forString()));
 		recetaNombreColumn.setOnEditCommit(cellEditEvent -> cellEditEvent
 				.getRowValue().setNombre(cellEditEvent.getNewValue()));
@@ -260,36 +261,36 @@ public class RecetaFrameRootController {
 		recetaParaColumn.setCellValueFactory(cell -> cell.getValue()
 				.paraProperty());
 		recetaParaColumn.setCellFactory(TextFieldTableCell
-				.<RecetaListItem, String> forTableColumn(StringConverterFactory
+				.<RecetaListItemFX, String> forTableColumn(StringConverterFactory
 						.forString()));
 		recetaParaColumn.setOnEditCommit(cellEditEvent -> cellEditEvent
 				.getRowValue().setPara(cellEditEvent.getNewValue()));
 
 		recetaTiempoTotalColumn
-				.setCellValueFactory(new PropertyValueFactory<RecetaListItem, Integer>(
+				.setCellValueFactory(new PropertyValueFactory<RecetaListItemFX, Integer>(
 						"tiempoTotal"));
 		recetaTiempoTotalColumn
 				.setCellFactory(TextFieldTableCell
-						.<RecetaListItem, Integer> forTableColumn(StringConverterFactory
+						.<RecetaListItemFX, Integer> forTableColumn(StringConverterFactory
 								.forInteger()));
 		recetaTiempoTotalColumn.setOnEditCommit(cellEditEvent -> cellEditEvent
 				.getRowValue().setTiempoTotal(cellEditEvent.getNewValue()));
 
 		recetaFechaCreacionColumn
-				.setCellValueFactory(new PropertyValueFactory<RecetaListItem, Date>(
+				.setCellValueFactory(new PropertyValueFactory<RecetaListItemFX, Date>(
 						"fechaCreacion"));
 		recetaFechaCreacionColumn.setCellFactory(TextFieldTableCell
-				.<RecetaListItem, Date> forTableColumn(new DateStringConverter(
+				.<RecetaListItemFX, Date> forTableColumn(new DateStringConverter(
 						"dd/MM/yyyy")));
 		recetaFechaCreacionColumn
 				.setOnEditCommit(cellEditEvent -> cellEditEvent.getRowValue()
 						.setFechaCreacion(cellEditEvent.getNewValue()));
 
 		recetaCategoriaColumn
-				.setCellValueFactory(new PropertyValueFactory<RecetaListItem, String>(
+				.setCellValueFactory(new PropertyValueFactory<RecetaListItemFX, String>(
 						"categoria"));
 		recetaCategoriaColumn.setCellFactory(TextFieldTableCell
-				.<RecetaListItem, String> forTableColumn(StringConverterFactory
+				.<RecetaListItemFX, String> forTableColumn(StringConverterFactory
 						.forString()));
 		recetaCategoriaColumn.setOnEditCommit(cellEditEvent -> cellEditEvent
 				.getRowValue().setPara(cellEditEvent.getNewValue()));
@@ -297,9 +298,7 @@ public class RecetaFrameRootController {
 
 	private void initCombosReceta() {
 		CategoriaItem ci = new CategoriaItem();
-		ci.setDescripcion("<Todas>"); // TODO modificar toString()'s de los
-										// Items para que solo devuelvan su
-										// campo String.
+		ci.setDescripcion("<Todas>");
 		categoriaItemCombo.setValue(ci);
 		Task<ObservableList<CategoriaItem>> task = new Task<ObservableList<CategoriaItem>>() {
 			@Override
@@ -490,7 +489,7 @@ public class RecetaFrameRootController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			recetTable.getItems().add(item.getRecetaListItem());
+			recetTable.getItems().add(RecetaListItemFX.fromRecetaListItem(item.toRecetaListItem()));
 		});
 		initCantidadRecetasLabel();
 	}
@@ -544,7 +543,7 @@ public class RecetaFrameRootController {
 				ServiceLocator.getRecetasService().modificarReceta(item);
 				int i = recetTable.getSelectionModel().getSelectedIndex();
 
-				recetTable.getItems().set(i, item.getRecetaListItem());
+				recetTable.getItems().set(i, RecetaListItemFX.fromRecetaListItem(item.toRecetaListItem()));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -1,15 +1,11 @@
 package dad.recetapp.services.items;
 
 import dad.recetapp.services.IItem;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class InstruccionItem implements IItem {
 	private Long id;
-	private IntegerProperty orden = new SimpleIntegerProperty();
-	private StringProperty descripcion = new SimpleStringProperty();
+	private Integer orden;
+	private String descripcion;
 
 	public Long getId() {
 		return id;
@@ -20,31 +16,24 @@ public class InstruccionItem implements IItem {
 	}
 
 	public Integer getOrden() {
-		return orden.getValue();
-	}
-
-	public void setOrden(Integer orden) {
-		this.orden.setValue(orden);
-	}
-
-	public String getDescripcion() {
-		return descripcion.getValue();
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion.setValue(descripcion);
-	}
-
-	public IntegerProperty ordenProperty() {
 		return orden;
 	}
 
-	public StringProperty descripcionProperty() {
+	public void setOrden(Integer orden) {
+		this.orden = orden;
+	}
+
+	public String getDescripcion() {
 		return descripcion;
 	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	@Override
 	public String toString() {
-		return descripcion.getValue();
+		return descripcion;
 	}
 
 }
