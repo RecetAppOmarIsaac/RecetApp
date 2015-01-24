@@ -1,8 +1,8 @@
-package dad.recetapp;
+package dad.recetapp.tests;
 
 import java.io.IOException;
 
-import dad.recetapp.ui.fxml.RecetaFrameRootController;
+import dad.recetapp.ui.controllers.RecetaFrameRootController;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
