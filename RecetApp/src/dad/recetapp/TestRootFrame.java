@@ -32,13 +32,9 @@ public class TestRootFrame extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(TestRootFrame.class.getResource("ui/fxml/recetaFrameRoot.fxml"));
             rootLayout = (AnchorPane) loader.load();
-
-           
             Scene scene = new Scene(rootLayout);
-            
             primaryStage.setScene(scene);
             RecetaFrameRootController controller=loader.getController();
-
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

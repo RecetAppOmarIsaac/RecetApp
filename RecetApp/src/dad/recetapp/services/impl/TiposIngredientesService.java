@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ITiposIngredientesService;
@@ -14,20 +15,26 @@ import dad.recetapp.services.items.TipoIngredienteItem;
 public class TiposIngredientesService implements ITiposIngredientesService {
 
 	@Override
-	public void crearTipoIngrediente(TipoIngredienteItem tipo) throws ServiceException {
+	public Long crearTipoIngrediente(TipoIngredienteItem tipo) throws ServiceException {
+		Long id=null;
 		if (tipo==null)throw new IllegalArgumentException("Debe especificar una tipo de ingrediente para crearlo");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement(
-					"insert into tipos_ingredientes (nombre)"
-							+"values(?)"
-					);
+					"insert into tipos_ingredientes (nombre) values(?)",Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, tipo.getNombre());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys(); 
+			if (rs.next()) {
+                id = rs.getLong(1);
+            }
+            rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new ServiceException("No se ha podido crear la medida "+ e);
 		}
+		
+		return id;
 
 	}
 

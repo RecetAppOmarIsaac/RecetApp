@@ -186,12 +186,12 @@
 																<Insets left="5.0" right="5.0" />
 															</FlowPane.margin>
 														</TextField>
-														<Button fx:id="anyadirIngreButton" mnemonicParsing="false" text="Añadir">
+														<Button fx:id="anyadirIngreButton" mnemonicParsing="false" onAction="#onAnyadirIngredienteButtonClick" text="Añadir">
 															<FlowPane.margin>
 																<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 															</FlowPane.margin>
 														</Button>
-														<Button fx:id="eliminarIngreButton" mnemonicParsing="false" text="Eliminar">
+														<Button fx:id="eliminarIngreButton" mnemonicParsing="false" onAction="#onEliminarIngredienteButtonClick" text="Eliminar">
 															<FlowPane.margin>
 																<Insets bottom="5.0" right="5.0" top="5.0" />
 															</FlowPane.margin>
@@ -238,12 +238,12 @@
 															</FlowPane.margin>
 														</Label>
 														<TextField fx:id="abrevMedidaTextField" />
-														<Button fx:id="anyadirMedidaButton" mnemonicParsing="false" text="Añadir">
+														<Button fx:id="anyadirMedidaButton" mnemonicParsing="false" onAction="#onAnyadirMedidasButtonClick" text="Añadir">
 															<FlowPane.margin>
 																<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 															</FlowPane.margin>
 														</Button>
-														<Button fx:id="eliminarMedidaButton" mnemonicParsing="false" text="Eliminar" />
+														<Button fx:id="eliminarMedidaButton" mnemonicParsing="false" onAction="#onEliminarMedidaButtonClick" text="Eliminar" />
 													</children>
 												</FlowPane>
 											</top>
@@ -283,12 +283,12 @@
 																<Insets bottom="5.0" right="5.0" top="5.0" />
 															</FlowPane.margin>
 														</TextField>
-														<Button fx:id="anyadirAnotaButton" mnemonicParsing="false" text="Añadir">
+														<Button fx:id="anyadirAnotaButton" mnemonicParsing="false" onAction="#onAnyadirAnotaButtonClick" text="Añadir">
 															<FlowPane.margin>
 																<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 															</FlowPane.margin>
 														</Button>
-														<Button fx:id="eliminarAnotaButton" mnemonicParsing="false" text="Eliminar" />
+														<Button fx:id="eliminarAnotaButton" mnemonicParsing="false" onAction="#onEliminarAnotaButtonClick" text="Eliminar" />
 													</children>
 												</FlowPane>
 											</top>

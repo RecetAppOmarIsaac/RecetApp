@@ -1,8 +1,12 @@
 package dad.recetapp.ui.fxml;
 
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+
+
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -239,16 +243,60 @@ public class RecetaFrameRootController {
 	private void initialize() {
 		initCantidadRecetasLabel();
 		initValidationCategorias();
+		initValidationIngredientes();
+		initValidationMedidas();
+		initValidationAnotaciones();
 	}
+	
+
+	
+
+	
+
 	private void initValidationCategorias() {
 		ValidationSupport validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(descripCatTextField, Validator.createEmptyValidator("Introduzca un nombre para la receta"));
+		validationSupport.registerValidator(descripCatTextField, Validator.createEmptyValidator("Introduzca un descripción para la categoría"));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				anyadirCateButton.setDisable(false);
 			else
 				anyadirCateButton.setDisable(true);
+		});
+	}
+	
+	private void initValidationIngredientes() {
+		ValidationSupport validationSupport = new ValidationSupport();
+		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
+		validationSupport.registerValidator(nombreIngreTextField, Validator.createEmptyValidator("Introduzca un nombre para el ingrediente"));
+		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue && !newValue)
+				anyadirIngreButton.setDisable(false);
+			else
+				anyadirIngreButton.setDisable(true);
+		});
+	}
+	private void initValidationMedidas() {
+		ValidationSupport validationSupport = new ValidationSupport();
+		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
+		validationSupport.registerValidator(nombreMedidaTextField, Validator.createEmptyValidator("Introduzca un nombre para la medida"));
+		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue && !newValue)
+				anyadirMedidaButton.setDisable(false);
+			else
+				anyadirMedidaButton.setDisable(true);
+		});
+	}
+	
+	private void initValidationAnotaciones() {
+		ValidationSupport validationSupport = new ValidationSupport();
+		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
+		validationSupport.registerValidator(descripAnotaTextField, Validator.createEmptyValidator("Introduzca un descripción para la categoría"));
+		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue && !newValue)
+				anyadirAnotaButton.setDisable(false);
+			else
+				anyadirAnotaButton.setDisable(true);
 		});
 	}
 	
@@ -594,18 +642,17 @@ public class RecetaFrameRootController {
 			try {
 				Long id = ServiceLocator.getRecetasService().crearReceta(item);
 				item.setId(id);
-				System.out.println("Id creada: " + id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (ServiceException e) {
+				mensajeError(e);
 			}
-			recetTable.getItems()
-					.add(RecetaListItemFX.fromRecetaListItem(item
+			recetData.add(RecetaListItemFX.fromRecetaListItem(item
 							.toRecetaListItem()));
 		});
 		initCantidadRecetasLabel();
 	}
+	
 
+	
 	@FXML
 	private void onEliminarRecetaButtonClick() {
 		int selectedIndex = recetTable.getSelectionModel().getSelectedIndex();
@@ -617,24 +664,22 @@ public class RecetaFrameRootController {
 						"Eliminar receta",
 						"¿Desea eliminar la receta: '"
 								+ recetTable.getItems().get(selectedIndex) + "'?",
-						"No se prodra recuperar los cambios");
+						"No se podra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					recetTable.getItems().remove(selectedIndex);
+					recetData.remove(selectedIndex);
 					Thread eliminarRecetHilo = new java.lang.Thread() {
 						public void run() {
 							try {
 								ServiceLocator.getRecetasService().eliminarReceta(
 										recetaBorrar.getId());
 								Platform.runLater(new Runnable() {
-									@Override
 									public void run() {
 										initCantidadRecetasLabel();
 									}
 								});
 							} catch (ServiceException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								mensajeError(e);
 							}
 						};
 					};
@@ -658,11 +703,8 @@ public class RecetaFrameRootController {
 		try {
 			receta = ServiceLocator.getRecetasService().obtenerReceta(
 					recetaEditar.getId());
-		} catch (ServiceException e1) {
-			// TODO Auto-generated catch block
-			// e1.printStackTrace();
-			System.err.println("Excepcion: " + e1.getMessage() + " causa: "
-					+ e1.getCause());
+		} catch (ServiceException e) {
+			mensajeError(e);
 		}
 		System.out.println("receta= " + receta);
 		ItemDialog<RecetaItem> dialog = ItemDialogFactory.forRecetaItem(receta);
@@ -674,14 +716,10 @@ public class RecetaFrameRootController {
 								.modificarReceta(item);
 						int i = recetTable.getSelectionModel()
 								.getSelectedIndex();
-
-						recetTable.getItems().set(
-								i,
-								RecetaListItemFX.fromRecetaListItem(item
+						recetData.set(i, RecetaListItemFX.fromRecetaListItem(item
 										.toRecetaListItem()));
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (ServiceException e) {
+						mensajeError(e);
 					}
 
 				});
@@ -701,8 +739,6 @@ public class RecetaFrameRootController {
 					recetasFiltradas = ServiceLocator.getRecetasService().buscarRecetas(campoNombre,campoTiempo,
 										categoriaItemCombo.getSelectionModel()
 												.getSelectedItem().getId());
-					
-
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -710,17 +746,37 @@ public class RecetaFrameRootController {
 							for (RecetaListItem recetaFiltrada : recetasFiltradas) {
 								recetData.add(RecetaListItemFX
 										.fromRecetaListItem(recetaFiltrada));
+							initCantidadRecetasLabel();
 							}
 						}
 					});
 				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mensajeError(e);
 				}
 			};
 		};
 		filtroRecetHilo.start();
 	}
+	
+	@FXML
+	private void onAnyadirCategoriaButtonClick() {
+		CategoriaItem cateNueva=new CategoriaItem();
+		cateNueva.setDescripcion(descripCatTextField.getText());
+		Thread anyadirCateHilo = new java.lang.Thread() {
+			public void run() {
+				try {
+					Long id = ServiceLocator.getCategoriasService().crearCategoria(cateNueva);
+					cateNueva.setId(id);
+				} catch (ServiceException e) {
+					mensajeError(e);
+				}
+			};
+		};
+			anyadirCateHilo.start();
+			cateData.add(cateNueva);
+			descripCatTextField.setText("");
+	}
+	
 	
 	@FXML
 	private void onEliminarCategoriaButtonClick() {
@@ -736,15 +792,14 @@ public class RecetaFrameRootController {
 						"No se prodra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					cateTable.getItems().remove(selectedIndex);
+					cateData.remove(selectedIndex);
 					Thread eliminarCateHilo = new java.lang.Thread() {
 						public void run() {
 							try {
 								ServiceLocator.getCategoriasService().eliminarCategoria(
 										cateBorrar.getId());
 							} catch (ServiceException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								mensajeError(e);
 							}
 						};
 					};
@@ -754,25 +809,179 @@ public class RecetaFrameRootController {
 				}
 
 				}
-		});
-			
+		});		
 	}
 	
 	@FXML
-	private void onAnyadirCategoriaButtonClick() {
-		CategoriaItem cateNueva=new CategoriaItem();
-		cateNueva.setDescripcion(descripCatTextField.getText());
-			try {
-				Long id = ServiceLocator.getCategoriasService().crearCategoria(cateNueva);
-				cateNueva.setId(id);
-				System.out.println("Id creada: " + id);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			cateTable.getItems().add(cateNueva);
-			descripCatTextField.setText("");
+	private void onAnyadirIngredienteButtonClick() {
+		TipoIngredienteItem ingreNuevo=new TipoIngredienteItem();
+		ingreNuevo.setNombre(nombreIngreTextField.getText());
+		Thread anyadirIngreHilo = new java.lang.Thread() {
+			public void run() {
+				try {
+					Long id = ServiceLocator.getTipoIngredienteService().crearTipoIngrediente(ingreNuevo);
+					ingreNuevo.setId(id);
+					ingreData.add(ingreNuevo);
+				} catch (ServiceException e) {
+					mensajeError(e);
+				}
+			};
+		};
+		anyadirIngreHilo.start();
+		nombreIngreTextField.setText("");
+	}
+	
+	@FXML
+	private void onEliminarIngredienteButtonClick() {
+		int selectedIndex = ingreTable.getSelectionModel().getSelectedIndex();
+		 TipoIngredienteItem ingreBorrar = ingreTable.getItems().get(selectedIndex);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				Alert alert = AlertFactory.createConfirmationAlert(
+						"Eliminar ingrediente",
+						"¿Desea eliminar el ingrediente: '"
+								+ ingreTable.getItems().get(selectedIndex) + "'?",
+						"No se prodra recuperar los cambios");
+				java.util.Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					ingreData.remove(selectedIndex);
+					Thread eliminarIngreHilo = new java.lang.Thread() {
+						public void run() {
+							try {
+								ServiceLocator.getTipoIngredienteService().eliminarTipoIngrediente(ingreBorrar.getId());
+							} catch (ServiceException e) {
+								mensajeError(e);
+							}
+						};
+					};
+					eliminarIngreHilo.start();
+				} else {
+					alert.close();
+				}
+
+				}
+		});		
+	}
+	
+	@FXML
+	private void onAnyadirMedidasButtonClick() {
+		MedidaItem medidaNueva=new MedidaItem();
+		medidaNueva.setNombre(nombreMedidaTextField.getText());
+		if (!abrevMedidaTextField.equals("")) {
+			medidaNueva.setAbreviatura(abrevMedidaTextField.getText());
+		}
+		Thread anyadirMedidaHilo = new java.lang.Thread() {
+			public void run() {
+				try {
+					Long id = ServiceLocator.getMedidasService().crearMedida(medidaNueva);
+					medidaNueva.setId(id);
+					medidaData.add(medidaNueva);	
+				} catch (ServiceException e) {
+					mensajeError(e);
+				}
+			};
+		};
+		anyadirMedidaHilo.start();
+		nombreMedidaTextField.setText("");
+		abrevMedidaTextField.setText("");
+	
+	}
+	
+	@FXML
+	private void onEliminarMedidaButtonClick() {
+		int selectedIndex = medidasTable.getSelectionModel().getSelectedIndex();
+		  MedidaItem medidaBorrar = medidasTable.getItems().get(selectedIndex);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				Alert alert = AlertFactory.createConfirmationAlert(
+						"Eliminar medida",
+						"¿Desea eliminar la medida: '"
+								+ medidasTable.getItems().get(selectedIndex) + "'?",
+						"No se prodra recuperar los cambios");
+				java.util.Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					medidaData.remove(selectedIndex);
+					Thread eliminarMedidaHilo = new java.lang.Thread() {
+						public void run() {
+							try {
+								ServiceLocator.getMedidasService().eliminarMedida(medidaBorrar.getId());
+							} catch (ServiceException e) {
+								mensajeError(e);
+							}
+						};
+					};
+					eliminarMedidaHilo.start();
+				} else {
+					alert.close();
+				}
+
+				}
+		});		
+	}
+	
+	@FXML
+	private void onAnyadirAnotaButtonClick() {
+		TipoAnotacionItem anotacionNueva=new TipoAnotacionItem();
+		anotacionNueva.setDescripcion(descripAnotaTextField.getText());
+		Thread anyadirAnotaHilo = new java.lang.Thread() {
+			public void run() {
+				try {
+					Long id = ServiceLocator.getTiposAnotacionesService().crearTipoAnotacion(anotacionNueva);
+					anotacionNueva.setId(id);
+					anotacionData.add(anotacionNueva);	
+				} catch (ServiceException e) {
+					mensajeError(e);
+				}
+			};
+		};
+		anyadirAnotaHilo.start();
+		descripAnotaTextField.setText("");
+	
+	}
+	
+	@FXML
+	private void onEliminarAnotaButtonClick() {
+		int selectedIndex = anotacionesTable.getSelectionModel().getSelectedIndex();
+		  TipoAnotacionItem anotaBorrar = anotacionesTable.getItems().get(selectedIndex);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				Alert alert = AlertFactory.createConfirmationAlert(
+						"Eliminar anotacion",
+						"¿Desea eliminar la anotacion: '"
+								+ anotacionesTable.getItems().get(selectedIndex) + "'?",
+						"No se prodra recuperar los cambios");
+				java.util.Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					anotacionData.remove(selectedIndex);
+					Thread eliminarAnotaHilo = new java.lang.Thread() {
+						public void run() {
+							try {
+								ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(anotaBorrar.getId());
+							} catch (ServiceException e) {
+								mensajeError(e);
+							}
+						};
+					};
+					eliminarAnotaHilo.start();
+				} else {
+					alert.close();
+				}
+
+				}
+		});		
 	}
 
+	private void mensajeError(Exception e) {
+		Platform.runLater(new Runnable() {
+			public void run() {
+			Alert alert =AlertFactory.createErrorAlert("ERROR", e.getMessage());
+				alert.show();
+			}
+			
+		});
+	}
 
 }

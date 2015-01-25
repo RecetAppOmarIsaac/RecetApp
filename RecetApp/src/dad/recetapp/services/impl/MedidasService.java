@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+
+import java.sql.Statement;
+
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.IMedidasService;
 import dad.recetapp.services.ServiceException;
@@ -14,21 +17,28 @@ import dad.recetapp.services.items.MedidaItem;
 public class MedidasService implements IMedidasService {
 
 	@Override
-	public void crearMedida(MedidaItem medida) throws ServiceException {
+	public Long crearMedida(MedidaItem medida) throws ServiceException {
+		Long id=null;
 		if (medida==null)throw new IllegalArgumentException("Debe especificar una medida para crearla");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement(
 					"insert into medidas (nombre, abreviatura)"
-							+"values(?,?)"
-					);
+							+"values(?,?)",Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, medida.getNombre());
 			stmt.setString(2, medida.getAbreviatura());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys(); 
+			if (rs.next()) {
+                id = rs.getLong(1);
+            }
+            rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new ServiceException("No se ha podido crear la medida "+ e);
 		}
+		
+		return id;
 
 	}
 

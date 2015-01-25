@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ITiposAnotacionesService;
@@ -13,22 +14,31 @@ import dad.recetapp.services.items.TipoAnotacionItem;
 
 public class TiposAnotacionesService implements ITiposAnotacionesService {
 
+	
+
 	@Override
-	public void crearTipoAnotacion(TipoAnotacionItem tipo)
+	public Long crearTipoAnotacion(TipoAnotacionItem tipo)
 			throws ServiceException {
+		Long id=null;
 		if (tipo==null)throw new IllegalArgumentException("Debe especificar un tipo de anotacion para crearlo");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement(
 					"insert into tipos_anotaciones (descripcion)"
-							+"values(?)"
-					);
+							+"values(?)",Statement.RETURN_GENERATED_KEYS);
+					
 			stmt.setString(1, tipo.getDescripcion());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys(); 
+            if (rs.next()) {
+                id = rs.getLong(1);
+            }
+            rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new ServiceException("No se ha podido crear el tipo de anotacion"+ e);
 		}
+		return id;
 
 	}
 
