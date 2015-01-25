@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ICategoriasService;
@@ -14,20 +15,27 @@ import dad.recetapp.services.items.CategoriaItem;
 public class CategoriasService implements ICategoriasService {
 
 	@Override
-	public void crearCategoria(CategoriaItem categoria) throws ServiceException {
+	public Long crearCategoria(CategoriaItem categoria) throws ServiceException {
+		Long id = null;
 		if (categoria==null)throw new IllegalArgumentException("Debe especificar una categor�a  para crearla");
 		try {
 			Connection conn=DataBase.getConnection();
 			PreparedStatement stmt=conn.prepareStatement(
 					"insert into categorias (descripcion)"
-							+"values(?)"
-					);
+							+"values(?)",Statement.RETURN_GENERATED_KEYS);
+					
 			stmt.setString(1, categoria.getDescripcion());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys(); 
+            if (rs.next()) {
+                id = rs.getLong(1);
+            }
+            rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new ServiceException("No se ha podido crear la categor�a "+ e);
 		}
+		return id;
 
 	}
 

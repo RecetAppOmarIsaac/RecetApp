@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 
 public class RecetaDialogController implements IDialogController<RecetaItem> {
-	public static final String NEW_CAPTION = "AÃ±adir";
+	public static final String NEW_CAPTION = "Añadir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
 	@FXML private Parent rootPane;

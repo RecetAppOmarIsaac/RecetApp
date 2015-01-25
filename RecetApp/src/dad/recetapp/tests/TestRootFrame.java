@@ -4,10 +4,8 @@ import java.io.IOException;
 
 import dad.recetapp.ui.controllers.RecetaFrameRootController;
 import javafx.application.Application;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -28,18 +26,15 @@ public class TestRootFrame extends Application {
     /**
      * Initializes the root layout.
      */
-    public void initRootLayout() {
+    @SuppressWarnings("unused")
+	public void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(TestRootFrame.class.getResource("ui/fxml/recetaFrameRoot.fxml"));
             rootLayout = (AnchorPane) loader.load();
-
-           
             Scene scene = new Scene(rootLayout);
-            
             primaryStage.setScene(scene);
             RecetaFrameRootController controller=loader.getController();
-
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,4 +51,5 @@ public class TestRootFrame extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
 }
