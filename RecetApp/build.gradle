@@ -19,7 +19,7 @@ sourceSets {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'dad.recetapp.TestInstruccionDialog'
+		attributes 'Main-Class': 'dad.recetapp.Main'
 	}
 	from {
 		configurations.compile.collect {

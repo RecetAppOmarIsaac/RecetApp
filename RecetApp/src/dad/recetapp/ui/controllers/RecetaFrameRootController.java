@@ -1,4 +1,4 @@
-package dad.recetapp.ui.fxml;
+package dad.recetapp.ui.controllers;
 
 
 import java.util.Arrays;

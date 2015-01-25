@@ -1,4 +1,4 @@
-package dad.recetapp;
+package dad.recetapp.tests;
 
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.*;
