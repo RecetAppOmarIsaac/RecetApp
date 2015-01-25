@@ -30,7 +30,7 @@ public class TestRootFrame extends Application {
 	public void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(TestRootFrame.class.getResource("ui/fxml/recetaFrameRoot.fxml"));
+            loader.setLocation(TestRootFrame.class.getResource("/dad/recetapp/ui/fxml/recetaFrameRoot.fxml"));
             rootLayout = (AnchorPane) loader.load();
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
