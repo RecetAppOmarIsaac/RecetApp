@@ -1,8 +1,12 @@
 package dad.recetapp.tests;
 
-import dad.recetapp.ui.ItemDialogFactory;
+import java.io.IOException;
+
 import dad.recetapp.ui.Splashscreen;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
@@ -15,7 +19,25 @@ public class TestSplashscreen extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		Splashscreen sp = new Splashscreen();
-		sp.setOnFinished(ae -> ItemDialogFactory.forInstruccionItem().show());
+		sp.setOnFinished(ae -> initRootFrame().show());
 		sp.show(4000);
 	}
+
+	private  Stage initRootFrame() {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaFrameRoot.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("RecetApp");
+		stage.getIcons().add(dad.recetapp.ui.images.Iconos.LOGO_ICON);
+		return stage;
+	}
+	
 }

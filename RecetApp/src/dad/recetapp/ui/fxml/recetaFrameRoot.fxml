@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -19,64 +21,76 @@
 										<BorderPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 											<center>
 												<BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-													<center>
-														<TableView fx:id="recetTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-															<columns>
-																<TableColumn fx:id="recetaNombreColumn" prefWidth="75.0" text="Nombre" />
-																<TableColumn fx:id="recetaParaColumn" prefWidth="75.0" text="Para" />
-																<TableColumn fx:id="recetaTiempoTotalColumn" prefWidth="75.0" text="Tiempo total" />
-																<TableColumn fx:id="recetaFechaCreacionColumn" prefWidth="75.0" text="Fecha de creación" />
-																<TableColumn fx:id="recetaCategoriaColumn" prefWidth="75.0" text="Categoría" />
-															</columns>
-															<columnResizePolicy>
-																<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-															</columnResizePolicy>
-															<BorderPane.margin>
-																<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-															</BorderPane.margin>
-														</TableView>
-													</center>
-													<top>
-														
-                                                <GridPane fx:id="anyadirRecetaPanel">
-                                                  <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="62.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="144.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="33.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="40.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="40.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="60.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="126.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
-                                                   <children>
-      																<Label fx:id="nombreRecetaLabel" text="Nombre:">
-                                                         <GridPane.margin>
-                                                            <Insets left="10.0" />
-                                                         </GridPane.margin>
-                                                      </Label>
-      																<TextField fx:id="nombreRecetaTextField" onKeyReleased="#onBuscarRecetasEvent" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1">
-                                                         <GridPane.margin>
-                                                            <Insets right="10.0" />
-                                                         </GridPane.margin>
-      																</TextField>
-      																<Label fx:id="hastaRecetaLabel" prefHeight="17.0" prefWidth="39.0" text="Hasta:" GridPane.columnIndex="2" />
-      																<Label fx:id="minutoRecetaLabel" text="M" GridPane.columnIndex="4" />
-      																<Label fx:id="segundoRecetaLabel" prefHeight="17.0" prefWidth="5.0" text="S" GridPane.columnIndex="6" />
-      																<Label fx:id="categoriaRecetaLabel" prefHeight="17.0" prefWidth="55.0" text="Categoría:" GridPane.columnIndex="7" />
-      																<ComboBox fx:id="categoriaItemCombo" onAction="#onBuscarRecetasEvent" prefHeight="25.0" prefWidth="114.0" GridPane.columnIndex="8" />
-                                                   </children>
+                                       <top>
+                                          <TitledPane animated="false" collapsible="false" prefHeight="75.0" prefWidth="707.0" text="Filtrar:" BorderPane.alignment="CENTER">
+                                             <content>
+      														
+                                                      <GridPane fx:id="anyadirRecetaPanel">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="62.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="144.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="33.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="40.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="40.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="60.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="126.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+            																<Label fx:id="nombreRecetaLabel" text="Nombre:">
+                                                               <GridPane.margin>
+                                                                  <Insets left="10.0" />
+                                                               </GridPane.margin>
+                                                            </Label>
+            																<TextField fx:id="nombreRecetaTextField" onKeyReleased="#onBuscarRecetasEvent" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1">
+                                                               <GridPane.margin>
+                                                                  <Insets right="10.0" />
+                                                               </GridPane.margin>
+            																</TextField>
+            																<Label fx:id="hastaRecetaLabel" prefHeight="17.0" prefWidth="39.0" text="Hasta:" GridPane.columnIndex="2" />
+            																<Label fx:id="minutoRecetaLabel" text="M" GridPane.columnIndex="4" />
+            																<Label fx:id="segundoRecetaLabel" prefHeight="17.0" prefWidth="5.0" text="S" GridPane.columnIndex="6" />
+            																<Label fx:id="categoriaRecetaLabel" prefHeight="17.0" prefWidth="55.0" text="Categoría:" GridPane.columnIndex="7" />
+            																<ComboBox fx:id="categoriaItemCombo" onAction="#onBuscarRecetasEvent" prefHeight="25.0" prefWidth="114.0" GridPane.columnIndex="8" />
+                                                         </children>
+                                                      </GridPane>
+                                             </content>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
                                              <BorderPane.margin>
-                                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                                <Insets left="5.0" right="5.0" top="5.0" />
                                              </BorderPane.margin>
-                                                </GridPane>
-															
-													
-													</top>
+                                          </TitledPane>
+                                       </top>
+                                       <center>
+                                          <TitledPane animated="false" collapsible="false" prefHeight="346.0" prefWidth="707.0" text="Recetas:" BorderPane.alignment="CENTER">
+                                             <content>
+      														<TableView fx:id="recetTable" prefHeight="200.0" prefWidth="200.0">
+      															<columns>
+      																<TableColumn fx:id="recetaNombreColumn" prefWidth="75.0" text="Nombre" />
+      																<TableColumn fx:id="recetaParaColumn" prefWidth="75.0" text="Para" />
+      																<TableColumn fx:id="recetaTiempoTotalColumn" prefWidth="75.0" text="Tiempo total" />
+      																<TableColumn fx:id="recetaFechaCreacionColumn" prefWidth="75.0" text="Fecha de creación" />
+      																<TableColumn fx:id="recetaCategoriaColumn" prefWidth="75.0" text="Categoría" />
+      															</columns>
+      															<columnResizePolicy>
+      																<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      															</columnResizePolicy>
+      														</TableView>
+                                             </content>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <BorderPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </BorderPane.margin>
+                                          </TitledPane>
+                                       </center>
 												</BorderPane>
 											</center>
 											<right>

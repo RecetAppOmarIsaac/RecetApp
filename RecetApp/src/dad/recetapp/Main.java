@@ -1,15 +1,14 @@
 package dad.recetapp;
 
+import java.io.IOException;
 
-import dad.recetapp.services.ServiceException;
-import dad.recetapp.services.ServiceLocator;
+
+import dad.recetapp.ui.Splashscreen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
 	public static void main(String[] args) {
@@ -18,6 +17,12 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		Splashscreen sp = new Splashscreen();
+		sp.setOnFinished(ae -> lanzar().show());
+		sp.show(4000);
+	}
+	
+	private  Stage lanzar() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/dad/recetapp/ui/fxml/recetaFrameRoot.fxml"));
 
 		Parent root = null;
@@ -29,8 +34,12 @@ public class Main extends Application {
 		}
 		Scene scene = new Scene(root);
 
-		stage = new Stage();
+		Stage stage = new Stage();
 		stage.setScene(scene);
-		stage.show();
+		return stage;
 	}
+	
+	
+	
 }
+
