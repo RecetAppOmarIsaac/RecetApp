@@ -10,6 +10,7 @@ import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ITiposAnotacionesService;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.items.TipoAnotacionItem;
+import dad.recetapp.utils.Logs;
 
 
 public class TiposAnotacionesService implements ITiposAnotacionesService {
@@ -96,7 +97,7 @@ public class TiposAnotacionesService implements ITiposAnotacionesService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return tipos;
 	}
@@ -114,7 +115,7 @@ public class TiposAnotacionesService implements ITiposAnotacionesService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return count;
 	}
@@ -140,7 +141,7 @@ public class TiposAnotacionesService implements ITiposAnotacionesService {
 				rs.close();
 				stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Logs.log(e);
 			}
 			return tipo;
 		}

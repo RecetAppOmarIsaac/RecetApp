@@ -6,8 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 
-
-
+import dad.recetapp.utils.Logs;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
@@ -202,7 +201,7 @@ public class RecetaFrameRootController {
 			anotaciones = ServiceLocator.getTiposAnotacionesService()
 					.listarTiposAnotaciones();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		anotacionData = FXCollections.observableArrayList(anotaciones);
 
@@ -214,7 +213,7 @@ public class RecetaFrameRootController {
 			// cargo las recetas
 			medidas = ServiceLocator.getMedidasService().listarMedidas();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		medidaData = FXCollections.observableArrayList(medidas);
 	}
@@ -228,7 +227,7 @@ public class RecetaFrameRootController {
 
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logs.log(e);
 		}
 
 		ingreData = FXCollections.observableArrayList(Arrays
@@ -256,7 +255,7 @@ public class RecetaFrameRootController {
 	private void initValidationCategorias() {
 		ValidationSupport validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(descripCatTextField, Validator.createEmptyValidator("Introduzca un descripción para la categoría"));
+		validationSupport.registerValidator(descripCatTextField, Validator.createEmptyValidator("Introduzca un descripciï¿½n para la categorï¿½a"));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				anyadirCateButton.setDisable(false);
@@ -291,7 +290,7 @@ public class RecetaFrameRootController {
 	private void initValidationAnotaciones() {
 		ValidationSupport validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(descripAnotaTextField, Validator.createEmptyValidator("Introduzca un descripción para la categoría"));
+		validationSupport.registerValidator(descripAnotaTextField, Validator.createEmptyValidator("Introduzca un descripciï¿½n para la categorï¿½a"));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				anyadirAnotaButton.setDisable(false);
@@ -358,7 +357,7 @@ public class RecetaFrameRootController {
 			// cargo las recetas
 			recetas = ServiceLocator.getRecetasService().listarRecetas();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		recetData = FXCollections.observableArrayList();
 		recetas.forEach(r -> recetData.add(RecetaListItemFX
@@ -499,8 +498,7 @@ public class RecetaFrameRootController {
 		try {
 			c = ServiceLocator.getCategoriasService().listarCategoria();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logs.log(e);
 		}
 
 		cateData = FXCollections.observableArrayList(Arrays.asList(c));
@@ -618,7 +616,7 @@ public class RecetaFrameRootController {
 				.setCellValueFactory(new PropertyValueFactory<MedidaItem, String>(
 						"nombre"));
 		medidaNombreColumn.setCellFactory(TextFieldTableCell
-				.<MedidaItem, String> forTableColumn(StringConverterFactory
+				.<MedidaItem, String>forTableColumn(StringConverterFactory
 						.forString()));
 		medidaNombreColumn.setOnEditCommit(cellEditEvent -> cellEditEvent
 				.getRowValue().setNombre(cellEditEvent.getNewValue()));
@@ -662,7 +660,7 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar receta",
-						"¿Desea eliminar la receta: '"
+						"ï¿½Desea eliminar la receta: '"
 								+ recetTable.getItems().get(selectedIndex) + "'?",
 						"No se podra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
@@ -786,8 +784,8 @@ public class RecetaFrameRootController {
 			@Override
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
-						"Eliminar categoría",
-						"¿Desea eliminar la categoría: '"
+						"Eliminar categorï¿½a",
+						"ï¿½Desea eliminar la categorï¿½a: '"
 								+ cateTable.getItems().get(selectedIndex) + "'?",
 						"No se prodra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
@@ -840,7 +838,7 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar ingrediente",
-						"¿Desea eliminar el ingrediente: '"
+						"ï¿½Desea eliminar el ingrediente: '"
 								+ ingreTable.getItems().get(selectedIndex) + "'?",
 						"No se prodra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
@@ -897,7 +895,7 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar medida",
-						"¿Desea eliminar la medida: '"
+						"ï¿½Desea eliminar la medida: '"
 								+ medidasTable.getItems().get(selectedIndex) + "'?",
 						"No se prodra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
@@ -950,7 +948,7 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar anotacion",
-						"¿Desea eliminar la anotacion: '"
+						"ï¿½Desea eliminar la anotacion: '"
 								+ anotacionesTable.getItems().get(selectedIndex) + "'?",
 						"No se prodra recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();

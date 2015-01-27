@@ -13,6 +13,7 @@ import dad.recetapp.db.DataBase;
 import dad.recetapp.services.IMedidasService;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.items.MedidaItem;
+import dad.recetapp.utils.Logs;
 
 public class MedidasService implements IMedidasService {
 
@@ -98,7 +99,7 @@ public class MedidasService implements IMedidasService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return medidas;
 	}
@@ -115,7 +116,7 @@ public class MedidasService implements IMedidasService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return count;
 	}
@@ -141,7 +142,7 @@ public class MedidasService implements IMedidasService {
 				rs.close();
 				stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Logs.log(e);
 			}
 			return medida;
 		}
