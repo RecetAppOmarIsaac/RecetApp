@@ -6,8 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 
-
-
+import dad.recetapp.utils.Logs;
 
 
 
@@ -206,7 +205,7 @@ public class RecetaFrameRootController {
 			anotaciones = ServiceLocator.getTiposAnotacionesService()
 					.listarTiposAnotaciones();
 		} catch (ServiceException e) {
-			mensajeError(e);
+			Logs.log(e);
 		}
 		anotacionData = FXCollections.observableArrayList(anotaciones);
 
@@ -218,7 +217,7 @@ public class RecetaFrameRootController {
 			// cargo las recetas
 			medidas = ServiceLocator.getMedidasService().listarMedidas();
 		} catch (ServiceException e) {
-			mensajeError(e);
+			Logs.log(e);
 		}
 		medidaData = FXCollections.observableArrayList(medidas);
 	}
@@ -231,7 +230,7 @@ public class RecetaFrameRootController {
 					.listarTipoIngredientes();
 
 		} catch (ServiceException e) {
-			mensajeError(e);
+			Logs.log(e);
 		}
 
 		ingreData = FXCollections.observableArrayList(Arrays
@@ -372,7 +371,7 @@ public class RecetaFrameRootController {
 			// cargo las recetas
 			recetas = ServiceLocator.getRecetasService().listarRecetas();
 		} catch (ServiceException e) {
-			mensajeError(e);
+			Logs.log(e);
 		}
 		recetData = FXCollections.observableArrayList();
 		recetas.forEach(r -> recetData.add(RecetaListItemFX
@@ -486,7 +485,7 @@ public class RecetaFrameRootController {
 				try {
 					c = ServiceLocator.getCategoriasService().listarCategoria();
 				} catch (ServiceException e) {
-					mensajeError(e);
+					Logs.log(e);
 				}
 
 				return FXCollections.observableArrayList(Arrays.asList(c));
@@ -523,7 +522,7 @@ public class RecetaFrameRootController {
 		try {
 			c = ServiceLocator.getCategoriasService().listarCategoria();
 		} catch (ServiceException e) {
-			mensajeError(e);
+			Logs.log(e);
 		}
 
 		cateData = FXCollections.observableArrayList(Arrays.asList(c));

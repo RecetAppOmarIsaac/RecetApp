@@ -10,6 +10,7 @@ import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ITiposIngredientesService;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.items.TipoIngredienteItem;
+import dad.recetapp.utils.Logs;
 
 
 public class TiposIngredientesService implements ITiposIngredientesService {
@@ -94,7 +95,7 @@ public class TiposIngredientesService implements ITiposIngredientesService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return tiposIngredientes;
 	}
@@ -110,7 +111,7 @@ public class TiposIngredientesService implements ITiposIngredientesService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return count;
 	}
@@ -135,7 +136,7 @@ public class TiposIngredientesService implements ITiposIngredientesService {
 				rs.close();
 				stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Logs.log(e);
 			}
 			return tipo;
 		}
