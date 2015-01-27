@@ -10,6 +10,7 @@ import dad.recetapp.db.DataBase;
 import dad.recetapp.services.ICategoriasService;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.items.CategoriaItem;
+import dad.recetapp.utils.Logs;
 
 
 public class CategoriasService implements ICategoriasService {
@@ -93,7 +94,7 @@ public class CategoriasService implements ICategoriasService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return categorias;
 	}
@@ -110,7 +111,7 @@ public class CategoriasService implements ICategoriasService {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return count;
 	}
@@ -136,7 +137,7 @@ public class CategoriasService implements ICategoriasService {
 				rs.close();
 				stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Logs.log(e);
 			}
 			return tipo;
 		}

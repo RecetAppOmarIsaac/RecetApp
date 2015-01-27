@@ -1,5 +1,7 @@
 package dad.recetapp.db;
 
+import dad.recetapp.utils.Logs;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -89,7 +91,7 @@ public class DataBase {
 			DataBase.disconnect(c);
 			testOk = true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		return testOk;
 	}

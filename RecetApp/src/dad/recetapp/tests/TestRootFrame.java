@@ -3,6 +3,7 @@ package dad.recetapp.tests;
 import java.io.IOException;
 
 import dad.recetapp.ui.controllers.RecetaFrameRootController;
+import dad.recetapp.utils.Logs;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,7 +38,7 @@ public class TestRootFrame extends Application {
             RecetaFrameRootController controller=loader.getController();
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logs.log(e);
         }
     }
 

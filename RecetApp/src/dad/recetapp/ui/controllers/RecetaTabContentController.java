@@ -7,6 +7,7 @@ import dad.recetapp.ui.ItemDialog;
 import dad.recetapp.ui.ItemDialogFactory;
 import dad.recetapp.ui.model.items.IngredienteItemFX;
 import dad.recetapp.ui.model.items.InstruccionItemFX;
+import dad.recetapp.utils.Logs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -156,7 +157,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 		try {
 			categorias = ServiceLocator.getMedidasService().listarMedidas();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		medidaComboList = FXCollections.observableArrayList();
 		medidaComboList.addAll(categorias);
@@ -165,7 +166,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 		try {
 			tipoIngredientes = ServiceLocator.getTipoIngredienteService().listarTipoIngredientes();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			Logs.log(e);
 		}
 		tipoIngredienteComboList = FXCollections.observableArrayList();
 		tipoIngredienteComboList.addAll(tipoIngredientes);

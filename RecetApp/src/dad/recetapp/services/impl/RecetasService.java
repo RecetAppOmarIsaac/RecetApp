@@ -22,6 +22,7 @@ import dad.recetapp.services.items.RecetaListItem;
 import dad.recetapp.services.items.SeccionItem;
 import dad.recetapp.services.items.TipoAnotacionItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
+import dad.recetapp.utils.Logs;
 
 public class RecetasService implements IRecetasService {
     public Long crearReceta(RecetaItem receta) throws ServiceException {
@@ -67,7 +68,7 @@ public class RecetasService implements IRecetasService {
                 conn.rollback();
                 conn.setAutoCommit(true);
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                Logs.log(e1);
             }
             throw new ServiceException("Error al crear la receta '" + receta.getNombre() + "': " + e.getMessage());
         }
@@ -127,7 +128,7 @@ public class RecetasService implements IRecetasService {
                 conn.rollback();
                 conn.setAutoCommit(true);
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                Logs.log(e1);
             }
             throw new ServiceException("Error al crear la receta '" + receta.getNombre() + "': " + e.getMessage());
         }
