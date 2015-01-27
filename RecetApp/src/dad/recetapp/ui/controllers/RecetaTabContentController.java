@@ -176,7 +176,12 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 	public void setItem(Optional<SeccionItem> item) {
 		SeccionItem si = item.get();
 		seccion = Optional.of(si);
-		parentTab.ifPresent(tab -> tab.setText(si.getNombre()));
+		String nombre;
+		if (si.getNombre() == null || si.getNombre().equals(""))
+			nombre = "Nueva seccion";
+		else
+			nombre = si.getNombre();
+		parentTab.ifPresent(tab -> tab.setText(nombre));
 
 		seccionTextField.setText(si.getNombre());
 

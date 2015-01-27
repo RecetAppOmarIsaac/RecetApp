@@ -14,12 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import jfxtras.scene.control.ListSpinner;
 import jfxtras.scene.control.ListSpinnerIntegerList;
 import jfxtras.util.StringConverterFactory;
+
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
@@ -147,11 +149,14 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	Por lo pronto, parece que no se pueden asignar limites ni StringConverters via FXML, asi que hay que meterlos programaticamente.
 	 */
 	private void initSpinners() {
-		totalMinutosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 10000)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		totalMinutosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 240)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		totalMinutosSpinner.setBackground(Background.EMPTY);
 		totalSegundosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 59)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
-		thermoMinutosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 10000)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		totalSegundosSpinner.setBackground(Background.EMPTY);
+		thermoMinutosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 240)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
+		thermoMinutosSpinner.setBackground(Background.EMPTY);
 		thermoSegundosSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0, 59)).withEditable(true).withCyclic(true).withStringConverter(StringConverterFactory.forInteger());
-
+		thermoSegundosSpinner.setBackground(Background.EMPTY);
 		topGridPane.add(totalMinutosSpinner, 3, 0);
 		topGridPane.add(totalSegundosSpinner, 5, 0);
 		topGridPane.add(thermoMinutosSpinner, 3, 1);
