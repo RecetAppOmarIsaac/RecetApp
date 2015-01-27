@@ -35,6 +35,8 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 
 		Stage stage = new Stage();
+		stage.setTitle("RecetApp");
+		stage.getIcons().add(dad.recetapp.ui.images.Iconos.LOGO_ICON);
 		stage.setScene(scene);
 		return stage;
 	}

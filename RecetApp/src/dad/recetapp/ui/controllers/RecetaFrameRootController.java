@@ -8,6 +8,9 @@ import java.util.List;
 
 
 
+
+
+
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
@@ -29,6 +32,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.Event;
@@ -45,8 +49,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import javafx.util.converter.DateStringConverter;
@@ -182,8 +188,6 @@ public class RecetaFrameRootController {
 	@FXML
 	private Button eliminarAnotaButton;
 	private ObservableList<TipoAnotacionItem> anotacionData;
-
-
 	/**
 	 * The constructor. The constructor is called before the initialize()
 	 * method.
@@ -202,7 +206,7 @@ public class RecetaFrameRootController {
 			anotaciones = ServiceLocator.getTiposAnotacionesService()
 					.listarTiposAnotaciones();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			mensajeError(e);
 		}
 		anotacionData = FXCollections.observableArrayList(anotaciones);
 
@@ -214,7 +218,7 @@ public class RecetaFrameRootController {
 			// cargo las recetas
 			medidas = ServiceLocator.getMedidasService().listarMedidas();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			mensajeError(e);
 		}
 		medidaData = FXCollections.observableArrayList(medidas);
 	}
@@ -227,8 +231,7 @@ public class RecetaFrameRootController {
 					.listarTipoIngredientes();
 
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mensajeError(e);
 		}
 
 		ingreData = FXCollections.observableArrayList(Arrays
@@ -307,16 +310,25 @@ public class RecetaFrameRootController {
 	}
 
 	private void initTabRecetas() {
+		anyadirRecetaButton.setTooltip(new Tooltip("Añada una nueva receta"));
+		eliminarRecetaButton.setTooltip(new Tooltip("Elimine la receta seleccionada"));
+		editarRecetaButton.setTooltip(new Tooltip("Edita la receta seleccionada"));
+		eliminarRecetaButton.setDisable(true);
+    	editarRecetaButton.setDisable(true);
 		initSpinners();
 		cargarDatosRecetTable();
 		initRecetTable();
 		initCombosReceta();
+		
 	}
 
 	private void initSpinners() {
 		minutosRecetaSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0,
 				240)).withEditable(true).withCyclic(true)
 				.withStringConverter(StringConverterFactory.forInteger());
+		minutosRecetaSpinner.setBackground(Background.EMPTY);
+		minutosRecetaSpinner.setTooltip(new Tooltip("Introduzca duración de la receta en minutos(máx 240 min)"));
+		
 		minutosRecetaSpinner.setOnMouseClicked(new EventHandler<Event>() {
 			public void handle(Event event) {
 				onBuscarRecetasEvent();
@@ -326,12 +338,14 @@ public class RecetaFrameRootController {
 		minutosRecetaSpinner.setOnKeyReleased(new EventHandler<Event>() {
 			public void handle(Event event) {
 				onBuscarRecetasEvent();
-				System.out.println("Suelto");
 			}
 		});
 		segundosRecetaSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0,
 				59)).withEditable(true).withCyclic(true)
 				.withStringConverter(StringConverterFactory.forInteger());
+		segundosRecetaSpinner.setTooltip(new Tooltip("Introduzca duración de la receta en segundos(máx 59 seg)"));
+		
+		segundosRecetaSpinner.setBackground(Background.EMPTY);
 		segundosRecetaSpinner.setOnMouseClicked(new EventHandler<Event>() {
 			public void handle(Event event) {
 				onBuscarRecetasEvent();
@@ -358,7 +372,7 @@ public class RecetaFrameRootController {
 			// cargo las recetas
 			recetas = ServiceLocator.getRecetasService().listarRecetas();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			mensajeError(e);
 		}
 		recetData = FXCollections.observableArrayList();
 		recetas.forEach(r -> recetData.add(RecetaListItemFX
@@ -366,6 +380,17 @@ public class RecetaFrameRootController {
 	}
 
 	private void initRecetTable() {
+		
+		recetTable.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>()
+			    {
+			        @Override
+			        public void onChanged(Change<? extends Integer> change)
+			        {
+			        	eliminarRecetaButton.setDisable(false);
+			        	editarRecetaButton.setDisable(false);
+			        }
+
+			    });
 		recetaNombreColumn.setCellValueFactory(cell -> cell.getValue()
 				.nombreProperty());
 		recetaNombreColumn
@@ -461,8 +486,7 @@ public class RecetaFrameRootController {
 				try {
 					c = ServiceLocator.getCategoriasService().listarCategoria();
 				} catch (ServiceException e) {
-					System.err.println("CategoriaService Error: "
-							+ e.getMessage() + " Cause: " + e.getCause());
+					mensajeError(e);
 				}
 
 				return FXCollections.observableArrayList(Arrays.asList(c));
@@ -499,8 +523,7 @@ public class RecetaFrameRootController {
 		try {
 			c = ServiceLocator.getCategoriasService().listarCategoria();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mensajeError(e);
 		}
 
 		cateData = FXCollections.observableArrayList(Arrays.asList(c));
@@ -656,40 +679,44 @@ public class RecetaFrameRootController {
 	@FXML
 	private void onEliminarRecetaButtonClick() {
 		int selectedIndex = recetTable.getSelectionModel().getSelectedIndex();
-		RecetaListItem recetaBorrar = recetTable.getItems().get(selectedIndex);
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				Alert alert = AlertFactory.createConfirmationAlert(
-						"Eliminar receta",
-						"¿Desea eliminar la receta: '"
-								+ recetTable.getItems().get(selectedIndex) + "'?",
-						"No se podra recuperar los cambios");
-				java.util.Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-					recetData.remove(selectedIndex);
-					Thread eliminarRecetHilo = new java.lang.Thread() {
-						public void run() {
-							try {
-								ServiceLocator.getRecetasService().eliminarReceta(
-										recetaBorrar.getId());
-								Platform.runLater(new Runnable() {
-									public void run() {
-										initCantidadRecetasLabel();
-									}
-								});
-							} catch (ServiceException e) {
-								mensajeError(e);
-							}
+		
+		if (selectedIndex!=-1) {
+			RecetaListItem recetaBorrar = recetTable.getItems().get(selectedIndex);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alert alert = AlertFactory.createConfirmationAlert(
+							"Eliminar receta",
+							"¿Desea eliminar la receta: '"
+									+ recetTable.getItems().get(selectedIndex) + "'?",
+							"No se podra recuperar los cambios");
+					java.util.Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+						recetData.remove(selectedIndex);
+						Thread eliminarRecetHilo = new java.lang.Thread() {
+							public void run() {
+								try {
+									ServiceLocator.getRecetasService().eliminarReceta(
+											recetaBorrar.getId());
+									Platform.runLater(new Runnable() {
+										public void run() {
+											initCantidadRecetasLabel();
+										}
+									});
+								} catch (ServiceException e) {
+									mensajeError(e);
+								}
+							};
 						};
-					};
-					eliminarRecetHilo.start();
-				} else {
-					alert.close();
-				}
+						eliminarRecetHilo.start();
+					} else {
+						alert.close();
+					}
 
-				}
-		});
+					}
+			});
+		}
+		
 			
 	}
 
@@ -789,7 +816,7 @@ public class RecetaFrameRootController {
 						"Eliminar categoría",
 						"¿Desea eliminar la categoría: '"
 								+ cateTable.getItems().get(selectedIndex) + "'?",
-						"No se prodra recuperar los cambios");
+						"No se podrá recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					cateData.remove(selectedIndex);
@@ -842,7 +869,7 @@ public class RecetaFrameRootController {
 						"Eliminar ingrediente",
 						"¿Desea eliminar el ingrediente: '"
 								+ ingreTable.getItems().get(selectedIndex) + "'?",
-						"No se prodra recuperar los cambios");
+						"No se podrá recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					ingreData.remove(selectedIndex);
@@ -899,7 +926,7 @@ public class RecetaFrameRootController {
 						"Eliminar medida",
 						"¿Desea eliminar la medida: '"
 								+ medidasTable.getItems().get(selectedIndex) + "'?",
-						"No se prodra recuperar los cambios");
+						"No se podrá recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					medidaData.remove(selectedIndex);
@@ -952,7 +979,7 @@ public class RecetaFrameRootController {
 						"Eliminar anotacion",
 						"¿Desea eliminar la anotacion: '"
 								+ anotacionesTable.getItems().get(selectedIndex) + "'?",
-						"No se prodra recuperar los cambios");
+						"No se podrá recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					anotacionData.remove(selectedIndex);
