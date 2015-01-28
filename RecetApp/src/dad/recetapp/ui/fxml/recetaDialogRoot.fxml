@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -27,9 +28,9 @@
           <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" percentWidth="0.0" />
           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
           <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" />
-          <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="60.0"/>
+          <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="60.0" />
           <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
-          <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="60.0"/>
+          <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="60.0" />
           <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
           <ColumnConstraints fillWidth="false" hgrow="NEVER" />
         </columnConstraints>
@@ -57,7 +58,7 @@
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <ComboBox fx:id="paraCombo">
+                  <ComboBox fx:id="paraCombo" editable="true">
                      <HBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </HBox.margin></ComboBox>

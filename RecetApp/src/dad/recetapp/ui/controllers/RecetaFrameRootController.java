@@ -427,9 +427,7 @@ public class RecetaFrameRootController {
 										tiempoTotal = min + "m " + seg + "s ";
 									}
 								} else if (min == 0) {
-									if (horas == 0) {
-										tiempoTotal = seg + "s ";
-									} else if (seg == 0) {
+									 if (seg == 0) {
 										tiempoTotal = horas + "h ";
 
 									} else {
@@ -848,8 +846,9 @@ public class RecetaFrameRootController {
 							for (RecetaListItem recetaFiltrada : recetasFiltradas) {
 								recetData.add(RecetaListItemFX
 										.fromRecetaListItem(recetaFiltrada));
-							initCantidadRecetasLabel();
+							
 							}
+							initCantidadRecetasLabel();
 						}
 					});
 				} catch (ServiceException e) {
@@ -896,12 +895,13 @@ public class RecetaFrameRootController {
 							"No se podr� recuperar los cambios");
 					java.util.Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK) {
-						cateData.remove(selectedIndex);
+						
 						Thread eliminarCateHilo = new java.lang.Thread() {
 							public void run() {
 								try {
 									ServiceLocator.getCategoriasService().eliminarCategoria(
 											cateBorrar.getId());
+									Platform.runLater(() -> cateData.remove(selectedIndex));
 								} catch (ServiceException e) {
 									mensajeError(e);
 									Logs.log(e);
@@ -957,11 +957,12 @@ public class RecetaFrameRootController {
 								"No se podr� recuperar los cambios");
 						java.util.Optional<ButtonType> result = alert.showAndWait();
 						if (result.get() == ButtonType.OK) {
-							ingreData.remove(selectedIndex);
+							
 							Thread eliminarIngreHilo = new java.lang.Thread() {
 								public void run() {
 									try {
 										ServiceLocator.getTipoIngredienteService().eliminarTipoIngrediente(ingreBorrar.getId());
+										Platform.runLater(() -> ingreData.remove(selectedIndex));
 									} catch (ServiceException e) {
 										mensajeError(e);
 										Logs.log(e);
@@ -1022,11 +1023,11 @@ public class RecetaFrameRootController {
 								"No se podr� recuperar los cambios");
 						java.util.Optional<ButtonType> result = alert.showAndWait();
 						if (result.get() == ButtonType.OK) {
-							medidaData.remove(selectedIndex);
 							Thread eliminarMedidaHilo = new java.lang.Thread() {
 								public void run() {
 									try {
 										ServiceLocator.getMedidasService().eliminarMedida(medidaBorrar.getId());
+										Platform.runLater(() ->medidaData.remove(selectedIndex));
 									} catch (ServiceException e) {
 										mensajeError(e);
 										Logs.log(e);
@@ -1083,11 +1084,11 @@ public class RecetaFrameRootController {
 								"No se podr� recuperar los cambios");
 						java.util.Optional<ButtonType> result = alert.showAndWait();
 						if (result.get() == ButtonType.OK) {
-							anotacionData.remove(selectedIndex);
 							Thread eliminarAnotaHilo = new java.lang.Thread() {
 								public void run() {
 									try {
 										ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(anotaBorrar.getId());
+										Platform.runLater(() ->anotacionData.remove(selectedIndex));
 									} catch (ServiceException e) {
 										mensajeError(e);
 										Logs.log(e);
