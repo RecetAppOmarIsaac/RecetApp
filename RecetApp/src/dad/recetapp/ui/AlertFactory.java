@@ -23,13 +23,23 @@ public class AlertFactory {
         alert.setContentText(content);
         return alert;
     }
-    public static Alert createConfirmationAlert(String title,String header, String content){
+    public static Alert createDeleteAlert(String title,String header, String content){
     	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     	Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
     	stage.getIcons().add(Iconos.DELETE_ICON);
     	alert.setTitle(title);
     	alert.setHeaderText(header);
     	alert.setContentText(content);
+    	return alert;
+
+    }
+    
+    public static Alert createConfirmAlert(String title,String header){
+    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    	Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+    	stage.getIcons().add(Iconos.LOGO_ICON);
+    	alert.setTitle(title);
+    	alert.setHeaderText(header);
     	return alert;
 
     }
