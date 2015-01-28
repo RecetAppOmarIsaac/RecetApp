@@ -1,5 +1,6 @@
 # RecetApp ignored stuff
 RecetApp.pdf
+.log
 
 # Eclipse stuff 
 .project
