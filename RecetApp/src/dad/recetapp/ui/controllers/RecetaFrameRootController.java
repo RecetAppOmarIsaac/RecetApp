@@ -9,7 +9,7 @@ import java.util.List;
 import dad.recetapp.utils.Logs;
 
 
-
+import dad.recetapp.utils.SpinnerStringConverter;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
@@ -258,7 +258,7 @@ public class RecetaFrameRootController {
 	private void initValidationCategorias() {
 		ValidationSupport validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(descripCatTextField, Validator.createEmptyValidator("Introduzca un descripción para la categoría"));
+		validationSupport.registerValidator(descripCatTextField, Validator.createEmptyValidator("Introduzca un descripciï¿½n para la categorï¿½a"));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				anyadirCateButton.setDisable(false);
@@ -293,7 +293,7 @@ public class RecetaFrameRootController {
 	private void initValidationAnotaciones() {
 		ValidationSupport validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(descripAnotaTextField, Validator.createEmptyValidator("Introduzca un descripción para la categoría"));
+		validationSupport.registerValidator(descripAnotaTextField, Validator.createEmptyValidator("Introduzca un descripciï¿½n para la categorï¿½a"));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				anyadirAnotaButton.setDisable(false);
@@ -309,7 +309,7 @@ public class RecetaFrameRootController {
 	}
 
 	private void initTabRecetas() {
-		anyadirRecetaButton.setTooltip(new Tooltip("Añada una nueva receta"));
+		anyadirRecetaButton.setTooltip(new Tooltip("Aï¿½ada una nueva receta"));
 		eliminarRecetaButton.setTooltip(new Tooltip("Elimine la receta seleccionada"));
 		editarRecetaButton.setTooltip(new Tooltip("Edita la receta seleccionada"));
 		eliminarRecetaButton.setDisable(true);
@@ -324,9 +324,9 @@ public class RecetaFrameRootController {
 	private void initSpinners() {
 		minutosRecetaSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0,
 				240)).withEditable(true).withCyclic(true)
-				.withStringConverter(StringConverterFactory.forInteger());
+				.withStringConverter(new SpinnerStringConverter());
 		minutosRecetaSpinner.setBackground(Background.EMPTY);
-		minutosRecetaSpinner.setTooltip(new Tooltip("Introduzca duración de la receta en minutos(máx 240 min)"));
+		minutosRecetaSpinner.setTooltip(new Tooltip("Introduzca duraciï¿½n de la receta en minutos(mï¿½x 240 min)"));
 		
 		minutosRecetaSpinner.setOnMouseClicked(new EventHandler<Event>() {
 			public void handle(Event event) {
@@ -341,8 +341,8 @@ public class RecetaFrameRootController {
 		});
 		segundosRecetaSpinner = new ListSpinner<>(new ListSpinnerIntegerList(0,
 				59)).withEditable(true).withCyclic(true)
-				.withStringConverter(StringConverterFactory.forInteger());
-		segundosRecetaSpinner.setTooltip(new Tooltip("Introduzca duración de la receta en segundos(máx 59 seg)"));
+				.withStringConverter(new SpinnerStringConverter());
+		segundosRecetaSpinner.setTooltip(new Tooltip("Introduzca duraciï¿½n de la receta en segundos(mï¿½x 59 seg)"));
 		
 		segundosRecetaSpinner.setBackground(Background.EMPTY);
 		segundosRecetaSpinner.setOnMouseClicked(new EventHandler<Event>() {
@@ -686,7 +686,7 @@ public class RecetaFrameRootController {
 				public void run() {
 					Alert alert = AlertFactory.createConfirmationAlert(
 							"Eliminar receta",
-							"¿Desea eliminar la receta: '"
+							"ï¿½Desea eliminar la receta: '"
 									+ recetTable.getItems().get(selectedIndex) + "'?",
 							"No se podra recuperar los cambios");
 					java.util.Optional<ButtonType> result = alert.showAndWait();
@@ -812,10 +812,10 @@ public class RecetaFrameRootController {
 			@Override
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
-						"Eliminar categoría",
-						"¿Desea eliminar la categoría: '"
+						"Eliminar categorï¿½a",
+						"ï¿½Desea eliminar la categorï¿½a: '"
 								+ cateTable.getItems().get(selectedIndex) + "'?",
-						"No se podrá recuperar los cambios");
+						"No se podrï¿½ recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					cateData.remove(selectedIndex);
@@ -866,9 +866,9 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar ingrediente",
-						"¿Desea eliminar el ingrediente: '"
+						"ï¿½Desea eliminar el ingrediente: '"
 								+ ingreTable.getItems().get(selectedIndex) + "'?",
-						"No se podrá recuperar los cambios");
+						"No se podrï¿½ recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					ingreData.remove(selectedIndex);
@@ -923,9 +923,9 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar medida",
-						"¿Desea eliminar la medida: '"
+						"ï¿½Desea eliminar la medida: '"
 								+ medidasTable.getItems().get(selectedIndex) + "'?",
-						"No se podrá recuperar los cambios");
+						"No se podrï¿½ recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					medidaData.remove(selectedIndex);
@@ -976,9 +976,9 @@ public class RecetaFrameRootController {
 			public void run() {
 				Alert alert = AlertFactory.createConfirmationAlert(
 						"Eliminar anotacion",
-						"¿Desea eliminar la anotacion: '"
+						"ï¿½Desea eliminar la anotacion: '"
 								+ anotacionesTable.getItems().get(selectedIndex) + "'?",
-						"No se podrá recuperar los cambios");
+						"No se podrï¿½ recuperar los cambios");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					anotacionData.remove(selectedIndex);
