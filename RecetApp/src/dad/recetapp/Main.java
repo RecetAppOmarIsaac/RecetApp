@@ -1,15 +1,18 @@
 package dad.recetapp;
 
 import java.io.IOException;
-
-
+import dad.recetapp.ui.AlertFactory;
 import dad.recetapp.ui.Splashscreen;
 import dad.recetapp.utils.Logs;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 	public static void main(String[] args) {
@@ -39,6 +42,17 @@ public class Main extends Application {
 		stage.setTitle("RecetApp");
 		stage.getIcons().add(dad.recetapp.ui.images.Iconos.LOGO_ICON);
 		stage.setScene(scene);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent event) {
+				Alert alert = AlertFactory.createConfirmAlert(
+						"Salir",
+						"¿Desea salir de la aplicación?");
+				java.util.Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.CANCEL) {
+					event.consume();
+				}	
+			}
+		});
 		return stage;
 	}
 	
