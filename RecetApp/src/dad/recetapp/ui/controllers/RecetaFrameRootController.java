@@ -612,7 +612,7 @@ public class RecetaFrameRootController {
 	}
 
 	private void initTabAnotaciones() {
-		descripAnotaTextField.setTooltip(new Tooltip("Introduzca el nombre de la anotaci\u00F3n que desea a\u00F1adir"));
+		descripAnotaTextField.setTooltip(new Tooltip("Introduzca el nombre de la anotaci\u00f3n que desea a\u00F1adir"));
 		initAnotaButtons();
 		cargarDatosAnotacionesTable();
 		initAnotacionesTable();
@@ -620,8 +620,8 @@ public class RecetaFrameRootController {
 	}
 
 	private void initAnotaButtons() {
-		anyadirAnotaButton.setTooltip(new Tooltip("A\u00F1ada una nueva anotaci\u00F3n"));
-		eliminarAnotaButton.setTooltip(new Tooltip("Elimine la anotaci\u00F3n seleccionada"));
+		anyadirAnotaButton.setTooltip(new Tooltip("A\u00F1ada una nueva anotaci\u00f3n"));
+		eliminarAnotaButton.setTooltip(new Tooltip("Elimine la anotaci\u00f3n seleccionada"));
 	}
 
 	private void cargarDatosAnotacionesTable() {
@@ -752,9 +752,9 @@ public class RecetaFrameRootController {
 				public void run() {
 					Alert alert = AlertFactory.createDeleteAlert(
 							"Eliminar receta",
-							"�Desea eliminar la receta: '"
-									+ recetTable.getItems().get(selectedIndex) + "'?",
-							"No se podra recuperar los cambios");
+							"\u00bfDesea eliminar la receta: '"
+									+ recetTable.getItems().get(selectedIndex) + "?",
+							"No se podr\u00e1 recuperar los cambios");
 					java.util.Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK) {
 						recetData.remove(selectedIndex);

@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class InstruccionDialogController implements IDialogController<InstruccionItem> {
-	public static final String NEW_CAPTION = "Añadir";
+	public static final String NEW_CAPTION = "A\u00f1adir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
 	@FXML private Parent rootPane;
@@ -32,7 +32,7 @@ public class InstruccionDialogController implements IDialogController<Instruccio
 	private void initValidation() {
 		validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
-		validationSupport.registerValidator(ordenTextField, Validator.createRegexValidator("No es un numero valido", "[+-]?\\d+", Severity.ERROR));
+		validationSupport.registerValidator(ordenTextField, Validator.createRegexValidator("No es un numero v\u00e1lido", "[+-]?\\d+", Severity.ERROR));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				aceptarButton.setDisable(false);

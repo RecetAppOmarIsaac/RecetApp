@@ -3,9 +3,11 @@ package dad.recetapp.ui.controllers;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.SeccionItem;
+import dad.recetapp.ui.AlertFactory;
 import dad.recetapp.ui.SeccionTab;
 import dad.recetapp.services.items.CategoriaItem;
 import dad.recetapp.services.items.RecetaItem;
+import dad.recetapp.utils.Logs;
 import dad.recetapp.utils.SpinnerStringConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +36,7 @@ import java.util.ResourceBundle;
 
 
 public class RecetaDialogController implements IDialogController<RecetaItem> {
-	public static final String NEW_CAPTION = "A\u00D1adir";
+	public static final String NEW_CAPTION = "A\u00f1adir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
 	@FXML private Parent rootPane;
@@ -58,14 +60,14 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	@FXML public void onAceptarButtonClick() {
 		RecetaItem ri = receta.orElse(new RecetaItem());
 		ri.setNombre(nombreText.getText());
-		ri.setCantidad((paraText.getText().isEmpty())? 0 : Integer.valueOf(paraText.getText()));
+		ri.setCantidad((paraText.getText().isEmpty()) ? 0 : Integer.valueOf(paraText.getText()));
 		ri.setPara(paraCombo.getValue());
 		ri.setCategoria(categoriaCombo.getValue());
 		ri.setTiempoTotal(totalMinutosSpinner.getValue() * 60 + totalSegundosSpinner.getValue());
 		ri.setTiempoThermomix(thermoMinutosSpinner.getValue() * 60 + thermoSegundosSpinner.getValue());
 		ri.getSecciones().removeAll(ri.getSecciones());
 		seccionTabPane.getTabs().filtered(tab -> tab != newTab).forEach(tab -> {
-			SeccionTab stab = (SeccionTab)tab;
+			SeccionTab stab = (SeccionTab) tab;
 			if (stab.getController().getItem().isPresent())
 				ri.getSecciones().add(stab.getController().getItem().get());
 		});
@@ -113,7 +115,8 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 					tabContents = loader.load();
 				}
 				catch (IOException e) {
-					System.err.println("FXML TabContent noped, " + e.getMessage() + " cause: " + e.getCause());
+					Logs.log(e);
+					AlertFactory.createErrorAlert("Error", "Error al leer recetaTabCibtebt.fxml");
 				}
 				if (item.isPresent())
 					controller.setItem(item);
@@ -154,7 +157,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		paraCombo.getItems().addAll("Personas", "Unidades", "Raciones");
 		paraCombo.setValue("Personas");
 		CategoriaItem ci = new CategoriaItem();
-		ci.setDescripcion("<Seleccione una categoria>");
+		ci.setDescripcion("<Seleccione una categor\u00eda>");
 		categoriaCombo.setValue(ci);
 		Task<ObservableList<CategoriaItem>> task = new Task<ObservableList<CategoriaItem>>() {
 			@Override
@@ -164,7 +167,8 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 					c = ServiceLocator.getCategoriasService().listarCategoria();
 				}
 				catch (ServiceException e) {
-					System.err.println("CategoriaService Error: " + e.getMessage() + " Cause: " + e.getCause());
+					Logs.log(e);
+					AlertFactory.createErrorAlert("Error", "Error al obtener categor\u00edas");
 				}
 				return FXCollections.observableArrayList(Arrays.asList(c));
 			}
@@ -182,7 +186,7 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		ValidationSupport validationSupport = new ValidationSupport();
 		validationSupport.setValidationDecorator(new GraphicValidationDecoration());
 		validationSupport.registerValidator(nombreText, Validator.createEmptyValidator("Introduzca un nombre para la receta"));
-		validationSupport.registerValidator(categoriaCombo, Validator.createEqualsValidator("Asigne una categoria", categoriaCombo.getItems()));
+		validationSupport.registerValidator(categoriaCombo, Validator.createEqualsValidator("Asigne una categor\u00eda", categoriaCombo.getItems()));
 		validationSupport.invalidProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue && !newValue)
 				aceptarButton.setDisable(false);
