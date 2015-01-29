@@ -178,7 +178,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 		seccion = Optional.of(si);
 		String nombre;
 		if (si.getNombre() == null || si.getNombre().equals(""))
-			nombre = "Nueva seccion";
+			nombre = "Nueva secci\u00f3n";
 		else
 			nombre = si.getNombre();
 		parentTab.ifPresent(tab -> tab.setText(nombre));
