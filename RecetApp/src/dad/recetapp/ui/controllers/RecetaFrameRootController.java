@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
+import dad.recetapp.Main;
 import dad.recetapp.utils.Logs;
 
 
@@ -224,7 +225,7 @@ public class RecetaFrameRootController {
 		TipoIngredienteItem[] ingredientes = new TipoIngredienteItem[0];
 		// cargo las categorias
 		try {
-			ingredientes = ServiceLocator.getTipoIngredienteService()
+			ingredientes = ServiceLocator.getTiposIngredientesService()
 					.listarTipoIngredientes();
 
 		} catch (ServiceException e) {
@@ -595,7 +596,7 @@ public class RecetaFrameRootController {
 			public void handle(CellEditEvent<TipoIngredienteItem, String> event) {
 				event.getRowValue().setNombre(event.getNewValue());
 				try {
-					ServiceLocator.getTipoIngredienteService().modificarTipoIngrediente(event.getRowValue());
+					ServiceLocator.getTiposIngredientesService().modificarTipoIngrediente(event.getRowValue());
 				} catch (ServiceException e) {
 					mensajeError(e);
 					Logs.log(e);
@@ -730,8 +731,7 @@ public class RecetaFrameRootController {
 		dialog.showModal();
 		dialog.getItem().ifPresent(item -> {
 			try {
-				Long id = ServiceLocator.getRecetasService().crearReceta(item);
-				item.setId(id);
+				ServiceLocator.getRecetasService().crearReceta(item);
 			} catch (ServiceException e) {
 				mensajeError(e);
 				Logs.log(e);
@@ -929,7 +929,7 @@ public class RecetaFrameRootController {
 		Thread anyadirIngreHilo = new java.lang.Thread() {
 			public void run() {
 				try {
-					Long id = ServiceLocator.getTipoIngredienteService().crearTipoIngrediente(ingreNuevo);
+					Long id = ServiceLocator.getTiposIngredientesService().crearTipoIngrediente(ingreNuevo);
 					ingreNuevo.setId(id);
 					ingreData.add(ingreNuevo);
 				} catch (ServiceException e) {
@@ -961,7 +961,7 @@ public class RecetaFrameRootController {
 							Thread eliminarIngreHilo = new java.lang.Thread() {
 								public void run() {
 									try {
-										ServiceLocator.getTipoIngredienteService().eliminarTipoIngrediente(ingreBorrar.getId());
+										ServiceLocator.getTiposIngredientesService().eliminarTipoIngrediente(ingreBorrar.getId());
 										Platform.runLater(() -> ingreData.remove(selectedIndex));
 									} catch (ServiceException e) {
 										mensajeError(e);

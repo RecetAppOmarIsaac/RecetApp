@@ -164,7 +164,7 @@ public class RecetaTabContentController implements IDialogController<SeccionItem
 
 		TipoIngredienteItem[] tipoIngredientes = new TipoIngredienteItem[0];
 		try {
-			tipoIngredientes = ServiceLocator.getTipoIngredienteService().listarTipoIngredientes();
+			tipoIngredientes = ServiceLocator.getTiposIngredientesService().listarTipoIngredientes();
 		} catch (ServiceException e) {
 			Logs.log(e);
 		}

@@ -72,7 +72,7 @@ public class TestReceta {
             ingrediente.setCantidad(1);
             ingrediente.setMedida(ServiceLocator.getMedidasService()
                     .obtenerMedida(1L));
-            ingrediente.setTipo(ServiceLocator.getTipoIngredienteService()
+            ingrediente.setTipo(ServiceLocator.getTiposIngredientesService()
                     .obtenerTipoIngrediente(1L));
             InstruccionItem instruccion = new InstruccionItem();
             instruccion.setDescripcion("Limpiar el pollo");
