@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
 
 
 public class RecetaDialogController implements IDialogController<RecetaItem> {
-	public static final String NEW_CAPTION = "A�adir";
+	public static final String NEW_CAPTION = "A\u00D1adir";
 	public static final String EDIT_CAPTION = "Guardar cambios";
 
 	@FXML private Parent rootPane;
@@ -57,7 +57,6 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 
 	@FXML public void onAceptarButtonClick() {
 		RecetaItem ri = receta.orElse(new RecetaItem());
-		//TODO guardar cosas en ri
 		ri.setNombre(nombreText.getText());
 		ri.setCantidad((paraText.getText().isEmpty())? 0 : Integer.valueOf(paraText.getText()));
 		ri.setPara(paraCombo.getValue());
@@ -72,22 +71,6 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		});
 		receta = Optional.of(ri);
 		Stage s = (Stage) rootPane.getScene().getWindow();
-
-		//TODO quitar esto al terminar de depurar
-		System.out.println("----data dump----");
-		System.out.println("Nombre: " + ri.getNombre());
-		System.out.println("Para " + ri.getCantidad() + " " + ri.getPara());
-		System.out.println("Secciones.len: " + ri.getSecciones().size());
-		ri.getSecciones().forEach(seccionItem -> {
-			System.out.println("{");
-			System.out.println("SeccionItem: " + seccionItem.getNombre());
-			System.out.println("Ingreds.len: " + seccionItem.getIngredientes().size());
-			seccionItem.getIngredientes().forEach(item -> System.out.println(item.getTipo().getNombre() + " " + item.getCantidad()));
-			System.out.println("Instrucc.len: " + seccionItem.getInstrucciones().size());
-			seccionItem.getInstrucciones().forEach(item -> System.out.println(item.getDescripcion()));
-			System.out.println("}");
-		});
-		System.out.println("------------------");
 
 		s.close();
 	}
@@ -109,7 +92,11 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	private void addTab(Optional<SeccionItem> item) {
 		SeccionTab tab = new SeccionTab();
 		createTabContents(tab, item);
-		seccionTabPane.getTabs().add(seccionTabPane.getTabs().size() - 1, tab);
+		int size = seccionTabPane.getTabs().size();
+		if (size > 0)
+			seccionTabPane.getTabs().add(size - 1, tab);
+		else
+			seccionTabPane.getTabs().add(tab);
 	}
 
 	private void createTabContents(SeccionTab tab, Optional<SeccionItem> item) {
@@ -232,12 +219,9 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 		thermoMinutosSpinner.setValue(ri.getTiempoThermomix() / 60);
 
 		seccionTabPane.getTabs().clear();
-		seccionTabPane.getTabs().add(newTab);
 		if (ri.getSecciones() != null)
 			ri.getSecciones().forEach(seccionItem -> addTab(Optional.of(seccionItem)));
-		if (seccionTabPane.getTabs().size() > 2 && seccionTabPane.getTabs().get(0).getText() == null) { //haaaack
-			seccionTabPane.getTabs().remove(0);
-		}
+		seccionTabPane.getTabs().add(newTab);
 	}
 
 	@Override

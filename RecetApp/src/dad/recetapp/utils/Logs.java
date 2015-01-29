@@ -1,5 +1,7 @@
 package dad.recetapp.utils;
 
+import dad.recetapp.services.items.RecetaItem;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,6 +44,24 @@ public class Logs {
         catch (IOException e1) {
             System.err.println("El sistema de logs ha lanzado una excepcion. Mensaje: " + e1.getMessage() + " causa: " + e1.getCause());
         }
+    }
+
+    public static void dataDump(RecetaItem ri) {
+        //TODO quitar esto al terminar de depurar
+        System.out.println("----data dump----");
+        System.out.println("Nombre: " + ri.getNombre());
+        System.out.println("Para " + ri.getCantidad() + " " + ri.getPara());
+        System.out.println("Secciones.len: " + ri.getSecciones().size());
+        ri.getSecciones().forEach(seccionItem -> {
+            System.out.println("{");
+            System.out.println("SeccionItem: " + seccionItem.getNombre() + " id: " + seccionItem.getId());
+            System.out.println("Ingreds.len: " + seccionItem.getIngredientes().size());
+            seccionItem.getIngredientes().forEach(item -> System.out.println(item.getTipo().getNombre() + " " + item.getCantidad()));
+            System.out.println("Instrucc.len: " + seccionItem.getInstrucciones().size());
+            seccionItem.getInstrucciones().forEach(item -> System.out.println(item.getDescripcion()));
+            System.out.println("}");
+        });
+        System.out.println("------------------");
     }
 }
 

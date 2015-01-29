@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -74,7 +73,7 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 			protected ObservableList<TipoIngredienteItem> call() {
 				TipoIngredienteItem[] tipoArray = new TipoIngredienteItem[0];
 				try {
-					tipoArray = ServiceLocator.getTipoIngredienteService().listarTipoIngredientes();
+					tipoArray = ServiceLocator.getTiposIngredientesService().listarTipoIngredientes();
 				}
 				catch (ServiceException e) {
 					System.err.println("TipoIngredientesService Error: " + e.getMessage() + " Cause: " + e.getCause());

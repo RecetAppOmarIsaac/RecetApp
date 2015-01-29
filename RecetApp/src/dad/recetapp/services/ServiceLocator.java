@@ -1,10 +1,6 @@
 package dad.recetapp.services;
 
-import dad.recetapp.services.impl.CategoriasService;
-import dad.recetapp.services.impl.MedidasService;
-import dad.recetapp.services.impl.RecetasService;
-import dad.recetapp.services.impl.TiposAnotacionesService;
-import dad.recetapp.services.impl.TiposIngredientesService;
+import dad.recetapp.services.impl.*;
 
 
 public class ServiceLocator {
@@ -30,7 +26,7 @@ public class ServiceLocator {
 		return medidasService;
 	}
 
-	public static ITiposIngredientesService getTipoIngredienteService() {
+	public static ITiposIngredientesService getTiposIngredientesService() {
 		if(tiposIngredientesService ==null){
 			tiposIngredientesService = new TiposIngredientesService();
 			

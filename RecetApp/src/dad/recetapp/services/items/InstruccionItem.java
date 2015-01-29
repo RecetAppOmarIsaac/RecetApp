@@ -36,4 +36,11 @@ public class InstruccionItem implements IItem {
 		return descripcion;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o != null && o instanceof InstruccionItem && this.id == ((InstruccionItem)o).getId())
+			return true;
+		else
+			return false;
+	}
 }
