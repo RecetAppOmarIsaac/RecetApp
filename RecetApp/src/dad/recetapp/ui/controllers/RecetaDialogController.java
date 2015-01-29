@@ -164,9 +164,8 @@ public class RecetaDialogController implements IDialogController<RecetaItem> {
 	}
 
 	private void initCombos() {
-		paraCombo.setPromptText("para...");
-		paraCombo.setValue("");
-
+		paraCombo.getItems().addAll("Personas", "Unidades", "Raciones");
+		paraCombo.setValue("Personas");
 		CategoriaItem ci = new CategoriaItem();
 		ci.setDescripcion("<Seleccione una categoria>");
 		categoriaCombo.setValue(ci);
