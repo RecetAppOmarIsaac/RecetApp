@@ -40,4 +40,12 @@ public class IngredienteItem implements IItem {
     public void setTipo(TipoIngredienteItem tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof IngredienteItem && this.id == ((IngredienteItem)o).getId())
+            return true;
+        else
+            return false;
+    }
 }
