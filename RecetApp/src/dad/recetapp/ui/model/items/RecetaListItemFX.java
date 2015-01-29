@@ -1,5 +1,6 @@
 package dad.recetapp.ui.model.items;
 
+import com.sun.istack.internal.NotNull;
 import dad.recetapp.services.items.RecetaListItem;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -61,7 +62,7 @@ public class RecetaListItemFX extends RecetaListItem {
         return rli;
     }
 
-    public static RecetaListItemFX fromRecetaListItem(RecetaListItem rli) {
+    public static RecetaListItemFX fromRecetaListItem(@NotNull RecetaListItem rli) {
         RecetaListItemFX rlifx = new RecetaListItemFX();
         rlifx.setId(rli.getId());
         rlifx.setNombre(rli.getNombre());
