@@ -4,12 +4,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
-import dad.recetapp.Main;
 import dad.recetapp.utils.Logs;
-
-
 import dad.recetapp.utils.SpinnerStringConverter;
+
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
@@ -18,6 +15,7 @@ import dad.recetapp.ui.model.items.RecetaListItemFX;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.CategoriaItem;
+
 import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.RecetaItem;
 import dad.recetapp.services.items.RecetaListItem;
@@ -41,6 +39,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -113,7 +112,7 @@ public class RecetaFrameRootController {
 
 	private ObservableList<RecetaListItemFX> recetData;
 
-	// pestaï¿½a categorias
+	// pestaña categorias
 	@FXML
 	private Tab categoriasTab;
 	@FXML
@@ -380,7 +379,10 @@ public class RecetaFrameRootController {
 				.fromRecetaListItem(r)));
 	}
 
-	private void initRecetTable() {	
+	private void initRecetTable() {
+		recetTable.getSelectionModel().setSelectionMode(
+			    SelectionMode.MULTIPLE
+			);
 		recetaNombreColumn.setCellValueFactory(cell -> cell.getValue()
 				.nombreProperty());
 		recetaNombreColumn
@@ -527,6 +529,9 @@ public class RecetaFrameRootController {
 
 	private void initCateTable() {
 		cateTable.setEditable(true);
+		cateTable.getSelectionModel().setSelectionMode(
+			    SelectionMode.MULTIPLE
+			);
 		cateDescripColumn
 				.setCellValueFactory(new PropertyValueFactory<CategoriaItem, String>(
 						"descripcion"));
@@ -583,6 +588,9 @@ public class RecetaFrameRootController {
 
 	private void initIngreTable() {
 		ingreTable.setEditable(true);
+		ingreTable.getSelectionModel().setSelectionMode(
+			    SelectionMode.MULTIPLE
+			);
 		ingreNombreColumn
 				.setCellValueFactory(new PropertyValueFactory<TipoIngredienteItem, String>(
 						"nombre"));
@@ -631,6 +639,9 @@ public class RecetaFrameRootController {
 
 	private void initAnotacionesTable() {
 		anotacionesTable.setEditable(true);
+		anotacionesTable.getSelectionModel().setSelectionMode(
+			    SelectionMode.MULTIPLE
+			);
 	
 		anotaDescripColumn
 				.setCellValueFactory(new PropertyValueFactory<TipoAnotacionItem, String>(
@@ -683,6 +694,9 @@ public class RecetaFrameRootController {
 
 	private void initMedidasTable() {
 		medidasTable.setEditable(true);
+		medidasTable.getSelectionModel().setSelectionMode(
+			    SelectionMode.MULTIPLE
+			);
 
 		medidaNombreColumn
 				.setCellValueFactory(new PropertyValueFactory<MedidaItem, String>(
@@ -744,27 +758,30 @@ public class RecetaFrameRootController {
 	
 	@FXML
 	private void onEliminarRecetaButtonClick() {
-		int selectedIndex = recetTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex!=-1) {
-			RecetaListItem recetaBorrar = recetTable.getItems().get(selectedIndex);
+		ObservableList<RecetaListItemFX> seleccionados = recetTable.getSelectionModel().getSelectedItems();
+		if (!seleccionados.isEmpty()) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 					Alert alert = AlertFactory.createDeleteAlert(
 							"Eliminar receta",
-							"\u00bfDesea eliminar la receta: '"
-									+ recetTable.getItems().get(selectedIndex) + "?",
-							"No se podr\u00e1 recuperar los cambios");
+							"Se va a proceder a eliminar las siguientes recetas: "
+									+ mostrarSeleccionados(seleccionados),
+							"\u00bfDesea continuar?\nNo se podr\u00e1 recuperar los cambios");
 					java.util.Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK) {
-						recetData.remove(selectedIndex);
+						
 						Thread eliminarRecetHilo = new java.lang.Thread() {
 							public void run() {
 								try {
-									ServiceLocator.getRecetasService().eliminarReceta(
-											recetaBorrar.getId());
+									for (RecetaListItemFX item: seleccionados) {
+										ServiceLocator.getRecetasService().eliminarReceta(
+												item.getId());
+									}
+									
 									Platform.runLater(new Runnable() {
 										public void run() {
+											recetData.removeAll(seleccionados);
 											initCantidadRecetasLabel();
 										}
 									});
@@ -780,12 +797,24 @@ public class RecetaFrameRootController {
 					}
 
 					}
+
+				private String mostrarSeleccionados(
+						ObservableList<RecetaListItemFX> seleccionados) {
+					String mostrar = "\n";
+					for (RecetaListItemFX item : seleccionados) {
+						mostrar+="-"+item.getNombre()+"\n";
+					}
+					return mostrar;
+				}
 			});
-		}else{
-			Alert alert = AlertFactory.createInfoAlert("Eliminar receta", "No hay ninguna receta seleccionada, para eliminarla primero debe seleccionarla en la tabla");
-			alert.show();
+			
+				
+			}else{
+				Alert alert = AlertFactory.createInfoAlert("Eliminar Receta", "No hay ninguna receta seleccionada, para eliminarla primero debe seleccionarla en la tabla");
+				alert.show();
+			}
 		}
-	}
+
 
 	@FXML
 	private void onEditarRecetaButtonClick() {
@@ -883,25 +912,31 @@ public class RecetaFrameRootController {
 	
 	@FXML
 	private void onEliminarCategoriaButtonClick() {
-		int selectedIndex = cateTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex!=-1) {
-			CategoriaItem cateBorrar = cateTable.getItems().get(selectedIndex);
+		 ObservableList<CategoriaItem> seleccionados = cateTable.getSelectionModel().getSelectedItems();
+		if (!seleccionados.isEmpty()) {
 			Platform.runLater(new Runnable() {
+				@Override
 				public void run() {
 					Alert alert = AlertFactory.createDeleteAlert(
-							"Eliminar categorï¿½a",
-							"ï¿½Desea eliminar la categorï¿½a: '"
-									+ cateTable.getItems().get(selectedIndex) + "'?",
-							"No se podrï¿½ recuperar los cambios");
+							"Eliminar categor\u00eda",
+							"Se va a proceder a eliminar las siguientes categor\u00edas: "
+									+ mostrarSeleccionados(seleccionados),
+							"\u00bfDesea continuar?\nNo se podr\u00e1 recuperar los cambios");
 					java.util.Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK) {
 						
 						Thread eliminarCateHilo = new java.lang.Thread() {
 							public void run() {
 								try {
-									ServiceLocator.getCategoriasService().eliminarCategoria(
-											cateBorrar.getId());
-									Platform.runLater(() -> cateData.remove(selectedIndex));
+									for (CategoriaItem item: seleccionados) {
+										ServiceLocator.getCategoriasService().eliminarCategoria(item.getId());
+									}
+									
+									Platform.runLater(new Runnable() {
+										public void run() {
+											cateData.removeAll(seleccionados);	
+										}
+									});
 								} catch (ServiceException e) {
 									mensajeError(e);
 									Logs.log(e);
@@ -914,13 +949,24 @@ public class RecetaFrameRootController {
 					}
 
 					}
-			});		
-		}else{
-			Alert alert = AlertFactory.createInfoAlert("Eliminar Categorï¿½a", "No hay ninguna categorï¿½a seleccionada, para eliminarla primero debe seleccionarla en la tabla");
-			alert.show();
+
+				private String mostrarSeleccionados(
+						ObservableList<CategoriaItem> seleccionados) {
+					String mostrar = "\n";
+					for (CategoriaItem item : seleccionados) {
+						mostrar+="-"+item.getDescripcion()+"\n";
+					}
+					return mostrar;
+				}
+			});
+			
+				
+			}else{
+				Alert alert = AlertFactory.createInfoAlert("Eliminar Categor\u00eda", "No hay ninguna categor\u00eda seleccionada, para eliminarla primero debe seleccionarla en la tabla");
+				alert.show();
+			}
 		}
-		
-	}
+
 	
 	@FXML
 	private void onAnyadirIngredienteButtonClick() {
@@ -944,43 +990,59 @@ public class RecetaFrameRootController {
 	
 	@FXML
 	private void onEliminarIngredienteButtonClick() {
-		int selectedIndex = ingreTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex!=-1) {
-			 TipoIngredienteItem ingreBorrar = ingreTable.getItems().get(selectedIndex);
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						Alert alert = AlertFactory.createDeleteAlert(
-								"Eliminar ingrediente",
-								"ï¿½Desea eliminar el ingrediente: '"
-										+ ingreTable.getItems().get(selectedIndex) + "'?",
-								"No se podrï¿½ recuperar los cambios");
-						java.util.Optional<ButtonType> result = alert.showAndWait();
-						if (result.get() == ButtonType.OK) {
-							
-							Thread eliminarIngreHilo = new java.lang.Thread() {
-								public void run() {
-									try {
-										ServiceLocator.getTiposIngredientesService().eliminarTipoIngrediente(ingreBorrar.getId());
-										Platform.runLater(() -> ingreData.remove(selectedIndex));
-									} catch (ServiceException e) {
-										mensajeError(e);
-										Logs.log(e);
+		 ObservableList<TipoIngredienteItem> seleccionados = ingreTable.getSelectionModel().getSelectedItems();
+		if (!seleccionados.isEmpty()) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alert alert = AlertFactory.createDeleteAlert(
+							"Eliminar ingrediente",
+							"Se va a proceder a eliminar los siguientes ingredientes: "
+									+ mostrarSeleccionados(seleccionados),
+							"\u00bfDesea continuar?\nNo se podr\u00e1 recuperar los cambios");
+					java.util.Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+						
+						Thread eliminarCateHilo = new java.lang.Thread() {
+							public void run() {
+								try {
+									for (TipoIngredienteItem item: seleccionados) {
+										ServiceLocator.getTiposIngredientesService().eliminarTipoIngrediente(item.getId());
 									}
-								};
+									
+									Platform.runLater(new Runnable() {
+										public void run() {
+											ingreData.removeAll(seleccionados);	
+										}
+									});
+								} catch (ServiceException e) {
+									mensajeError(e);
+									Logs.log(e);
+								}
 							};
-							eliminarIngreHilo.start();
-						} else {
-							alert.close();
-						}
+						};
+						eliminarCateHilo.start();
+					} else {
+						alert.close();
+					}
 
-						}
-				});		
-		}else{
-			Alert alert = AlertFactory.createInfoAlert("Eliminar ingrediente", "No hay ningï¿½n ingrediente seleccionado, para eliminarlo primero debe seleccionarlo en la tabla");
-			alert.show();
-		}
-		
+					}
+
+				private String mostrarSeleccionados(
+						ObservableList<TipoIngredienteItem> seleccionados) {
+					String mostrar = "\n";
+					for (TipoIngredienteItem item : seleccionados) {
+						mostrar+="-"+item.getNombre()+"\n";
+					}
+					return mostrar;
+				}
+			});
+			
+				
+			}else{
+				Alert alert = AlertFactory.createInfoAlert("Eliminar Ingrediente", "No hay ning\u00fan ingrediente seleccionado, para eliminarlo primero debe seleccionarlo en la tabla");
+				alert.show();
+			}	
 	}
 	
 	@FXML
@@ -1010,24 +1072,31 @@ public class RecetaFrameRootController {
 	
 	@FXML
 	private void onEliminarMedidaButtonClick() {
-		int selectedIndex = medidasTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex!=-1) {
-			  MedidaItem medidaBorrar = medidasTable.getItems().get(selectedIndex);
+		ObservableList<MedidaItem> seleccionados = medidasTable.getSelectionModel().getSelectedItems();
+			if (!seleccionados.isEmpty()) {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
 						Alert alert = AlertFactory.createDeleteAlert(
 								"Eliminar medida",
-								"ï¿½Desea eliminar la medida: '"
-										+ medidasTable.getItems().get(selectedIndex) + "'?",
-								"No se podrï¿½ recuperar los cambios");
+								"Se va a proceder a eliminar las siguientes medidas: "
+										+ mostrarSeleccionados(seleccionados),
+								"\u00bfDesea continuar?\nNo se podr\u00e1 recuperar los cambios");
 						java.util.Optional<ButtonType> result = alert.showAndWait();
 						if (result.get() == ButtonType.OK) {
+							
 							Thread eliminarMedidaHilo = new java.lang.Thread() {
 								public void run() {
 									try {
-										ServiceLocator.getMedidasService().eliminarMedida(medidaBorrar.getId());
-										Platform.runLater(() ->medidaData.remove(selectedIndex));
+										for (MedidaItem item: seleccionados) {
+											ServiceLocator.getMedidasService().eliminarMedida(item.getId());
+										}
+										
+										Platform.runLater(new Runnable() {
+											public void run() {
+												medidaData.removeAll(seleccionados);	
+											}
+										});
 									} catch (ServiceException e) {
 										mensajeError(e);
 										Logs.log(e);
@@ -1040,13 +1109,22 @@ public class RecetaFrameRootController {
 						}
 
 						}
-				});		
-		}else{
-			Alert alert = AlertFactory.createInfoAlert("Eliminar medida", "No hay ninguna medida seleccionada, para eliminarla primero debe seleccionarla en la tabla");
-			alert.show();
-		}
-		
-	}
+
+					private String mostrarSeleccionados(
+							ObservableList<MedidaItem> seleccionados) {
+						String mostrar = "\n";
+						for (MedidaItem item : seleccionados) {
+							mostrar+="-"+item.getNombre()+"\n";
+						}
+						return mostrar;
+					}
+				});
+					
+				}else{
+					Alert alert = AlertFactory.createInfoAlert("Eliminar medida", "No hay ninguna medida seleccionada, para eliminarla primero debe seleccionarla en la tabla");
+					alert.show();
+				}
+			}
 	
 	@FXML
 	private void onAnyadirAnotaButtonClick() {
@@ -1071,43 +1149,61 @@ public class RecetaFrameRootController {
 	
 	@FXML
 	private void onEliminarAnotaButtonClick() {
-		int selectedIndex = anotacionesTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex!=-1) {
-			  TipoAnotacionItem anotaBorrar = anotacionesTable.getItems().get(selectedIndex);
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						Alert alert = AlertFactory.createDeleteAlert(
-								"Eliminar anotacion",
-								"ï¿½Desea eliminar la anotacion: '"
-										+ anotacionesTable.getItems().get(selectedIndex) + "'?",
-								"No se podrï¿½ recuperar los cambios");
-						java.util.Optional<ButtonType> result = alert.showAndWait();
-						if (result.get() == ButtonType.OK) {
-							Thread eliminarAnotaHilo = new java.lang.Thread() {
-								public void run() {
-									try {
-										ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(anotaBorrar.getId());
-										Platform.runLater(() ->anotacionData.remove(selectedIndex));
-									} catch (ServiceException e) {
-										mensajeError(e);
-										Logs.log(e);
+		ObservableList<TipoAnotacionItem> seleccionados = anotacionesTable.getSelectionModel().getSelectedItems();
+		if (!seleccionados.isEmpty()) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Alert alert = AlertFactory.createDeleteAlert(
+							"Eliminar anotaci\u00f3n",
+							"Se va a proceder a eliminar las siguientes anotaciones: "
+									+ mostrarSeleccionados(seleccionados),
+							"\u00bfDesea continuar?\nNo se podr\u00e1 recuperar los cambios");
+					java.util.Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+						
+						Thread eliminarAnotaHilo = new java.lang.Thread() {
+							public void run() {
+								try {
+									for (TipoAnotacionItem item: seleccionados) {
+										ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(item.getId());
 									}
-								};
+									
+									Platform.runLater(new Runnable() {
+										public void run() {
+											anotacionData.removeAll(seleccionados);	
+										}
+									});
+								} catch (ServiceException e) {
+									mensajeError(e);
+									Logs.log(e);
+								}
 							};
-							eliminarAnotaHilo.start();
-						} else {
-							alert.close();
-						}
+						};
+						eliminarAnotaHilo.start();
+					} else {
+						alert.close();
+					}
 
-						}
-				});		
-		}else{
-			Alert alert = AlertFactory.createInfoAlert("Eliminar anotaciï¿½n", "No hay ninguna anotaciï¿½n, para eliminarla primero debe seleccionarla en la tabla");
-			alert.show();
+					}
+
+				private String mostrarSeleccionados(
+						ObservableList<TipoAnotacionItem> seleccionados) {
+					String mostrar = "\n";
+					for (TipoAnotacionItem item : seleccionados) {
+						mostrar+="-"+item.getDescripcion()+"\n";
+					}
+					return mostrar;
+				}
+			});
+				
+			}else{
+				Alert alert = AlertFactory.createInfoAlert("Eliminar anotaci\u00f3n", "No hay ninguna anotaci\u00f3n seleccionada, para eliminarla primero debe seleccionarla en la tabla");
+				alert.show();
+			}
 		}
 		
-	}
+	
 	
 	private void mensajeError(Exception e) {
 		Platform.runLater(new Runnable() {
