@@ -46,7 +46,7 @@ public class Main extends Application {
 			public void handle(WindowEvent event) {
 				Alert alert = AlertFactory.createConfirmAlert(
 						"Salir",
-						"\u00bfDesea salir de la aplicaci\u00f3n?");
+						"¿Desea salir de la aplicación?");
 				java.util.Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.CANCEL) {
 					event.consume();
