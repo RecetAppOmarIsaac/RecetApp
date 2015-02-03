@@ -23,6 +23,7 @@ public class AlertFactory {
         alert.setContentText(content);
         return alert;
     }
+
     public static Alert createDeleteAlert(String title,String header, String content){
     	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     	Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
@@ -41,6 +42,5 @@ public class AlertFactory {
     	alert.setTitle(title);
     	alert.setHeaderText(header);
     	return alert;
-
     }
 }

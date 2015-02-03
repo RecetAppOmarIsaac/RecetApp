@@ -42,21 +42,14 @@ public class Main extends Application {
 		stage.setTitle("RecetApp");
 		stage.getIcons().add(dad.recetapp.ui.images.Iconos.LOGO_ICON);
 		stage.setScene(scene);
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent event) {
-				Alert alert = AlertFactory.createConfirmAlert(
-						"Salir",
-						"¿Desea salir de la aplicación?");
-				java.util.Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.CANCEL) {
-					event.consume();
-				}	
-			}
-		});
+		stage.setOnCloseRequest(event -> {
+            Alert alert = AlertFactory.createConfirmAlert("Salir", "\u00bfDesea salir de la aplicaci\u00f4n?");
+            java.util.Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.CANCEL) {
+                event.consume();
+            }
+        });
 		return stage;
 	}
-	
-	
-	
 }
 

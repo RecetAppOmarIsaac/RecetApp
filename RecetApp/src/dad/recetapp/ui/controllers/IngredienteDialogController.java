@@ -53,8 +53,7 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 				catch (ServiceException e) {
 					System.err.println("MedidaService Error: " + e.getMessage() + " Cause: " + e.getCause());
 				}
-				ObservableList<MedidaItem> medidaList = FXCollections.observableArrayList(Arrays.asList(medidaArray));
-				return medidaList;
+				return FXCollections.observableArrayList(Arrays.asList(medidaArray));
 			}
 
 			@Override
@@ -78,8 +77,7 @@ public class IngredienteDialogController implements IDialogController<Ingredient
 				catch (ServiceException e) {
 					System.err.println("TipoIngredientesService Error: " + e.getMessage() + " Cause: " + e.getCause());
 				}
-				ObservableList<TipoIngredienteItem> tipoList = FXCollections.observableArrayList(Arrays.asList(tipoArray));
-				return tipoList;
+				return FXCollections.observableArrayList(Arrays.asList(tipoArray));
 			}
 
 			@Override
